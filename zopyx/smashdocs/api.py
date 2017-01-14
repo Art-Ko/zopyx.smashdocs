@@ -37,6 +37,13 @@ class UploadError(SmashdocsError):
     """ DOCX upload or import error"""
 
 
+class ArchiveError(SmashdocsError):
+    """ Archiving error """
+
+class DeletionError(SmashdocsError):
+    """ Deletion error """
+
+
 class Smashdocs(object):
 
     def __init__(self, partner_url, client_id, client_key, group_id=None):
@@ -161,9 +168,9 @@ class Smashdocs(object):
         result = requests.post(
             self.partner_url + '/partner/documents/{}/archive'.format(document_id), headers=headers)
         if result.status_code != 200:
-            msg = _(u'Archive error (HTTP {}, {})'.format(
-                result.status_code, result.content))
-            raise SmashdocsError(msg, result)
+            msg = u'Archive error (HTTP {}, {}'.format(
+                result.status_code, result.content)
+            raise ArchiveError(msg, result)
 
     def delete_document(self, document_id):
 
@@ -176,9 +183,9 @@ class Smashdocs(object):
         result = requests.delete(
             self.partner_url + '/partner/documents/{}'.format(document_id), headers=headers)
         if result.status_code != 200:
-            msg = _(u'Archive error (HTTP {}, {})'.format(
-                result.status_code, result.content))
-            raise SmashdocsError(msg, result)
+            msg = u'Deletionerror (HTTP {}, {}'.format(
+                result.status_code, result.content)
+            raise DeletionError(msg, result)
 
     def unarchive_document(self, document_id):
 

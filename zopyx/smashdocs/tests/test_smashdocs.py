@@ -34,6 +34,18 @@ def test_create_document():
     assert 'documentId' in result
     assert 'userIdSD' in result
 
+    document_id = result['documentId']
+
+    # archiving and duplicate archiving
+    sd.archive_document(document_id)
+    with pytest.raises(api.ArchiveError):
+        sd.archive_document(document_id)
+
+    # deletion and duplicated deletion
+    sd.delete_document(document_id)
+    with pytest.raises(api.DeletionError):
+        sd.delete_document(document_id)
+
 
 def test_create_document_long_title():
 
