@@ -122,6 +122,29 @@ def test_duplicate_document():
     sd.delete_document(new_result['documentId']) 
 
 
+def test_update_metadata():
+
+    sd = make_sd()
+    result = sd.new_document(
+            title=u'My document',
+            description=u'My document description',
+            role='editor',
+            user_data=make_user_data())
+
+    document_id = result['documentId']
+    sd.update_metadata(
+            document_id,
+            title=u'Title changed',
+            description='Description changed')
+
+    document_info = sd.document_info(document_id)
+    assert document_info['title'] == u'Title changed'
+    assert document_info['description'] == u'Description changed'
+
+    sd.delete_document(document_id) 
+
+
+
 def test_archiving():
 
     sd = make_sd()

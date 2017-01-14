@@ -15,6 +15,9 @@ import tempfile
 import requests
 
 
+from requests_logger import debug_requests
+
+
 def safe_unicode(s):
     if not isinstance(s, unicode):
         return unicode(s, 'utf-8')
@@ -54,6 +57,10 @@ class CopyError(SmashdocsError):
 
 
 class DocumentInfoError(SmashdocsError):
+    """ Error retrieving document info """
+
+
+class UpdateMetadataError(SmashdocsError):
     """ Error retrieving document info """
 
 
@@ -169,6 +176,23 @@ class Smashdocs(object):
             msg = u'Create error (HTTP {}, {}'.format(
                 result.status_code, result.content)
             raise CreationFailed(msg, result)
+        return result.json()
+
+    def update_metadata(self, document_id, **kw):
+
+        headers = {
+            'x-client-id': self.client_id,
+            'content-type': 'application/json',
+            'authorization': 'Bearer ' + self.get_token()
+        }
+
+        url = self.partner_url + '/partner/documents/{}/metadata'.format(document_id)
+        with debug_requests():
+            result = requests.post(url, headers=headers, data=json.dumps(kw))
+        if result.status_code != 200:
+            msg = u'Update metadata error (HTTP {}, {}'.format(
+                result.status_code, result.content)
+            raise UpdateMetadataError(msg, result)
         return result.json()
 
     def archive_document(self, document_id):
