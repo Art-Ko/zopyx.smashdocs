@@ -18,11 +18,21 @@ import six
 
 from .requests_logger import debug_requests
 
+if six.PY2:
 
-def safe_unicode(s):
-    if not isinstance(s, six.text_type):
-        return six.text_type(s, 'utf-8')
-    return s
+    def safe_unicode(s):
+        if not isinstance(s, unicode):
+            return unicode(s, 'utf-8')
+        return s
+
+else:
+
+    def safe_unicode(s):
+        if not s:
+            import pdb; pdb.set_trace() 
+        if not isinstance(s, str):
+            return s.decode('utf-8')
+        return s
 
 
 class SmashdocsError(Exception):
@@ -65,6 +75,10 @@ class UpdateMetadataError(SmashdocsError):
     """ Error retrieving document info """
 
 
+class OpenError(SmashdocsError):
+    """ Error opening file """
+
+
 class Smashdocs(object):
 
     def __init__(self, partner_url, client_id, client_key, group_id=None):
@@ -83,7 +97,7 @@ class Smashdocs(object):
         }
         return jwt.encode(payload=jwt_payload, key=self.client_key, algorithm="HS256").decode('utf-8')
 
-    def open_document(self, document_id, title=None, description=None, smashdoc_role=None, user_data={}):
+    def open_document(self, document_id, role=None, user_data={}):
 
         headers = {
             'x-client-id': self.client_id,
@@ -92,10 +106,8 @@ class Smashdocs(object):
         }
         data = {
             'user': user_data,
-            'title': safe_unicode(title),
-            'description': safe_unicode(description),
             'groupId': self.group_id,
-            'userRole': smashdoc_role,
+            'userRole': role,
             'sectionHistory': True
         }
 
@@ -104,7 +116,7 @@ class Smashdocs(object):
         if result.status_code != 200:
             msg = u'Error (HTTP {}, {})'.format(
                 result.status_code, result.content)
-            raise SmashdocsError(msg, result)
+            raise OpenError(msg, result)
         return result.json()
 
     def document_info(self, document_id):

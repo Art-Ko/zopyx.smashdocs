@@ -57,8 +57,7 @@ def test_create_document():
     assert document_info['status'] == u'draft'
 
 
-    result = sd.open_document(document_id)
-    import pdb; pdb.set_trace() 
+    result = sd.open_document(document_id, role='editor', user_data=make_user_data())
 
     # deletion and duplicated deletion
     sd.delete_document(document_id)
