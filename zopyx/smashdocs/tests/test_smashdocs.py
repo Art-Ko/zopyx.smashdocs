@@ -56,6 +56,10 @@ def test_create_document():
     assert document_info['hasUnreadSectionChanges'] == False 
     assert document_info['status'] == u'draft'
 
+
+    result = sd.open_document(document_id)
+    import pdb; pdb.set_trace() 
+
     # deletion and duplicated deletion
     sd.delete_document(document_id)
     with pytest.raises(api.DeletionError):

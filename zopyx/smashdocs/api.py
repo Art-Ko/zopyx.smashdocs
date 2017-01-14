@@ -261,7 +261,7 @@ class Smashdocs(object):
         return result.json()
 
     def get_documents(self, group_id=None, user_id=None):
-        import pdb; pdb.set_trace() 
+
         headers = {
             'x-client-id': self.client_id,
             'content-type': 'application/json',
