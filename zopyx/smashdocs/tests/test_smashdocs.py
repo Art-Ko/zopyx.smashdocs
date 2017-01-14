@@ -44,11 +44,6 @@ def test_create_document():
 
     document_id = result['documentId']
 
-    # archiving and duplicate archiving
-    sd.archive_document(document_id)
-    with pytest.raises(api.ArchiveError):
-        sd.archive_document(document_id)
-
     # deletion and duplicated deletion
     sd.delete_document(document_id)
     with pytest.raises(api.DeletionError):
@@ -113,3 +108,26 @@ def test_duplicate_document():
 
     sd.delete_document(document_id) 
     sd.delete_document(new_result['documentId']) 
+
+
+def test_archiving():
+
+    sd = make_sd()
+    result = sd.new_document(
+            title=u'My document',
+            description=u'My document description',
+            role='editor',
+            user_data=make_user_data())
+
+    document_id = result['documentId']
+
+    # archiving and duplicate archiving
+    sd.archive_document(document_id)
+    with pytest.raises(api.ArchiveError):
+        sd.archive_document(document_id)
+
+    sd.unarchive_document(document_id)
+    with pytest.raises(api.UnarchiveError):
+        sd.unarchive_document(document_id)
+    
+    sd.delete_document(document_id)

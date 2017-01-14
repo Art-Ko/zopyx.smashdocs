@@ -41,6 +41,10 @@ class ArchiveError(SmashdocsError):
     """ Archiving error """
 
 
+class UnarchiveError(SmashdocsError):
+    """ Unarchiving error """
+
+
 class DeletionError(SmashdocsError):
     """ Deletion error """
 
@@ -203,9 +207,9 @@ class Smashdocs(object):
         result = requests.post(
             self.partner_url + '/partner/documents/{}/unarchive'.format(document_id), headers=headers)
         if result.status_code != 200:
-            msg = _(u'Archive error (HTTP {}, {})'.format(
-                result.status_code, result.content))
-            raise SmashdocsError(msg, result)
+            msg  =u'Archive error (HTTP {}, {})'.format(
+                result.status_code, result.content)
+            raise UnarchiveError(msg, result)
 
     def duplicate_document(self, document_id, title=None, description=None, creator_id=None):
 
