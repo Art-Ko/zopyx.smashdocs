@@ -1,0 +1,2 @@
+zopyx.smashdocs
+===============
