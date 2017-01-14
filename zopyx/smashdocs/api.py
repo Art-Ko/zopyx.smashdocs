@@ -40,7 +40,12 @@ class UploadError(SmashdocsError):
 class ArchiveError(SmashdocsError):
     """ Archiving error """
 
+
 class DeletionError(SmashdocsError):
+    """ Deletion error """
+
+
+class CopyError(SmashdocsError):
     """ Deletion error """
 
 
@@ -219,9 +224,9 @@ class Smashdocs(object):
         result = requests.post(
             self.partner_url + '/partner/documents/{}/duplicate'.format(document_id), headers=headers, data=json.dumps(data))
         if result.status_code != 200:
-            msg = _(u'Copy error (HTTP {}, {})'.format(
-                result.status_code, result.content))
-            raise SmashdocsError(msg, result)
+            msg = u'Copy error (HTTP {}, {})'.format(
+                result.status_code, result.content)
+            raise CopyError(msg, result)
         return result.json()
 
     def get_documents(self, group_id=None, user_id=None):

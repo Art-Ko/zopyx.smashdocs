@@ -71,6 +71,9 @@ def test_upload_docx():
     assert 'documentId' in result
     assert 'userIdSD' in result
 
+    document_id = result['documentId']
+    sd.delete_document(document_id)
+
 
 def test_upload_non_docx():
 
@@ -83,3 +86,22 @@ def test_upload_non_docx():
                 description=u'My document description',
                 role='editor',
                 user_data=make_user_data())
+
+def test_duplicate_document():
+
+    sd = make_sd()
+    result = sd.new_document(
+            title=u'My document',
+            description=u'My document description',
+            role='editor',
+            user_data=make_user_data())
+
+    document_id = result['documentId']
+    new_result = sd.duplicate_document(
+            document_id,
+            title=u'My new title',
+            description='My new description',
+            creator_id='testuser')
+
+    sd.delete_document(document_id) 
+    sd.delete_document(new_result['documentId']) 
