@@ -25,6 +25,7 @@ setup(name='zopyx.smashdocs',
       tests_require=['pytest', 'tox'],
       test_suite='tests',
       install_requires=[
+          'pytest',
           'setuptools',
           'requests',
           'pyjwt',
