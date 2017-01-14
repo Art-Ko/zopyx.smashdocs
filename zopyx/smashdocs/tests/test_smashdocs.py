@@ -44,3 +44,30 @@ def test_create_document_long_title():
                 description=u'My document description'*500,
                 role='editor',
                 user_data=make_user_data())
+
+def test_upload_docx():
+
+    sd = make_sd()
+    filename = os.path.join(os.path.dirname(__file__), 'test.docx')
+    result = sd.upload_document(
+            filename,
+            title=u'My document',
+            description=u'My document description',
+            role='editor',
+            user_data=make_user_data())
+    assert 'documentAccessLink' in result
+    assert 'documentId' in result
+    assert 'userIdSD' in result
+
+
+def test_upload_non_docx():
+
+    sd = make_sd()
+    filename = os.path.join(os.path.dirname(__file__), 'test_smashdocs.py')
+    with pytest.raises(api.UploadError):
+        result = sd.upload_document(
+                filename,
+                title=u'My document',
+                description=u'My document description',
+                role='editor',
+                user_data=make_user_data())

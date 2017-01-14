@@ -28,8 +28,13 @@ class SmashdocsError(Exception):
         self.msg = msg
         self.result = result
 
+
 class CreationFailed(SmashdocsError):
     """ Unable to create a new document """
+
+
+class UploadError(SmashdocsError):
+    """ DOCX upload or import error"""
 
 
 class Smashdocs(object):
@@ -91,13 +96,7 @@ class Smashdocs(object):
             raise SmashdocsError(msg, result)
         return result.json()
 
-    def upload_document(self, fp_in, title=None, description=None, smashdoc_role=None, user_data=None):
-
-        fp_in.seek(0)
-
-        tmp_fn = tempfile.mktemp(suffix='.docx')
-        with open(tmp_fn, 'wb') as fp:
-            fp.write(fp_in.read())
+    def upload_document(self, filename, title=None, description=None, role=None, user_data=None):
 
         headers = {
             'x-client-id': self.client_id,
@@ -109,23 +108,22 @@ class Smashdocs(object):
             'title': safe_unicode(title),
             'description': safe_unicode(description),
             'groupId': self.group_id,
-            'userRole': smashdoc_role,
+            'userRole': role,
             'sectionHistory': True
         }
 
         files = {
             'data': (None, json.dumps(data), 'application/json'),
-            'file': ('dummy.docx', open(tmp_fn, 'rb'), 'application/octet-stream'),
+            'file': ('dummy.docx', open(filename, 'rb'), 'application/octet-stream'),
         }
 
         result = requests.post(
             self.partner_url + '/partner/imports/word/upload', headers=headers, files=files)
-        os.unlink(tmp_fn)
 
         if result.status_code != 200:
-            msg = _(u'Upload error (HTTP {}, {})'.format(
-                result.status_code, result.content))
-            raise SmashdocsError(msg, result)
+            msg = u'Upload error (HTTP {}, {}'.format(
+                result.status_code, result.content)
+            raise UploadError(msg, result)
         return result.json()
 
     def new_document(self, title=None, description=None, role=None, user_data=None):
