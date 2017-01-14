@@ -81,7 +81,7 @@ class Smashdocs(object):
             'iss': iss,
             'jti': str(uuid.uuid4())
         }
-        return str(jwt.encode(payload=jwt_payload, key=self.client_key, algorithm="HS256"))
+        return jwt.encode(payload=jwt_payload, key=self.client_key, algorithm="HS256").decode('utf-8')
 
     def open_document(self, document_id, title=None, description=None, smashdoc_role=None, user_data={}):
 
@@ -90,7 +90,6 @@ class Smashdocs(object):
             'content-type': 'application/json',
             'authorization': 'Bearer ' + self.get_token()
         }
-
         data = {
             'user': user_data,
             'title': safe_unicode(title),
