@@ -144,6 +144,12 @@ def test_update_metadata():
     sd.delete_document(document_id) 
 
 
+def test_document_info_unknown_doc_id():
+
+    sd = make_sd()
+    with pytest.raises(api.DocumentInfoError):
+        document_info = sd.document_info('no such id')
+
 
 def test_archiving():
 
@@ -166,3 +172,14 @@ def test_archiving():
         sd.unarchive_document(document_id)
     
     sd.delete_document(document_id)
+
+
+def test_listings():
+
+    sd = make_sd()
+    result = sd.new_document(
+            title=u'My document',
+            description=u'My document description',
+            role='editor',
+            user_data=make_user_data())
+    result = sd.get_documents(user_id='testuser')
