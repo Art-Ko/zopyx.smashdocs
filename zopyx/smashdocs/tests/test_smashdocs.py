@@ -1,5 +1,6 @@
 import os
 import uuid
+import pytest
 
 from .. import api
 
@@ -21,7 +22,7 @@ def make_user_data():
         userId=u'testuser',
         company=u'Dummies Ltd')
 
-def test_creste_document():
+def test_create_document():
 
     sd = make_sd()
     result = sd.new_document(
@@ -32,3 +33,14 @@ def test_creste_document():
     assert 'documentAccessLink' in result
     assert 'documentId' in result
     assert 'userIdSD' in result
+
+
+def test_create_document_long_title():
+
+    sd = make_sd()
+    with pytest.raises(api.CreationFailed):
+        result = sd.new_document(
+                title=u'My document'*500,
+                description=u'My document description'*500,
+                role='editor',
+                user_data=make_user_data())

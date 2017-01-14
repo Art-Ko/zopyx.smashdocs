@@ -28,6 +28,9 @@ class SmashdocsError(Exception):
         self.msg = msg
         self.result = result
 
+class CreationFailed(SmashdocsError):
+    """ Unable to create a new document """
+
 
 class Smashdocs(object):
 
@@ -147,7 +150,7 @@ class Smashdocs(object):
         if result.status_code != 200:
             msg = u'Create error (HTTP {}, {}'.format(
                 result.status_code, result.content)
-            raise SmashdocsError(msg, result)
+            raise CreationFailed(msg, result)
         return result.json()
 
     def archive_document(self, document_id):
