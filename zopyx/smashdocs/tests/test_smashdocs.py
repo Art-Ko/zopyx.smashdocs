@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 import uuid
 import pytest
@@ -34,8 +36,8 @@ def test_create_document():
 
     sd = make_sd()
     result = sd.new_document(
-            title=u'My document',
-            description=u'My document description',
+            title=u'My document - üöäß',
+            description=u'My document description - üöäß',
             role='editor',
             user_data=make_user_data())
     assert 'documentAccessLink' in result
@@ -43,6 +45,16 @@ def test_create_document():
     assert 'userIdSD' in result
 
     document_id = result['documentId']
+
+    document_info = sd.document_info(document_id)
+
+    assert document_info['archived'] ==  False
+    assert document_info['title'] == u'My document - üöäß'
+    assert document_info['description'] == u'My document description - üöäß'
+    assert document_info['hasOpenedDocument'] == False
+    assert document_info['hasUnreadConversationChanges'] == False
+    assert document_info['hasUnreadSectionChanges'] == False 
+    assert document_info['status'] == u'draft'
 
     # deletion and duplicated deletion
     sd.delete_document(document_id)

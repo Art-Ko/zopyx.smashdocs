@@ -53,6 +53,10 @@ class CopyError(SmashdocsError):
     """ Deletion error """
 
 
+class DocumentInfoError(SmashdocsError):
+    """ Error retrieving document info """
+
+
 class Smashdocs(object):
 
     def __init__(self, partner_url, client_id, client_key, group_id=None):
@@ -109,7 +113,7 @@ class Smashdocs(object):
         if result.status_code != 200:
             msg = u'Error (HTTP {}, {})'.format(
                 result.status_code, result.content)
-            raise SmashdocsError(msg, result)
+            raise DocumentInfoError(msg, result)
         return result.json()
 
     def upload_document(self, filename, title=None, description=None, role=None, user_data=None):
