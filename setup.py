@@ -22,7 +22,7 @@ setup(name='zopyx.smashdocs',
       namespace_packages=['zopyx'],
       include_package_data=True,
       zip_safe=False,
-      tests_require=['pytest'],
+      tests_require=['pytest', 'tox'],
       install_requires=[
           'setuptools',
           'requests',
