@@ -13,14 +13,15 @@ import time
 import datetime
 import tempfile
 import requests
+import six
 
 
-from requests_logger import debug_requests
+from .requests_logger import debug_requests
 
 
 def safe_unicode(s):
-    if not isinstance(s, unicode):
-        return unicode(s, 'utf-8')
+    if not isinstance(s, six.text_type):
+        return six.text_type(s, 'utf-8')
     return s
 
 
@@ -80,7 +81,7 @@ class Smashdocs(object):
             'iss': iss,
             'jti': str(uuid.uuid4())
         }
-        return jwt.encode(payload=jwt_payload, key=self.client_key, algorithm="HS256")
+        return str(jwt.encode(payload=jwt_payload, key=self.client_key, algorithm="HS256"))
 
     def open_document(self, document_id, title=None, description=None, smashdoc_role=None, user_data={}):
 

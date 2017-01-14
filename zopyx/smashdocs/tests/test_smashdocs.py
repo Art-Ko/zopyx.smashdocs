@@ -4,7 +4,7 @@ import os
 import uuid
 import pytest
 
-from .. import api
+from zopyx.smashdocs import api
 
 
 client_id = os.environ.get('SMASHDOCS_CLIENT_ID')
