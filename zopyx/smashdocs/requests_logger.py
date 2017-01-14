@@ -1,5 +1,9 @@
+# -*- coding: utf-8 -*-
+
 import logging
 import contextlib
+
+
 try:
     from http.client import HTTPConnection # py3
 except ImportError:

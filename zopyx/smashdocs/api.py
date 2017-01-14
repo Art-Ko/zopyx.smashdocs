@@ -187,8 +187,7 @@ class Smashdocs(object):
         }
 
         url = self.partner_url + '/partner/documents/{}/metadata'.format(document_id)
-        with debug_requests():
-            result = requests.post(url, headers=headers, data=json.dumps(kw))
+        result = requests.post(url, headers=headers, data=json.dumps(kw))
         if result.status_code != 200:
             msg = u'Update metadata error (HTTP {}, {}'.format(
                 result.status_code, result.content)
