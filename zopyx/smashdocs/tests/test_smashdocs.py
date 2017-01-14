@@ -10,6 +10,14 @@ client_key = os.environ.get('SMASHDOCS_CLIENT_KEY')
 client_partner_url = os.environ.get('SMASHDOCS_PARTNER_URL')
 group_id = str(uuid.uuid4())
 
+if not client_id:
+    raise ValueError('SMASHDOCS_CLIENT_ID not set')
+if not client_key:
+    raise ValueError('SMASHDOCS_CLIENT_KEY not set')
+if not client_partner_url:
+    raise ValueError('SMASHDOCS_PARTNER_URL not set')
+
+
 def make_sd():
     return api.Smashdocs(client_partner_url, client_id, client_key, group_id)
 
