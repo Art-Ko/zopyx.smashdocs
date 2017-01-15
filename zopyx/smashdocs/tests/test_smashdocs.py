@@ -56,7 +56,6 @@ def test_create_document():
     assert document_info['hasUnreadSectionChanges'] == False 
     assert document_info['status'] == u'draft'
 
-
     result = sd.open_document(document_id, role='editor', user_data=make_user_data())
 
     # deletion and duplicated deletion
@@ -68,7 +67,7 @@ def test_create_document():
 def test_create_document_long_title():
 
     sd = make_sd()
-    with pytest.raises(api.CreationFailed):
+    with pytest.raises(ValueError):
         result = sd.new_document(
                 title=u'My document'*500,
                 description=u'My document description'*500,

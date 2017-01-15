@@ -79,6 +79,63 @@ class OpenError(SmashdocsError):
     """ Error opening file """
 
 
+allowed_sd_roles = ('editor', 'reader', 'approver', 'commentator')
+def check_role(role):
+    if not role in allowed_sd_roles:
+        raise ValueError('Unsupported role in Smashdocs: {} (allowed: {})'.format(role, allowed_sd_roles))
+
+
+def check_length(s, max_len):
+
+    if six.PY2:
+        if not isinstance(s, unicode):
+            raise TypeError('{} must be unicode'.format(s))
+    elif six.PY3:
+        if not isinstance(s, str):
+            raise TypeError('{} must be str'.format(s))
+    
+    if len(s) > max_len:
+        raise ValueError('"{}" too long (max {} chars)'.format(s, max_len))
+
+
+def check_title(s):
+    return check_length(s, 200)
+
+
+def check_description(s):
+    return check_length(s, 400)
+
+
+def check_email(s):
+    return check_length(s, 150)
+
+
+def check_firstname(s):
+    return check_length(s, 150)
+
+
+def check_lastname(s):
+    return check_length(s, 150)
+
+
+def check_company(s):
+    return check_length(s, 150)
+
+
+def check_userid(s):
+    if not s:
+        raise ValueError('"userId" not specified')
+
+
+def check_user_data(user_data):
+
+    check_firstname(user_data.get('firstname'))
+    check_lastname(user_data.get('lastname'))
+    check_email(user_data.get('email'))
+    check_company(user_data.get('company'))
+    check_userid(user_data.get('userId'))
+
+
 class Smashdocs(object):
 
     def __init__(self, partner_url, client_id, client_key, group_id=None):
@@ -98,6 +155,10 @@ class Smashdocs(object):
         return jwt.encode(payload=jwt_payload, key=self.client_key, algorithm="HS256").decode('utf-8')
 
     def open_document(self, document_id, role=None, user_data={}):
+
+        check_role(role)
+        check_user_data(user_data)
+        check_user_data(user_data)
 
         headers = {
             'x-client-id': self.client_id,
@@ -137,6 +198,11 @@ class Smashdocs(object):
 
     def upload_document(self, filename, title=None, description=None, role=None, user_data=None):
 
+        check_title(title)
+        check_description(description)
+        check_role(role)
+        check_user_data(user_data)
+
         headers = {
             'x-client-id': self.client_id,
             'authorization': 'Bearer ' + self.get_token()
@@ -166,6 +232,11 @@ class Smashdocs(object):
         return result.json()
 
     def new_document(self, title=None, description=None, role=None, user_data=None):
+
+        check_title(title)
+        check_description(description)
+        check_role(role)
+        check_user_data(user_data)
 
         headers = {
             'x-client-id': self.client_id,
@@ -251,6 +322,9 @@ class Smashdocs(object):
             raise UnarchiveError(msg, result)
 
     def duplicate_document(self, document_id, title=None, description=None, creator_id=None):
+
+        check_title(title)
+        check_description(description)
 
         headers = {
             'x-client-id': self.client_id,
