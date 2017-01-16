@@ -5,13 +5,11 @@
 # (C) 2016,  Andreas Jung, www.zopyx.com, Tuebingen, Germany
 ################################################################
 
-import os
 import jwt
 import json
 import uuid
 import time
 import datetime
-import tempfile
 import requests
 import six
 
@@ -21,16 +19,13 @@ from .requests_logger import debug_requests
 if six.PY2:
 
     def safe_unicode(s):
-        if not isinstance(s, unicode):
+        if not isinstance(s, unicode): # noqa
             return unicode(s, 'utf-8')
         return s
 
 else:
 
     def safe_unicode(s):
-        if not s:
-            import pdb
-            pdb.set_trace()
         if not isinstance(s, str):
             return s.decode('utf-8')
         return s
@@ -84,7 +79,7 @@ allowed_sd_roles = ('editor', 'reader', 'approver', 'commentator')
 
 
 def check_role(role):
-    if not role in allowed_sd_roles:
+    if role not in allowed_sd_roles:
         raise ValueError('Unsupported role in Smashdocs: {} (allowed: {})'.format(
             role, allowed_sd_roles))
 
@@ -368,7 +363,7 @@ class Smashdocs(object):
         result = requests.get(
             self.partner_url + '/partner/documents/list', headers=headers, params=data)
         if result.status_code != 200:
-            msg = _(u'List error (HTTP {}, {})'.format(
-                result.status_code, result.content))
+            msg = u'List error (HTTP {}, {})'.format(
+                result.status_code, result.content)
             raise SmashdocsError(msg, result)
         return result.json()
