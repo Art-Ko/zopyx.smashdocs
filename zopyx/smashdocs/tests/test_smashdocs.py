@@ -32,14 +32,15 @@ def make_user_data():
         userId=u'testuser',
         company=u'Dummies Ltd')
 
+
 def test_create_document():
 
     sd = make_sd()
     result = sd.new_document(
-            title=u'My document - üöäß',
-            description=u'My document description - üöäß',
-            role='editor',
-            user_data=make_user_data())
+        title=u'My document - üöäß',
+        description=u'My document description - üöäß',
+        role='editor',
+        user_data=make_user_data())
     assert 'documentAccessLink' in result
     assert 'documentId' in result
     assert 'userIdSD' in result
@@ -48,15 +49,16 @@ def test_create_document():
 
     document_info = sd.document_info(document_id)
 
-    assert document_info['archived'] ==  False
+    assert document_info['archived'] == False
     assert document_info['title'] == u'My document - üöäß'
     assert document_info['description'] == u'My document description - üöäß'
     assert document_info['hasOpenedDocument'] == False
     assert document_info['hasUnreadConversationChanges'] == False
-    assert document_info['hasUnreadSectionChanges'] == False 
+    assert document_info['hasUnreadSectionChanges'] == False
     assert document_info['status'] == u'draft'
 
-    result = sd.open_document(document_id, role='editor', user_data=make_user_data())
+    result = sd.open_document(
+        document_id, role='editor', user_data=make_user_data())
 
     # deletion and duplicated deletion
     sd.delete_document(document_id)
@@ -69,21 +71,22 @@ def test_create_document_long_title():
     sd = make_sd()
     with pytest.raises(ValueError):
         result = sd.new_document(
-                title=u'My document'*500,
-                description=u'My document description'*500,
-                role='editor',
-                user_data=make_user_data())
+            title=u'My document' * 500,
+            description=u'My document description' * 500,
+            role='editor',
+            user_data=make_user_data())
+
 
 def test_upload_docx():
 
     sd = make_sd()
     filename = os.path.join(os.path.dirname(__file__), 'test.docx')
     result = sd.upload_document(
-            filename,
-            title=u'My document',
-            description=u'My document description',
-            role='editor',
-            user_data=make_user_data())
+        filename,
+        title=u'My document',
+        description=u'My document description',
+        role='editor',
+        user_data=make_user_data())
     assert 'documentAccessLink' in result
     assert 'documentId' in result
     assert 'userIdSD' in result
@@ -98,52 +101,53 @@ def test_upload_non_docx():
     filename = os.path.join(os.path.dirname(__file__), 'test_smashdocs.py')
     with pytest.raises(api.UploadError):
         result = sd.upload_document(
-                filename,
-                title=u'My document',
-                description=u'My document description',
-                role='editor',
-                user_data=make_user_data())
-
-def test_duplicate_document():
-
-    sd = make_sd()
-    result = sd.new_document(
+            filename,
             title=u'My document',
             description=u'My document description',
             role='editor',
             user_data=make_user_data())
 
+
+def test_duplicate_document():
+
+    sd = make_sd()
+    result = sd.new_document(
+        title=u'My document',
+        description=u'My document description',
+        role='editor',
+        user_data=make_user_data())
+
     document_id = result['documentId']
     new_result = sd.duplicate_document(
-            document_id,
-            title=u'My new title',
-            description='My new description',
-            creator_id='testuser')
+        document_id,
+        title=u'My new title',
+        description='My new description',
+        creator_id='testuser')
 
-    sd.delete_document(document_id) 
-    sd.delete_document(new_result['documentId']) 
+    sd.delete_document(document_id)
+    sd.delete_document(new_result['documentId'])
 
 
 def test_update_metadata():
 
     sd = make_sd()
     result = sd.new_document(
-            title=u'My document',
-            description=u'My document description',
-            role='editor',
-            user_data=make_user_data())
+        title=u'My document',
+        description=u'My document description',
+        role='editor',
+        user_data=make_user_data())
 
     document_id = result['documentId']
     sd.update_metadata(
-            document_id,
-            title=u'Title changed',
-            description='Description changed')
+        document_id,
+        title=u'Title changed',
+        description='Description changed')
 
     document_info = sd.document_info(document_id)
     assert document_info['title'] == u'Title changed'
     assert document_info['description'] == u'Description changed'
 
-    sd.delete_document(document_id) 
+    sd.delete_document(document_id)
 
 
 def test_document_info_unknown_doc_id():
@@ -157,10 +161,10 @@ def test_archiving():
 
     sd = make_sd()
     result = sd.new_document(
-            title=u'My document',
-            description=u'My document description',
-            role='editor',
-            user_data=make_user_data())
+        title=u'My document',
+        description=u'My document description',
+        role='editor',
+        user_data=make_user_data())
 
     document_id = result['documentId']
 
@@ -172,7 +176,7 @@ def test_archiving():
     sd.unarchive_document(document_id)
     with pytest.raises(api.UnarchiveError):
         sd.unarchive_document(document_id)
-    
+
     sd.delete_document(document_id)
 
 
@@ -180,8 +184,8 @@ def test_listings():
 
     sd = make_sd()
     result = sd.new_document(
-            title=u'My document',
-            description=u'My document description',
-            role='editor',
-            user_data=make_user_data())
+        title=u'My document',
+        description=u'My document description',
+        role='editor',
+        user_data=make_user_data())
     result = sd.get_documents(user_id='testuser')

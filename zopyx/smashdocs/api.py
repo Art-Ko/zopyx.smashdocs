@@ -29,7 +29,8 @@ else:
 
     def safe_unicode(s):
         if not s:
-            import pdb; pdb.set_trace() 
+            import pdb
+            pdb.set_trace()
         if not isinstance(s, str):
             return s.decode('utf-8')
         return s
@@ -80,9 +81,12 @@ class OpenError(SmashdocsError):
 
 
 allowed_sd_roles = ('editor', 'reader', 'approver', 'commentator')
+
+
 def check_role(role):
     if not role in allowed_sd_roles:
-        raise ValueError('Unsupported role in Smashdocs: {} (allowed: {})'.format(role, allowed_sd_roles))
+        raise ValueError('Unsupported role in Smashdocs: {} (allowed: {})'.format(
+            role, allowed_sd_roles))
 
 
 def check_length(s, max_len):
@@ -93,7 +97,7 @@ def check_length(s, max_len):
     elif six.PY3:
         if not isinstance(s, str):
             raise TypeError('{} must be str'.format(s))
-    
+
     if len(s) > max_len:
         raise ValueError('"{}" too long (max {} chars)'.format(s, max_len))
 
@@ -269,7 +273,8 @@ class Smashdocs(object):
             'authorization': 'Bearer ' + self.get_token()
         }
 
-        url = self.partner_url + '/partner/documents/{}/metadata'.format(document_id)
+        url = self.partner_url + \
+            '/partner/documents/{}/metadata'.format(document_id)
         result = requests.post(url, headers=headers, data=json.dumps(kw))
         if result.status_code != 200:
             msg = u'Update metadata error (HTTP {}, {}'.format(
@@ -317,7 +322,7 @@ class Smashdocs(object):
         result = requests.post(
             self.partner_url + '/partner/documents/{}/unarchive'.format(document_id), headers=headers)
         if result.status_code != 200:
-            msg  =u'Archive error (HTTP {}, {})'.format(
+            msg = u'Archive error (HTTP {}, {})'.format(
                 result.status_code, result.content)
             raise UnarchiveError(msg, result)
 
