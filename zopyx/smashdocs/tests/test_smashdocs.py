@@ -121,7 +121,7 @@ def test_duplicate_document():
     new_result = sd.duplicate_document(
         document_id,
         title=u'My new title',
-        description='My new description',
+        description=u'My new description',
         creator_id='testuser')
 
     sd.delete_document(document_id)
@@ -130,7 +130,6 @@ def test_duplicate_document():
 
 def test_update_metadata():
 
-    return 0
     sd = make_sd()
     result = sd.new_document(
         title=u'My document',
