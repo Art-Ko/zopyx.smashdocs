@@ -26,7 +26,7 @@ def make_sd():
 
 def make_user_data():
     return dict(
-        email='test@foo.com',
+        email=u'test@foo.com',
         firstname=u'Henry',
         lastname=u'Miller',
         userId=u'testuser',
