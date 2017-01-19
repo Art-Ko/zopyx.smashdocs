@@ -143,6 +143,9 @@ class Smashdocs(object):
         self.client_key = client_key
         self.group_id = group_id
 
+    def __repr__(self):
+        return '<Smashdocs {}>'.format(self.__dict__)
+
     def get_token(self, iss='ajung'):
         iss = str(uuid.uuid4())
         iat = int(time.mktime(datetime.datetime.now().timetuple()))
