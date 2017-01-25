@@ -8,4 +8,3 @@ pyparsing==2.1.10
 pytest==3.0.6
 requests==2.13.0
 six==1.10.0
--e git+git@github.com:zopyx/zopyx.smashdocs.git@24b26740ce06fc7ac80f4c65e6b098f134f525a9#egg=zopyx.smashdocs
