@@ -1,10 +1,9 @@
 language: python
 python:
-  - "2.7"
-  - "3.5"
-  - "3.6"
-# command to install dependencies
-install: "make install"
-# command to run tests
-script: "make test"
-
+- '2.7'
+- '3.5'
+- '3.6'
+install: make install
+script: make test
+dd:
+  secure: wXSunTEsxmWiSuSWcmVLcXk02BlslYXfX9dRYynK1Bf5DYEBW6TuFPzjPBhDLCBeKw50W4mMWqOyIEERPsIXw2+YboaF1++PikrDK5utkKq7XOiyVUi+npPT7rEaDVpE6VUxGNUBi4wzVreIAcXGs2rFDn5B7hD+5RPXsHw8JtlK/RnoyFU6gFkS1K1fSDXz8uHmvwaNvghyeyztm9RK59/Wbpaj6GQjrSpp5BELQxEMcdPT5huq+PEFdpPt8nI49Qp5h1uh69b9CpGrBNwKRtIi6huCgJ6tddIlls1q6AIZF0XFydhBJaTqqdvLUkGgrCwUPKCu7AE6yBb04QM6XvIB0suk4vCi+CY+T0Tm5fpOE5Ucw8JrrBDfdLcVO76AeARBxq9id5zevHXQ5wJsVureAte1TUPMrNyZU3ddXenNZlH8W+tPCFazm83jO33cidCNqQziNItINU4+LzIqkRsdPtOpBsaUy13p7rIUg7u6mo9C9Wy1tHAyk9JBhEvAx/3xaSX/OvGrfZMytMVMJftg9FSsKPsMNNHxIiw8Fwg+xm8rmfGHL/eEVRbc6ZzgDojDPDcqwyYc7X7IylkLC5FHoJj+EYGrq7j5L1UY5tXjtdoa/XBWycEjb9cUx7IN+NKWGKH2SMc8N9aDYI8rbBNy+f6Kn4U6PQNT3I7xNbg=
