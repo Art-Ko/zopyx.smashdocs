@@ -1,4 +1,4 @@
-all:
+install:
 	virtualenv .
 	bin/python setup.py develop
 
