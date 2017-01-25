@@ -3,4 +3,4 @@ install:
 	bin/python setup.py develop
 
 test:
-	bin/pytest zopyx
+	NO_CERT_VERIFICATION=1 bin/pytest zopyx
