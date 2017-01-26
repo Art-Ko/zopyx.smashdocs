@@ -1,0 +1,11 @@
+language: python
+python:
+- '2.7'
+- '3.5'
+- '3.6'
+install:  "pip install -r requirements.txt "
+script:   pytest zopyx
+env:
+  global:
+
+  - secure: AOO1OQJCrc73aTDHzdv/H9dWSciXNKMCo7ZSabI+f/xVxIHw4auifH7ivV1XilkB5fOydYisZFWoLTu1sM1ztdkUaX8ZwObC2d/KN8WTFxGkMH5daJgn8czd0l2GfIjIptmn+WymZxeLh9ZfH+/KuHJ1ngFNvunMfeV4ja8qPYhxWNl2OcDI4tCc4YQ66Xp9JNXyTSJW8Q+N3OcsJ8S9o850oUqbiW726LsbkUgOhratmncVGHuapVd/MCPMjTtyYS0DppkbThL4PzncgLxhnKhdTxbf3tfqPzE9BfOH1jubtxck+2S47ZGVbooowZ/YL62xAUXQ1R8b7Bv29WGYta8c8S6/SHrzATRvpIr5xB7mfK763u0MvbvwOxINO+xkMTGBEureEICzz1C/t2/SZZpbcfyvPsiq4U070SQw3H3OogSJ4vybZWls/Ln2UveP8jhBPAn0HoGg/c3Nys8dNOlrdnlOZeEJpkhzNFM7T1Sg0H3rc9D0q7GPq2Y7LshO3x6uAB3aQXtGqPBnukf6fJgG/OoqctwOESAimhxiqGwZs9LPCYMcmEtkJ6cLLpE5JoiRSPH8opMixhL+PfjEtB3B6GVjAGlu6I58YFWFCVUEW41IfAn/xtEoIpZ+sd00SHi/QEoqIHc77v9fK9PFO1eVDbcoVJcYTvVG+XHSH4w=
