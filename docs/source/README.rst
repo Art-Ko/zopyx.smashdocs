@@ -19,12 +19,12 @@ https://documentation.smashdocs.net/release_notes.html#version-1-5-0-0-18-11-201
 Repository
 ----------
 
-* https://bitbucket.org/ajung/zopyx.smashdocs
+* https://github.com/zopyx/zopyx.smashdocs
 
 Issue tracker
 -------------
 
-* https://bitbucket.org/ajung/zopyx.smashdocs/issues?status=new&status=open
+* https://github.com/zopyx/zopyx.smashdocs/issues
 
 License
 -------
