@@ -66,7 +66,7 @@ def test_create_document():
         sd.delete_document(document_id)
 
 
-def xtest_create_document_long_title():
+def test_create_document_long_title():
 
     sd = make_sd()
     with pytest.raises(ValueError):
@@ -77,7 +77,7 @@ def xtest_create_document_long_title():
             user_data=make_user_data())
 
 
-def xtest_upload_docx():
+def test_upload_docx():
 
     sd = make_sd()
     filename = os.path.join(os.path.dirname(__file__), 'test.docx')
@@ -95,7 +95,7 @@ def xtest_upload_docx():
     sd.delete_document(document_id)
 
 
-def xtest_upload_non_docx():
+def test_upload_non_docx():
 
     sd = make_sd()
     filename = os.path.join(os.path.dirname(__file__), 'test_smashdocs.py')
@@ -108,7 +108,7 @@ def xtest_upload_non_docx():
             user_data=make_user_data())
 
 
-def xtest_duplicate_document():
+def test_duplicate_document():
 
     sd = make_sd()
     result = sd.new_document(
@@ -128,7 +128,7 @@ def xtest_duplicate_document():
     sd.delete_document(new_result['documentId'])
 
 
-def xtest_update_metadata():
+def test_update_metadata():
 
     sd = make_sd()
     result = sd.new_document(
@@ -150,14 +150,14 @@ def xtest_update_metadata():
     sd.delete_document(document_id)
 
 
-def xtest_document_info_unknown_doc_id():
+def test_document_info_unknown_doc_id():
 
     sd = make_sd()
     with pytest.raises(api.DocumentInfoError):
         document_info = sd.document_info('no such id')
 
 
-def xtest_archiving():
+def test_archiving():
 
     sd = make_sd()
     result = sd.new_document(
@@ -180,7 +180,7 @@ def xtest_archiving():
     sd.delete_document(document_id)
 
 
-def xtest_listings():
+def test_listings():
 
     sd = make_sd()
     result = sd.new_document(
