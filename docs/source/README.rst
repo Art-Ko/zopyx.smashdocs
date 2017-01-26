@@ -36,8 +36,6 @@ Author
 ------
 | Andreas Jung/ZOPYX
 | Hundskapfklinge 33
-| D-72074 Tuebingen, Germany
+| D-72074 Tübingen, Germany
 | info@zopyx.com
 | www.zopyx.com
-
-
