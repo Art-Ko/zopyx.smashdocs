@@ -84,7 +84,7 @@ allowed_sd_roles = ('editor', 'reader', 'approver', 'commentator')
 
 def check_role(role):
     if role not in allowed_sd_roles:
-        raise ValueError('Unsupported role in Smashdocs: {} (allowed: {})'.format(
+        raise ValueError('Unsupported role in Smashdocs: {0} (allowed: {1})'.format(
             role, allowed_sd_roles))
 
 
@@ -92,13 +92,13 @@ def check_length(s, max_len):
 
     if six.PY2:
         if not isinstance(s, unicode):
-            raise TypeError('{} must be unicode'.format(s))
+            raise TypeError('{0} must be unicode'.format(s))
     elif six.PY3:
         if not isinstance(s, str):
-            raise TypeError('{} must be str'.format(s))
+            raise TypeError('{0} must be str'.format(s))
 
     if len(s) > max_len:
-        raise ValueError('"{}" too long (max {} chars)'.format(s, max_len))
+        raise ValueError('"{0}" too long (max {1} chars)'.format(s, max_len))
 
 
 def check_title(s):
@@ -148,7 +148,7 @@ class Smashdocs(object):
         self.group_id = group_id
 
     def __repr__(self):
-        return '<Smashdocs {}>'.format(self.__dict__)
+        return '<Smashdocs {0}>'.format(self.__dict__)
 
     def get_token(self, iss='ajung'):
         iss = str(uuid.uuid4())
@@ -178,10 +178,10 @@ class Smashdocs(object):
             'sectionHistory': True
         }
 
-        url = self.partner_url + '/partner/documents/{}'.format(document_id)
+        url = self.partner_url + '/partner/documents/{0}'.format(document_id)
         result = requests.post(url, headers=headers, data=json.dumps(data), verify=VERIFY)
         if result.status_code != 200:
-            msg = u'Error (HTTP {}, {})'.format(
+            msg = u'Error (HTTP {0}, {1})'.format(
                 result.status_code, result.content)
             raise OpenError(msg, result)
         return result.json()
@@ -197,7 +197,7 @@ class Smashdocs(object):
         url = self.partner_url + '/partner/documents/{}'.format(document_id)
         result = requests.get(url, headers=headers, verify=VERIFY)
         if result.status_code != 200:
-            msg = u'Error (HTTP {}, {})'.format(
+            msg = u'Error (HTTP {0}, {1})'.format(
                 result.status_code, result.content)
             raise DocumentInfoError(msg, result)
         return result.json()
@@ -232,7 +232,7 @@ class Smashdocs(object):
             self.partner_url + '/partner/imports/word/upload', headers=headers, files=files, verify=VERIFY)
 
         if result.status_code != 200:
-            msg = u'Upload error (HTTP {}, {}'.format(
+            msg = u'Upload error (HTTP {0}, {1}'.format(
                 result.status_code, result.content)
             raise UploadError(msg, result)
         return result.json()
@@ -262,7 +262,7 @@ class Smashdocs(object):
         result = requests.post(
             self.partner_url + '/partner/documents/create', headers=headers, data=json.dumps(data), verify=VERIFY)
         if result.status_code != 200:
-            msg = u'Create error (HTTP {}, {}'.format(
+            msg = u'Create error (HTTP {0}, {1}'.format(
                 result.status_code, result.content)
             raise CreationFailed(msg, result)
         return result.json()
@@ -276,10 +276,10 @@ class Smashdocs(object):
         }
 
         url = self.partner_url + \
-            '/partner/documents/{}/metadata'.format(document_id)
+            '/partner/documents/{0}/metadata'.format(document_id)
         result = requests.post(url, headers=headers, data=json.dumps(kw), verify=VERIFY)
         if result.status_code != 200:
-            msg = u'Update metadata error (HTTP {}, {}'.format(
+            msg = u'Update metadata error (HTTP {0}, {1}'.format(
                 result.status_code, result.content)
             raise UpdateMetadataError(msg, result)
         return result.json()
@@ -292,9 +292,9 @@ class Smashdocs(object):
             'authorization': 'Bearer ' + self.get_token()
         }
         result = requests.post(
-            self.partner_url + '/partner/documents/{}/archive'.format(document_id), headers=headers, verify=VERIFY)
+            self.partner_url + '/partner/documents/{0}/archive'.format(document_id), headers=headers, verify=VERIFY)
         if result.status_code != 200:
-            msg = u'Archive error (HTTP {}, {}'.format(
+            msg = u'Archive error (HTTP {0}, {1}'.format(
                 result.status_code, result.content)
             raise ArchiveError(msg, result)
 
@@ -307,9 +307,9 @@ class Smashdocs(object):
         }
 
         result = requests.delete(
-            self.partner_url + '/partner/documents/{}'.format(document_id), headers=headers, verify=VERIFY)
+            self.partner_url + '/partner/documents/{0}'.format(document_id), headers=headers, verify=VERIFY)
         if result.status_code != 200:
-            msg = u'Deletionerror (HTTP {}, {}'.format(
+            msg = u'Deletionerror (HTTP {0}, {1}'.format(
                 result.status_code, result.content)
             raise DeletionError(msg, result)
 
@@ -322,9 +322,9 @@ class Smashdocs(object):
         }
 
         result = requests.post(
-            self.partner_url + '/partner/documents/{}/unarchive'.format(document_id), headers=headers, verify=VERIFY)
+            self.partner_url + '/partner/documents/{0}/unarchive'.format(document_id), headers=headers, verify=VERIFY)
         if result.status_code != 200:
-            msg = u'Archive error (HTTP {}, {})'.format(
+            msg = u'Archive error (HTTP {0}, {1})'.format(
                 result.status_code, result.content)
             raise UnarchiveError(msg, result)
 
@@ -348,7 +348,7 @@ class Smashdocs(object):
         result = requests.post(
             self.partner_url + '/partner/documents/{}/duplicate'.format(document_id), headers=headers, data=json.dumps(data), verify=VERIFY)
         if result.status_code != 200:
-            msg = u'Copy error (HTTP {}, {})'.format(
+            msg = u'Copy error (HTTP {0}, {1})'.format(
                 result.status_code, result.content)
             raise CopyError(msg, result)
         return result.json()
@@ -370,7 +370,7 @@ class Smashdocs(object):
         result = requests.get(
             self.partner_url + '/partner/documents/list', headers=headers, params=data, verify=VERIFY)
         if result.status_code != 200:
-            msg = u'List error (HTTP {}, {})'.format(
+            msg = u'List error (HTTP {0}, {1})'.format(
                 result.status_code, result.content)
             raise SmashdocsError(msg, result)
         return result.json()
