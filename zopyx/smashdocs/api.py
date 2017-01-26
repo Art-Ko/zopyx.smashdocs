@@ -265,6 +265,8 @@ class Smashdocs(object):
         if result.status_code != 200:
             msg = u'Create error (HTTP {}, {}'.format(
                 result.status_code, result.content)
+            print(msg)
+            print(result.content)
             raise CreationFailed(msg, result)
         return result.json()
 
