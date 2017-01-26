@@ -147,6 +147,9 @@ class Smashdocs(object):
         self.client_id = client_id
         self.client_key = client_key
         self.group_id = group_id
+        print partner_url
+        print client_id
+        print client_key
 
     def __repr__(self):
         return '<Smashdocs {}>'.format(self.__dict__)
