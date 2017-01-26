@@ -194,7 +194,7 @@ class Smashdocs(object):
             'authorization': 'Bearer ' + self.get_token()
         }
 
-        url = self.partner_url + '/partner/documents/{}'.format(document_id)
+        url = self.partner_url + '/partner/documents/{0}'.format(document_id)
         result = requests.get(url, headers=headers, verify=VERIFY)
         if result.status_code != 200:
             msg = u'Error (HTTP {0}, {1})'.format(
@@ -346,7 +346,7 @@ class Smashdocs(object):
         }
 
         result = requests.post(
-            self.partner_url + '/partner/documents/{}/duplicate'.format(document_id), headers=headers, data=json.dumps(data), verify=VERIFY)
+            self.partner_url + '/partner/documents/{0}/duplicate'.format(document_id), headers=headers, data=json.dumps(data), verify=VERIFY)
         if result.status_code != 200:
             msg = u'Copy error (HTTP {0}, {1})'.format(
                 result.status_code, result.content)
