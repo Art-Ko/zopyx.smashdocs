@@ -161,6 +161,7 @@ class Smashdocs(object):
         return jwt.encode(payload=jwt_payload, key=self.client_key, algorithm="HS256").decode('utf-8')
 
     def open_document(self, document_id, role=None, user_data={}):
+        """ Open document """
 
         check_role(role)
         check_user_data(user_data)
@@ -187,6 +188,7 @@ class Smashdocs(object):
         return result.json()
 
     def document_info(self, document_id):
+        """ Get document information """
 
         headers = {
             'x-client-id': self.client_id,
@@ -203,6 +205,7 @@ class Smashdocs(object):
         return result.json()
 
     def upload_document(self, filename, title=None, description=None, role=None, user_data=None):
+        """ Upload DOCX document"""
 
         check_title(title)
         check_description(description)
@@ -238,6 +241,7 @@ class Smashdocs(object):
         return result.json()
 
     def new_document(self, title=None, description=None, role=None, user_data=None):
+        """ Create a new document """
 
         check_title(title)
         check_description(description)
@@ -268,6 +272,7 @@ class Smashdocs(object):
         return result.json()
 
     def update_metadata(self, document_id, **kw):
+        """ Update metadata"""
 
         headers = {
             'x-client-id': self.client_id,
@@ -285,6 +290,7 @@ class Smashdocs(object):
         return result.json()
 
     def archive_document(self, document_id):
+        """ Archive document by ``document_id``"""
 
         headers = {
             'x-client-id': self.client_id,
@@ -299,6 +305,7 @@ class Smashdocs(object):
             raise ArchiveError(msg, result)
 
     def delete_document(self, document_id):
+        """ Delete document by ``document_id``"""
 
         headers = {
             'x-client-id': self.client_id,
@@ -314,6 +321,7 @@ class Smashdocs(object):
             raise DeletionError(msg, result)
 
     def unarchive_document(self, document_id):
+        """ Unarchive document by ``document_id``"""
 
         headers = {
             'x-client-id': self.client_id,
@@ -329,6 +337,7 @@ class Smashdocs(object):
             raise UnarchiveError(msg, result)
 
     def duplicate_document(self, document_id, title=None, description=None, creator_id=None):
+        """ Duplicate document """
 
         check_title(title)
         check_description(description)
@@ -354,6 +363,7 @@ class Smashdocs(object):
         return result.json()
 
     def get_documents(self, group_id=None, user_id=None):
+        """ Get all document """
 
         headers = {
             'x-client-id': self.client_id,

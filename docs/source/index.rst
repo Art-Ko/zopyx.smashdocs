@@ -18,7 +18,6 @@ Contents:
 smashdocs.api module
 --------------------
 
-.. automodule:: zopyx.smashdocs.api
+.. autoclass:: zopyx.smashdocs.api.Smashdocs
     :members:
-    :undoc-members:
-    :show-inheritance:
+    
