@@ -146,9 +146,6 @@ class Smashdocs(object):
         self.client_id = client_id
         self.client_key = client_key
         self.group_id = group_id
-        print partner_url
-        print client_id
-        print client_key
 
     def __repr__(self):
         return '<Smashdocs {}>'.format(self.__dict__)
@@ -267,8 +264,6 @@ class Smashdocs(object):
         if result.status_code != 200:
             msg = u'Create error (HTTP {}, {}'.format(
                 result.status_code, result.content)
-            print(msg)
-            print(result.content)
             raise CreationFailed(msg, result)
         return result.json()
 
