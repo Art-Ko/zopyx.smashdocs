@@ -128,7 +128,7 @@ def test_duplicate_document():
     sd.delete_document(new_result['documentId'])
 
 
-def test_update_metadata():
+def xtest_update_metadata():
 
     sd = make_sd()
     result = sd.new_document(
