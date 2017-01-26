@@ -3,8 +3,8 @@ python:
 - '2.7'
 - '3.5'
 - '3.6'
-install: make install
-script: make test
+install:  "pip install -r requirements.txt --use-mirrors"
+script:   pytest zopyx
 env:
   global:
   - secure: Q9ahPhaJPjxbb/8uW99MqXRNvSxQaOnICWOPYK8T/pCN8jzfh9dvSXbXS7fARnk0O1ldV4sBSrdz2josfsmhokazUKd66fZECmH+XTmsfIiHr7x2YY3tijFeEH47PcGgjVn2Vjy12w7Wk5aL/vb/himpFbNUck7EyjMsmlaU4Rwt5s2XIt3LAED+qkRE0Peo71gp/lC7FVBnRqYCXFXvmLQtt8mik6mzmoGq0QLdWlCzbC9bXapnJp8JVti+YsWn3babSBiXUfS86tp+R6phrAZVdKgTPqjdrY4/JiHyu9JGwNXIGM6ky3UDYIvUw04Icp01XVyuGC01drfjaZ5h8fcUIgulqrJeFwVsXsrjGyuUm/aUmEoC87grT9ze4LKVg6pk2XzbeQO4tcRauO0gSWEfZx4lWNB4hjtGk2S1drMCkCFMlDB4vsnJp/jtsXkHI6gaPIIS8JedaiN/T94xA02zECg6NBSMCs0HTgFIN44CQrS/TqOh6dBqToiw6xg7p4zQqrTYkx39Wc3EK3zVjBpFqYYkgTjGdrh1/TyL82KB8xy96kbztw23HkIZ0vL+DQD43YKXqReH4skSi7y8e/ZRjFp3zNqCWIgOfHoUg6lNXIlw0PGsMp1E51TcAEaPy7FUBGEfXDYwCRi+tH29XYtXZE4vynL/4oD4k7aiGTM=
