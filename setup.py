@@ -6,8 +6,8 @@ version = '0.1.1'
 setup(name='zopyx.smashdocs',
       version=version,
       description="Integration of Python with the Smashdocs Partner API",
-      long_description=open(os.path.join("docs", "source", "README.rst")).read() + "\n" +
-      open(os.path.join("docs", "source", "HISTORY.rst")).read(),
+      long_description=open(os.path.join("docs", "source", "README.rst"), encoding='utf8').read() + "\n" +
+      open(os.path.join("docs", "source", "HISTORY.rst"), encoding='utf8').read(),
       # Get more strings from
       # http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[

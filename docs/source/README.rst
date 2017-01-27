@@ -34,6 +34,19 @@ Issue tracker
 
 * https://github.com/zopyx/zopyx.smashdocs/issues
 
+Testing
+-------
+
+`zopyx.smashdocs` has been tested against the latest Python 2 and Python 3 versions.
+In order to run the test suite yourself you need to run:
+
+.. code::
+
+    export SMASHDOCS_PARTNER_URL=http://...
+    export SMASHDOCS_CLIENT_ID=<your client id>
+    export SMASHDOCS_CLIENT_KEY=<your client key>
+    bin/pytest zopyx/smashdocs
+
 License
 -------
 
