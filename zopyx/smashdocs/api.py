@@ -205,7 +205,15 @@ class Smashdocs(object):
         return result.json()
 
     def upload_document(self, filename, title=None, description=None, role=None, user_data=None):
-        """ Upload DOCX document"""
+        """ Upload DOCX document
+        
+            :param filename: DOCX filename
+            :param title: title of document
+            :param description: description of document
+            :param role: Smashdoch role: editor|reader|approver|commentator
+            :param user_data: dict with user data
+            :rtype: Smashdocs return datastructure (see Partner API docs for details) 
+        """
 
         check_title(title)
         check_description(description)
