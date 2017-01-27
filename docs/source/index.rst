@@ -3,8 +3,11 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to zopyx.smashdocs's documentation!
-===========================================
+zopyx.smashdocs - Python wrapper for Smashdocs API
+==================================================
+
+This module implements a Python 2/3 compatible wrapper for interacting
+with the Smashdocs Partner API.
 
 Contents:
 
@@ -13,12 +16,5 @@ Contents:
 
    README.rst
    usage.rst
+   api.rst
    HISTORY.rst
-
-
-smashdocs.api module
---------------------
-
-.. autoclass:: zopyx.smashdocs.api.Smashdocs
-    :members:
-    
