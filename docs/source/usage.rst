@@ -120,7 +120,7 @@ Archiving and unarchiving a Smashdocs document
 The API provides the following two methods for archiving and unarching
 a Smashdocs document given by its `document_id`.
 
-..code ::
+.. code::
 
     client.archive_document(document_id)
 
