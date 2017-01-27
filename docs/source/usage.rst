@@ -8,6 +8,15 @@ your Smashdocs provider:
 - Client ID (used for authentication)
 - Client Key (used for authentication) 
 
+
+Prequisite
+++++++++++
+
+The following examples are written for Python 2.7 and use unicode strings as
+parameters.  In general all parameters must be passed as unicode strings (not
+as UTF-8 encoded byte strings).  Unicodeness is strongly checked. There is no
+implicit conversion from utf-8 parameters to unicode strings.
+
 Creating client handle to Smashdocs
 +++++++++++++++++++++++++++++++++++
 
