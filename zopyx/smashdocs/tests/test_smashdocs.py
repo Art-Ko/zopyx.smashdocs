@@ -66,6 +66,35 @@ def test_create_document():
         sd.delete_document(document_id)
 
 
+def test_create_and_open():
+
+    sd = make_sd()
+    result = sd.new_document(
+        title=u'My document - üöäß',
+        description=u'My document description - üöäß',
+        role='editor',
+        user_data=make_user_data())
+    document_id = result['documentId']
+
+    result = sd.open_document(
+            document_id,
+            'reader',
+            user_data=make_user_data())
+
+    assert 'documentAccessLink' in result
+
+
+def test_open_invalid_document_id():
+
+    sd = make_sd()
+
+    with pytest.raises(api.OpenError):
+        result = sd.open_document(
+                'no such documentid',
+                'reader',
+                user_data=make_user_data())
+
+
 def test_create_document_long_title():
 
     sd = make_sd()
