@@ -135,7 +135,7 @@ Deleting a Smashdocs document
 A Smashdocs document given by its `document_id` can be deleted using
 `delete_document()`.
 
-..code ::
+.. code ::
 
     client.delete_document(document_id)
 
