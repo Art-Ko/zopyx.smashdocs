@@ -321,7 +321,10 @@ class Smashdocs(object):
             raise DeletionError(msg, result)
 
     def unarchive_document(self, document_id):
-        """ Unarchive document by ``document_id``"""
+        """ Unarchive document by ``document_id``
+            :param document_id: Smashdocs document id
+            :rtype: None 
+        """
 
         headers = {
             'x-client-id': self.client_id,
