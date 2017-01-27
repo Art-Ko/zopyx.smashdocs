@@ -19,6 +19,11 @@ Smashdocs API version
 The current version of ``zopyx.smashdocs`` has been tested against
 https://documentation.smashdocs.net/release_notes.html#version-1-5-0-0-18-11-2016
 
+API documentation
+-----------------
+
+See https://pythonhosted.org/zopyx.smashdocs/
+
 Repository
 ----------
 
