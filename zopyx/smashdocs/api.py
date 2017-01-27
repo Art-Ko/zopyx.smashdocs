@@ -290,7 +290,11 @@ class Smashdocs(object):
         return result.json()
 
     def archive_document(self, document_id):
-        """ Archive document by ``document_id``"""
+        """ Archive document by ``document_id``
+
+            :param document_id: Smashdocs document id
+            :rtype: None 
+        """
 
         headers = {
             'x-client-id': self.client_id,
@@ -305,7 +309,11 @@ class Smashdocs(object):
             raise ArchiveError(msg, result)
 
     def delete_document(self, document_id):
-        """ Delete document by ``document_id``"""
+        """ Delete document by ``document_id``
+
+            :param document_id: Smashdocs document id
+            :rtype: None 
+        """
 
         headers = {
             'x-client-id': self.client_id,
@@ -322,6 +330,7 @@ class Smashdocs(object):
 
     def unarchive_document(self, document_id):
         """ Unarchive document by ``document_id``
+
             :param document_id: Smashdocs document id
             :rtype: None 
         """
