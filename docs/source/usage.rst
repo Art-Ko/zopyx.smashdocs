@@ -26,7 +26,7 @@ Creating client handle to Smashdocs
 
     # first you need to instantiate a client instance of the `Smashdocs`
     # connector class. The `group_id` is used to group all documents together
-    # belong to a particular user group (e.g. a work group working on one or more 
+    # belonging to a particular user group (e.g. a work group working on one or more 
     # document). The `client` is from now on used for all interactions with Smashdocs.
 
     client = Smashdocs(partner_url, client_id, client_key, group_id)
