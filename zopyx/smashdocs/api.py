@@ -142,6 +142,14 @@ def check_user_data(user_data):
 class Smashdocs(object):
 
     def __init__(self, partner_url, client_id, client_key, group_id=None):
+        """ Constructor
+
+            :param partner_url: Smashdocs server URL
+            :param client_id: Smashdocs Client ID
+            :param client_key: Smashdocs Client Key
+            :param group_id: Smashdoc Group ID
+        """
+
         self.partner_url = partner_url
         self.client_id = client_id
         self.client_key = client_key
@@ -150,7 +158,7 @@ class Smashdocs(object):
     def __repr__(self):
         return '<Smashdocs {0}>'.format(self.__dict__)
 
-    def get_token(self, iss='ajung'):
+    def get_token(self):
         iss = str(uuid.uuid4())
         iat = int(time.mktime(datetime.datetime.now().timetuple()))
         jwt_payload = {
@@ -161,10 +169,14 @@ class Smashdocs(object):
         return jwt.encode(payload=jwt_payload, key=self.client_key, algorithm="HS256").decode('utf-8')
 
     def open_document(self, document_id, role=None, user_data={}):
-        """ Open document """
+        """ Open document 
+        
+            :param document_id: Document id
+            :param role: Smashdoc role: editor|reader|approver|commentator
+            :param user_data: Dict with user data, see Smashdocs Partner API
+        """
 
         check_role(role)
-        check_user_data(user_data)
         check_user_data(user_data)
 
         headers = {
@@ -188,7 +200,10 @@ class Smashdocs(object):
         return result.json()
 
     def document_info(self, document_id):
-        """ Get document information """
+        """ Get document information 
+        
+            :param document_id: Smashdocs document id
+        """
 
         headers = {
             'x-client-id': self.client_id,
@@ -249,7 +264,13 @@ class Smashdocs(object):
         return result.json()
 
     def new_document(self, title=None, description=None, role=None, user_data=None):
-        """ Create a new document """
+        """ Create a new document 
+        
+            :param title: title of document
+            :param description: description of document
+            :param role: Smashdocs role: editor|reader|approver|commentator
+            :param user_date: Smashdocs user data, see Smashdocs Partner API
+        """
 
         check_title(title)
         check_description(description)
@@ -357,7 +378,13 @@ class Smashdocs(object):
             raise UnarchiveError(msg, result)
 
     def duplicate_document(self, document_id, title=None, description=None, creator_id=None):
-        """ Duplicate document """
+        """ Duplicate document 
+        
+            :param documen_id: Smashdocs document id to be duplicated
+            :param title: title of new document
+            :param description: description of new document
+            :param creator_id: Creator id
+        """
 
         check_title(title)
         check_description(description)
