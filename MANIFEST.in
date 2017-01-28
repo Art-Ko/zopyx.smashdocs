@@ -1,2 +1,2 @@
-recursive-include *.rst
+recursive-include docs *.rst
 include docs/source/*
