@@ -1,9 +1,10 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-*
 
 ################################################################
-# zopyx.plone.smashdocs
-# (C) 2016,  Andreas Jung, www.zopyx.com, Tuebingen, Germany
+# zopyx.smashdocs
+# (C) 2017, ZOPYX/Andreas Jung, D-72074 Tübingen
 ################################################################
+
 
 import os
 import jwt
