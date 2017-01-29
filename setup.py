@@ -30,10 +30,16 @@ setup(name='zopyx.smashdocs',
       zip_safe=False,
       tests_require=['pytest', 'tox'],
       test_suite='tests',
+      entry_points={
+          'console_scripts': [
+              'sd-ls=zopyx.smashdocs.scripts.sd_ls:list_documents'
+          ]
+      },
       install_requires=[
           'pytest',
           'setuptools',
           'requests',
+          'click',
           'pyjwt',
           'furl',
       ],

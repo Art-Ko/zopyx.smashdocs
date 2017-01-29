@@ -17,7 +17,7 @@ import six
 
 from .requests_logger import debug_requests
 
-VERIFY = 'NO_CERT_VERIFICATION' in os.environ
+VERIFY = True
 
 
 if six.PY2:
