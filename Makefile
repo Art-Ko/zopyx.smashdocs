@@ -3,4 +3,8 @@ install:
 	bin/python setup.py develop
 
 test:
-	NO_CERT_VERIFICATION=1 bin/pytest zopyx
+	bin/pytest zopyx
+
+coverage:
+	bin/pytest --cov=zopyx --cov-report annotate --cov-report html zopyx
+
