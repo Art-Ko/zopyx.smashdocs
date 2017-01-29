@@ -5,7 +5,7 @@
 # (C) 2017, ZOPYX/Andreas Jung, D-72074 Tübingen
 ################################################################
 
-
+import uuid
 import os
 import jwt
 import json
@@ -131,6 +131,29 @@ def check_userid(s):
         raise ValueError('"userId" not specified')
 
 
+def check_uuid(uuid_string):
+    """ Validate that a UUID string is in fact a valid uuid4.  Happily, the uuid
+        module does the actual checking for us.  It is vital that the 'version'
+        kwarg be passed to the UUID() call, otherwise any 32-character hex string
+        is considered valid.
+    """
+
+    try:
+        val = uuid.UUID(uuid_string, version=4)
+    except ValueError:
+        # If it's a value error, then the string 
+        # is not a valid hex code for a UUID.
+        return False
+
+    # If the uuid_string is a valid hex code, 
+    # but an invalid uuid4,
+    # the UUID.__init__ will convert it to a 
+    # valid uuid4. This is bad for validation purposes.
+
+    if str(val) != uuid_string:
+        raise ValueError('Invalid UUID {}'.format(uuid_string))
+
+
 def check_user_data(user_data):
 
     check_firstname(user_data.get('firstname'))
@@ -179,6 +202,7 @@ class Smashdocs(object):
 
         check_role(role)
         check_user_data(user_data)
+        check_uuid(document_id)
 
         headers = {
             'x-client-id': self.client_id,
@@ -206,6 +230,8 @@ class Smashdocs(object):
             :param document_id: Smashdocs document id
         """
 
+        check_uuid(document_id)
+        
         headers = {
             'x-client-id': self.client_id,
             'content-type': 'application/json',
@@ -304,6 +330,8 @@ class Smashdocs(object):
     def update_metadata(self, document_id, **kw):
         """ Update metadata"""
 
+        check_uuid(document_id)
+
         headers = {
             'x-client-id': self.client_id,
             'content-type': 'application/json',
@@ -326,6 +354,8 @@ class Smashdocs(object):
             :rtype: None 
         """
 
+        check_uuid(document_id)
+
         headers = {
             'x-client-id': self.client_id,
             'content-type': 'application/json',
@@ -344,6 +374,8 @@ class Smashdocs(object):
             :param document_id: Smashdocs document id
             :rtype: None 
         """
+
+        check_uuid(document_id)
 
         headers = {
             'x-client-id': self.client_id,
@@ -364,6 +396,8 @@ class Smashdocs(object):
             :param document_id: Smashdocs document id
             :rtype: None 
         """
+
+        check_uuid(document_id)
 
         headers = {
             'x-client-id': self.client_id,
@@ -389,6 +423,7 @@ class Smashdocs(object):
 
         check_title(title)
         check_description(description)
+        check_uuid(document_id)
 
         headers = {
             'x-client-id': self.client_id,
