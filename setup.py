@@ -32,7 +32,8 @@ setup(name='zopyx.smashdocs',
       test_suite='tests',
       entry_points={
           'console_scripts': [
-              'sd-ls=zopyx.smashdocs.scripts.sd_ls:list_documents'
+              'sd-ls=zopyx.smashdocs.scripts.sd_ls:list_documents',
+              'sd-rm=zopyx.smashdocs.scripts.sd_rm:remove_documents'
           ]
       },
       install_requires=[

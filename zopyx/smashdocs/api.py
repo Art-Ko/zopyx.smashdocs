@@ -141,13 +141,13 @@ def check_uuid(uuid_string):
     try:
         val = uuid.UUID(uuid_string, version=4)
     except ValueError:
-        # If it's a value error, then the string 
+        # If it's a value error, then the string
         # is not a valid hex code for a UUID.
-        return False
+        raise ValueError('Invalid UUID {}'.format(uuid_string))
 
-    # If the uuid_string is a valid hex code, 
+    # If the uuid_string is a valid hex code,
     # but an invalid uuid4,
-    # the UUID.__init__ will convert it to a 
+    # the UUID.__init__ will convert it to a
     # valid uuid4. This is bad for validation purposes.
 
     if str(val) != uuid_string:
@@ -193,8 +193,8 @@ class Smashdocs(object):
         return jwt.encode(payload=jwt_payload, key=self.client_key, algorithm="HS256").decode('utf-8')
 
     def open_document(self, document_id, role=None, user_data={}):
-        """ Open document 
-        
+        """ Open document
+
             :param document_id: Document id
             :param role: Smashdoc role: editor|reader|approver|commentator
             :param user_data: Dict with user data, see Smashdocs Partner API
@@ -225,13 +225,13 @@ class Smashdocs(object):
         return result.json()
 
     def document_info(self, document_id):
-        """ Get document information 
-        
+        """ Get document information
+
             :param document_id: Smashdocs document id
         """
 
         check_uuid(document_id)
-        
+
         headers = {
             'x-client-id': self.client_id,
             'content-type': 'application/json',
@@ -248,13 +248,13 @@ class Smashdocs(object):
 
     def upload_document(self, filename, title=None, description=None, role=None, user_data=None):
         """ Upload DOCX document
-        
+
             :param filename: DOCX filename
             :param title: title of document
             :param description: description of document
             :param role: Smashdoch role: editor|reader|approver|commentator
             :param user_data: dict with user data
-            :rtype: Smashdocs return datastructure (see Partner API docs for details) 
+            :rtype: Smashdocs return datastructure (see Partner API docs for details)
         """
 
         check_title(title)
@@ -291,8 +291,8 @@ class Smashdocs(object):
         return result.json()
 
     def new_document(self, title=None, description=None, role=None, user_data=None):
-        """ Create a new document 
-        
+        """ Create a new document
+
             :param title: title of document
             :param description: description of document
             :param role: Smashdocs role: editor|reader|approver|commentator
@@ -351,7 +351,7 @@ class Smashdocs(object):
         """ Archive document by ``document_id``
 
             :param document_id: Smashdocs document id
-            :rtype: None 
+            :rtype: None
         """
 
         check_uuid(document_id)
@@ -372,7 +372,7 @@ class Smashdocs(object):
         """ Delete document by ``document_id``
 
             :param document_id: Smashdocs document id
-            :rtype: None 
+            :rtype: None
         """
 
         check_uuid(document_id)
@@ -386,7 +386,7 @@ class Smashdocs(object):
         result = requests.delete(
             self.partner_url + '/partner/documents/{0}'.format(document_id), headers=headers, verify=VERIFY)
         if result.status_code != 200:
-            msg = u'Deletionerror (HTTP {0}, {1}'.format(
+            msg = u'DeletionError (HTTP {0}, {1}'.format(
                 result.status_code, result.content)
             raise DeletionError(msg, result)
 
@@ -394,7 +394,7 @@ class Smashdocs(object):
         """ Unarchive document by ``document_id``
 
             :param document_id: Smashdocs document id
-            :rtype: None 
+            :rtype: None
         """
 
         check_uuid(document_id)
@@ -413,8 +413,8 @@ class Smashdocs(object):
             raise UnarchiveError(msg, result)
 
     def duplicate_document(self, document_id, title=None, description=None, creator_id=None):
-        """ Duplicate document 
-        
+        """ Duplicate document
+
             :param documen_id: Smashdocs document id to be duplicated
             :param title: title of new document
             :param description: description of new document
