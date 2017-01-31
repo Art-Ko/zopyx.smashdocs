@@ -94,7 +94,7 @@ def test_open_invalid_document_id():
 
     sd = make_sd()
 
-    with pytest.raises(api.OpenError):
+    with pytest.raises(ValueError):
         result = sd.open_document(
                 'no such documentid',
                 'reader',
@@ -188,7 +188,7 @@ def xtest_update_metadata():
 def test_document_info_unknown_doc_id():
 
     sd = make_sd()
-    with pytest.raises(api.DocumentInfoError):
+    with pytest.raises(ValueError):
         document_info = sd.document_info('no such id')
 
 
