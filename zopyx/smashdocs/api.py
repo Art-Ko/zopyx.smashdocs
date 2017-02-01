@@ -183,6 +183,10 @@ class Smashdocs(object):
         return '<Smashdocs {0}>'.format(self.__dict__)
 
     def get_token(self):
+
+        if not self.client_key:
+            raise ValueError('No client key configured or specified')
+
         iss = str(uuid.uuid4())
         iat = int(time.mktime(datetime.datetime.now().timetuple()))
         jwt_payload = {
