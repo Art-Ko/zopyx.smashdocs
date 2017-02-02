@@ -34,6 +34,12 @@ Issue tracker
 
 * https://github.com/zopyx/zopyx.smashdocs/issues
 
+Continous integration
+---------------------
+
+* https://travis-ci.org/zopyx/zopyx.smashdocs
+
+
 Testing
 -------
 
