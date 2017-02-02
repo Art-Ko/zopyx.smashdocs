@@ -83,9 +83,9 @@ def test_create_and_open():
     document_id = result['documentId']
 
     result = sd.open_document(
-            document_id,
-            'reader',
-            user_data=make_user_data())
+        document_id,
+        'reader',
+        user_data=make_user_data())
 
     assert 'documentAccessLink' in result
 
@@ -96,9 +96,9 @@ def test_open_invalid_document_id():
 
     with pytest.raises(ValueError):
         result = sd.open_document(
-                'no such documentid',
-                'reader',
-                user_data=make_user_data())
+            'no such documentid',
+            'reader',
+            user_data=make_user_data())
 
 
 def test_create_document_long_title():

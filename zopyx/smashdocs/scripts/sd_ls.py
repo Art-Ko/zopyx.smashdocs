@@ -8,14 +8,9 @@
 
 import os
 import click
+import pprint
 
-from zopyx.smashdocs.api import Smashdocs
-
-
-client = Smashdocs(
-        partner_url=os.environ['SMASHDOCS_PARTNER_URL'] ,
-        client_id=os.environ['SMASHDOCS_CLIENT_ID'] ,
-        client_key=os.environ['SMASHDOCS_CLIENT_KEY'])
+from .util import client
 
 
 @click.command()
@@ -27,7 +22,7 @@ def list_documents(user=None, group=None):
         raise ValueError('You specify at least --group and/or --user')
 
     for x in client.get_documents(user_id=user, group_id=group):
-        print(x)
+        pprint.pprint(x)
 
 if __name__ == '__main__':
     list_documents()

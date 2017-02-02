@@ -9,13 +9,7 @@
 import os
 import click
 
-from zopyx.smashdocs import api
-
-
-client = api.Smashdocs(
-        partner_url=os.environ['SMASHDOCS_PARTNER_URL'] ,
-        client_id=os.environ['SMASHDOCS_CLIENT_ID'] ,
-        client_key=os.environ['SMASHDOCS_CLIENT_KEY'])
+from .util import client
 
 
 @click.command()

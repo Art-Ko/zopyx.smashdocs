@@ -24,7 +24,7 @@ VERIFY = True
 if six.PY2:
 
     def safe_unicode(s):
-        if not isinstance(s, unicode): # noqa
+        if not isinstance(s, unicode):  # noqa
             return unicode(s, 'utf-8')
         return s
 
@@ -221,7 +221,8 @@ class Smashdocs(object):
         }
 
         url = self.partner_url + '/partner/documents/{0}'.format(document_id)
-        result = requests.post(url, headers=headers, data=json.dumps(data), verify=VERIFY)
+        result = requests.post(url, headers=headers,
+                               data=json.dumps(data), verify=VERIFY)
         if result.status_code != 200:
             msg = u'Error (HTTP {0}, {1})'.format(
                 result.status_code, result.content)
@@ -344,7 +345,8 @@ class Smashdocs(object):
 
         url = self.partner_url + \
             '/partner/documents/{0}/metadata'.format(document_id)
-        result = requests.post(url, headers=headers, data=json.dumps(kw), verify=VERIFY)
+        result = requests.post(url, headers=headers,
+                               data=json.dumps(kw), verify=VERIFY)
         if result.status_code != 200:
             msg = u'Update metadata error (HTTP {0}, {1}'.format(
                 result.status_code, result.content)
