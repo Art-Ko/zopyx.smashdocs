@@ -224,3 +224,60 @@ def test_listings():
         role='editor',
         user_data=make_user_data())
     result = sd.get_documents(user_id='testuser')
+
+
+def test_list_templates():
+
+    sd = make_sd()
+    result = sd.list_templates()
+    assert isinstance(result, list)
+    assert len(result) > 0
+    assert 'id' in result[0]
+    assert 'name' in result[0]
+    assert 'description' in result[0]
+
+
+def _make_export_document():
+
+    sd = make_sd()
+
+    result = sd.new_document(
+        title=u'My document',
+        description=u'My document description',
+        role='editor',
+        user_data=make_user_data())
+
+    return result['documentId']
+
+
+def test_export_docx():
+
+    sd = make_sd()
+    document_id = _make_export_document()
+    user_id = 'admin'
+
+    templates = sd.list_templates()
+
+    out_fn = sd.export_document(
+        document_id, user_id, format='docx', template_id=templates[0]['id'])
+    assert out_fn.endswith('.docx')
+
+
+def test_export_html():
+
+    sd = make_sd()
+    document_id = _make_export_document()
+    user_id = 'admin'
+
+    out_fn = sd.export_document(document_id, user_id, format='html')
+    assert out_fn.endswith('.zip')
+
+
+def test_export_sdxml():
+
+    sd = make_sd()
+    document_id = _make_export_document()
+    user_id = 'admin'
+
+    out_fn = sd.export_document(document_id, user_id, format='sdxml')
+    assert out_fn.endswith('.zip')

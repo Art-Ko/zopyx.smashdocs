@@ -11,6 +11,7 @@ import jwt
 import json
 import uuid
 import time
+import tempfile
 import datetime
 import requests
 import six
@@ -78,6 +79,10 @@ class UpdateMetadataError(SmashdocsError):
 
 class OpenError(SmashdocsError):
     """ Error opening file """
+
+
+class ExportError(SmashdocsError):
+    """ Export error"""
 
 
 allowed_sd_roles = ('editor', 'reader', 'approver', 'commentator')
@@ -451,6 +456,22 @@ class Smashdocs(object):
             raise CopyError(msg, result)
         return result.json()
 
+    def list_templates(self):
+
+        headers = {
+            'x-client-id': self.client_id,
+            'content-type': 'application/json',
+            'authorization': 'Bearer ' + self.get_token(),
+        }
+
+        result = requests.get(
+            self.partner_url + '/partner/templates/word', headers=headers, verify=VERIFY)
+        if result.status_code != 200:
+            msg = u'List error (HTTP {0}, {1})'.format(
+                result.status_code, result.content)
+            raise SmashdocsError(msg, result)
+        return result.json()
+
     def get_documents(self, group_id=None, user_id=None):
         """ Get all document """
 
@@ -473,3 +494,56 @@ class Smashdocs(object):
                 result.status_code, result.content)
             raise SmashdocsError(msg, result)
         return result.json()
+
+    def export_document(self, document_id, user_id, template_id=None, format='docx'):
+        """ Duplicate document
+
+            :param documen_id: Smashdocs document id to be duplicated
+            :param title: title of new document
+            :param description: description of new document
+            :param creator_id: Creator id
+        """
+
+        check_uuid(document_id)
+
+        if format not in ('docx', 'html', 'sdxml'):
+            raise ValueError('"format" must be sdxml|html|docx')
+
+        headers = {
+            'x-client-id': self.client_id,
+            'content-type': 'application/json',
+            'authorization': 'Bearer ' + self.get_token(),
+        }
+
+        data = {
+            'userId': user_id,
+        }
+
+        if format == 'docx':
+            url = self.partner_url + \
+                '/partner/documents/{0}/export/word'.format(document_id)
+            data['templateId'] = template_id
+            data['settings'] = dict()
+        elif format == 'sdxml':
+            url = self.partner_url + \
+                '/partner/documents/{0}/export/sdxml'.format(document_id)
+        elif format == 'html':
+            url = self.partner_url + \
+                '/partner/documents/{0}/export/html'.format(document_id)
+        else:
+            raise ValueError(u'Unsupported format: {}'.format(format))
+
+        result = requests.post(url, headers=headers,
+                               data=json.dumps(data), verify=VERIFY)
+        if result.status_code != 200:
+            msg = u'Export error (HTTP {0}, {1})'.format(
+                result.status_code, result.content)
+            raise ExportError(msg, result)
+
+        suffix = format
+        if format in ('html', 'sdxml'):
+            suffix = 'zip'
+        out_fn = tempfile.mktemp(suffix='.' + suffix)
+        with open(out_fn, 'wb') as fp:
+            fp.write(result.content)
+        return out_fn
