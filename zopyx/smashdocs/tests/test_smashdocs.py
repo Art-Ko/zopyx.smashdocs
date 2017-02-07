@@ -261,6 +261,8 @@ def test_export_docx():
     out_fn = sd.export_document(
         document_id, user_id, format='docx', template_id=templates[0]['id'])
     assert out_fn.endswith('.docx')
+    sd.delete_document(document_id)
+    os.unlink(out_fn)
 
 
 def test_export_html():
@@ -271,6 +273,8 @@ def test_export_html():
 
     out_fn = sd.export_document(document_id, user_id, format='html')
     assert out_fn.endswith('.zip')
+    sd.delete_document(document_id)
+    os.unlink(out_fn)
 
 
 def test_export_sdxml():
@@ -281,3 +285,5 @@ def test_export_sdxml():
 
     out_fn = sd.export_document(document_id, user_id, format='sdxml')
     assert out_fn.endswith('.zip')
+    sd.delete_document(document_id)
+    os.unlink(out_fn)
