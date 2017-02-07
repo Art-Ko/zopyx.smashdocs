@@ -168,3 +168,31 @@ an new access URL.
     new_document_id = result['documentId']
     new_document_url = result['documentAccessLink']
 
+
+Listing word templates
+++++++++++++++++++++++
+
+An export to word requires a word template.  This API method returns a list of
+available word templates with id, name and description. See also
+https://documentation.smashdocs.net/api_guide.html#get-partner-templates-word
+
+
+.. code::
+
+   templates = client.list_templates()
+
+
+Exporting content
++++++++++++++++++
+
+You can export Smashdocs content to either HTML, SDXML or DOCX. Both HTML
+and SDXML exports produce a ZIP file (index.xml + images/* subfolder).
+
+.. code::
+
+   output_filename = client.export_document(
+            document_id,
+            format='docx',
+            template_id=docx_template_id, # see above)
+            user_id='admin')
+
