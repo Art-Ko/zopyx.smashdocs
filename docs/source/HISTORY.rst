@@ -1,6 +1,11 @@
 Changes
 -------
 
+0.3.0 (2017-)
+++++++++++++++++++
+
+- support for export API to DOCX, SDXML and HTML
+
 0.2.0 (2017-02-02)
 ++++++++++++++++++
 

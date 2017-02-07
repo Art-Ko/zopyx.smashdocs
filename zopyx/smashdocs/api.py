@@ -499,9 +499,9 @@ class Smashdocs(object):
         """ Duplicate document
 
             :param documen_id: Smashdocs document id to be duplicated
-            :param title: title of new document
-            :param description: description of new document
-            :param creator_id: Creator id
+            :param user_id: user id of the Smashdocs user performing the export
+            :param template_id: template UID of a word template (mandatory if format='docx')
+            :param format: docx|html|sdxml
         """
 
         check_uuid(document_id)
