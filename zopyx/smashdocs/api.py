@@ -356,7 +356,6 @@ class Smashdocs(object):
             msg = u'Update metadata error (HTTP {0}, {1}'.format(
                 result.status_code, result.content)
             raise UpdateMetadataError(msg, result)
-        return result.json()
 
     def archive_document(self, document_id):
         """ Archive document by ``document_id``
