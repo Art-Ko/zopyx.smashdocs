@@ -2,3 +2,16 @@ body {
     font-family: Sans-Serif;
     font-size: 10pt;
 }
+
+.indent-1 {
+    margin-left: 2em;
+}
+
+.indent-2 {
+    margin-left: 4em;
+}
+
+ul, ol {
+    margin-left: 0.5em;
+    padding-left: 0.5em;
+}
