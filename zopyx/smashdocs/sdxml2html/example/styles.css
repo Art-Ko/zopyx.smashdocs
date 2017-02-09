@@ -11,7 +11,13 @@ body {
     margin-left: 4em;
 }
 
-ul, ol {
+.indent-3 {
+    margin-left: 6em;
+}
+
+
+ol.indent-0,
+ul.indent-0 {
     margin-left: 0.5em;
     padding-left: 0.5em;
 }
