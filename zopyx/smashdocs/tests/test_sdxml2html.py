@@ -8,11 +8,10 @@
 
 import os
 
-from zopyx.smashdocs import sdxml2html
+from zopyx.smashdocs.sdxml2html import sdxml2html
 
 
 def test_convert():
-
     in_name = os.path.join(os.path.dirname(__file__), 'test.xml')
     out_fn = sdxml2html.sdxml2html(in_name)
     assert out_fn.endswith('.html')
