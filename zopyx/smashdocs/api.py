@@ -288,11 +288,13 @@ class Smashdocs(object):
 
         files = {
             'data': (None, json.dumps(data), 'application/json'),
-            'file': ('dummy.docx', open(filename, 'rb'), 'application/octet-stream'),
+            'file': ('dummy', open(filename, 'rb'), 'application/octet-stream'),
         }
 
+        base, ext = os.path.splitext(filename)
+        endpoint = 'word' if ext.lower() == '.docx' else 'sdxml'
         result = requests.post(
-            self.partner_url + '/partner/imports/word/upload', headers=headers, files=files, verify=VERIFY)
+            self.partner_url + '/partner/imports/{0}/upload'.format(endpoint), headers=headers, files=files, verify=VERIFY)
 
         if result.status_code != 200:
             msg = u'Upload error (HTTP {0}, {1}'.format(
