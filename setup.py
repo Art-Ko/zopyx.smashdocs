@@ -42,6 +42,7 @@ setup(name='zopyx.smashdocs',
           'requests',
           'click',
           'pyjwt',
+          'lxml',
           'furl',
       ],
       )
