@@ -286,13 +286,15 @@ class Smashdocs(object):
             'sectionHistory': True
         }
 
+        base, ext = os.path.splitext(filename)
+        suffix = 'docx' if ext.lower() == '.docx' else 'zip'
+        endpoint = 'word' if ext.lower() == '.docx' else 'sdxml'
+
         files = {
             'data': (None, json.dumps(data), 'application/json'),
-            'file': ('dummy', open(filename, 'rb'), 'application/octet-stream'),
+            'file': ('dummy.{}'.format(suffix), open(filename, 'rb'), 'application/octet-stream'),
         }
 
-        base, ext = os.path.splitext(filename)
-        endpoint = 'word' if ext.lower() == '.docx' else 'sdxml'
         result = requests.post(
             self.partner_url + '/partner/imports/{0}/upload'.format(endpoint), headers=headers, files=files, verify=VERIFY)
 
