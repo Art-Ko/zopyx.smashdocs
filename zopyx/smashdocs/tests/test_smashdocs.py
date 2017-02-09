@@ -130,7 +130,7 @@ def test_upload_docx():
     sd.delete_document(document_id)
 
 
-def xxxtest_upload_sdxml():
+def test_upload_sdxml():
 
     sd = make_sd()
     filename = os.path.join(os.path.dirname(__file__), 'test_sdxml.zip')

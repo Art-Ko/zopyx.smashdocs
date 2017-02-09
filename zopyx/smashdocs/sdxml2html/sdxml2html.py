@@ -27,27 +27,45 @@ def sdxml2html(in_name, out_name=None):
         img.attrib['src'] = 'images/' + img.text
         img.text = None
 
+    for node in root.xpath('//*[@indent]'):
+        value = node.attrib['indent']
+        cls = node.attrib.get('class', '')
+        cls += ' indent-{}'.format(value)
+        node.attrib['class'] = cls
+        del node.attrib['indent']
+
+    for node in root.xpath('//*[@alignment]'):
+        value = node.attrib['alignment']
+        cls = node.attrib.get('class', '')
+        cls += ' align-{}'.format(value)
+        node.attrib['class'] = cls
+        del node.attrib['alignment']
+
     for node in root.xpath('//paragraph'):
         node.tag = 'p'
-        alignment = node.attrib.get('alignment')
-        if alignment:
-            cls = node.attrib.get('class', '')
-            cls += ' align-{}'.format(alignment)
-            node.attrib['class'] = cls
-        indent = node.attrib.get('indent')
-        if indent:
-            cls = node.attrib.get('class', '')
-            cls += ' indent-{}'.format(indent)
-            node.attrib['class'] = cls
+
+    for node in root.xpath('//column_width'):
+        node.tag = 'colgroup'
+
+    for node in root.xpath('//item'):
+        node.tag = 'col'
+        node.attrib['width'] = node.text
+        node.text = None
+
+    head = root.find('head')
+    head.append(lxml.etree.fromstring('<link rel="stylesheet" type="text/css" href="styles.css"/>'))
+    for name in ('language', 'subtitle', 'description', 'footer', 'creator'):
+        for node in head.xpath('//{}'.format(name)):
+            node.getparent().remove(node)
 
     if not out_name:
         out_name = tempfile.mktemp(suffix='.html')
     
     with open(out_name, 'wb') as fp:
-        fp.write(lxml.etree.tostring(root, pretty_print=1))
+        fp.write(lxml.etree.tostring(root, encoding='utf8', pretty_print=1))
     
     return out_name
 
 
 if __name__ == '__main__':
-    print(sdxml2html(sys.argv[-1]))
+    print(sdxml2html(sys.argv[-1], 'out.html'))

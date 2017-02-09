@@ -21,3 +21,19 @@ ul.indent-0 {
     margin-left: 0.5em;
     padding-left: 0.5em;
 }
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+tr {
+    border: 1px solid black;
+}
+
+th {
+    border: 1px solid black;
+}
+td {
+    border: 1px solid black;
+}
