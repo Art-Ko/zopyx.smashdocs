@@ -148,6 +148,24 @@ def test_upload_sdxml():
     sd.delete_document(document_id)
 
 
+def test_upload_sdxml_large():
+
+    sd = make_sd()
+    filename = os.path.join(os.path.dirname(__file__), 'test_sdxml.zip')
+    result = sd.upload_document(
+        filename,
+        title=u'My document',
+        description=u'My document description',
+        role='editor',
+        user_data=make_user_data())
+    assert 'documentAccessLink' in result
+    assert 'documentId' in result
+    assert 'userIdSD' in result
+
+    document_id = result['documentId']
+    sd.delete_document(document_id)
+
+
 def test_upload_non_docx():
 
     sd = make_sd()
