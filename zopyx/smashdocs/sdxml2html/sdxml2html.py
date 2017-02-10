@@ -4,6 +4,18 @@ import tempfile
 import lxml.etree
 
 
+MAP = {
+    'alignment': 'text-align',
+    'indent': ('indent-level', 'value'),
+    'text-align': 'text-align',
+    'vertical-align': 'vertical-align',
+    'border-right': 'border-right',
+    'border-bottom': 'border-bottom',
+    'border-top': 'border-top',
+    'border-left': 'border-left'
+}
+
+
 def sdxml2html(in_name, out_name=None):
 
     with open(in_name, 'rb') as fp:
@@ -27,6 +39,19 @@ def sdxml2html(in_name, out_name=None):
         img.attrib['src'] = 'images/' + img.text
         img.text = None
 
+#    for old_attrib, new_attrib in MAP.items():
+#        for node in root.xpath('//*[@{0}]'.format(old_attrib)):
+#            value = node.attrib[old_attrib]
+#            cls = node.attrib.get('class', '')
+#            if isinstance(new_attrib, tuple):
+#                new_attrib, method = new_attrib
+#                cls += ' {}-{}'.format(new_attrib, value)
+#            else:
+#                cls += ' {}'.format(new_attrib)
+#            node.attrib['class'] = cls
+#            del node.attrib[old_attrib]
+
+
     for node in root.xpath('//*[@indent]'):
         value = node.attrib['indent']
         cls = node.attrib.get('class', '')
@@ -40,6 +65,23 @@ def sdxml2html(in_name, out_name=None):
         cls += ' align-{}'.format(value)
         node.attrib['class'] = cls
         del node.attrib['alignment']
+
+    for node in root.xpath('//*[@text-align]'):
+        value = node.attrib['text-align']
+        cls = node.attrib.get('class', '')
+        cls += ' text-align-{}'.format(value)
+        node.attrib['class'] = cls
+        del node.attrib['text-align']
+
+    for node in root.xpath('//*[@vertical-align]'):
+        value = node.attrib['vertical-align']
+        cls = node.attrib.get('class', '')
+        cls += ' vertical-align-{}'.format(value)
+        node.attrib['class'] = cls
+        del node.attrib['vertical-align']
+
+    for node in root.xpath('//*[@size]'):
+        del node.attrib['size']
 
     for node in root.xpath('//paragraph'):
         node.tag = 'p'
