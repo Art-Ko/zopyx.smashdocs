@@ -95,16 +95,20 @@ def sdxml2html(in_name, out_name=None):
         node.text = None
 
     head = root.find('head')
-    head.append(lxml.etree.fromstring('<link rel="stylesheet" type="text/css" href="styles.css"/>'))
     for name in ('language', 'subtitle', 'description', 'footer', 'creator'):
         for node in head.xpath('//{}'.format(name)):
             node.getparent().remove(node)
+
+    body = root.find('body')
+    body.insert(0, lxml.etree.fromstring('<link rel="stylesheet" type="text/css" href="styles.css"/>'))
+    body.tag = 'div'
+    body.attrib['id'] = 'sd-content'
 
     if not out_name:
         out_name = tempfile.mktemp(suffix='.html')
     
     with open(out_name, 'wb') as fp:
-        fp.write(lxml.etree.tostring(root, encoding='utf8', pretty_print=1))
+        fp.write(lxml.etree.tostring(body, encoding='utf8', pretty_print=1))
     
     return out_name
 
