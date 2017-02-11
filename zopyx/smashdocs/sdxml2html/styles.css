@@ -1,0 +1,67 @@
+body {
+    font-family: Sans-Serif;
+    font-size: 10pt;
+}
+
+.indent-1 {
+    margin-left: 2em;
+}
+
+.indent-2 {
+    margin-left: 4em;
+}
+
+.indent-3 {
+    margin-left: 6em;
+}
+
+
+ol.indent-0,
+ul.indent-0 {
+    margin-left: 0.5em;
+    padding-left: 0.5em;
+}
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+tr {
+    border: 1px solid black;
+}
+
+th {
+    border: 1px solid black;
+}
+td {
+    border: 1px solid black;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+}
+
+
+.text-align-left {
+    text-align: left;
+}
+
+.text-align-right {
+    text-align: right;
+}
+
+.vertical-align-top {
+    vertical-align: top;
+}
+
+
