@@ -1,0 +1,74 @@
+$margin-indent: 2em;
+$list-indent: 2em;
+
+$font-stack: Helvectia,sans-serif;
+$font-size: 10pt;
+
+body {
+    font-family: $font-stack;
+    font-size: $font-size;
+}
+
+@for $i from 1 through 10 {
+    p.indent-#{$i} {
+        margin-left: $i * $margin-indent
+    }
+}
+
+@for $i from 1 through 10 {
+    ul.indent-#{$i},
+    ol.indent-#{$i} {
+        margin-left: $list-indent;
+    }
+}
+
+
+ol.indent-0,
+ul.indent-0 {
+    margin-left: 0.5em;
+    padding-left: 0.5em;
+}
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+tr {
+    border: 1px solid black;
+}
+
+th {
+    border: 1px solid black;
+}
+td {
+    border: 1px solid black;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+}
+
+
+.text-align-left {
+    text-align: left;
+}
+
+.text-align-right {
+    text-align: right;
+}
+
+.vertical-align-top {
+    vertical-align: top;
+}
+
+
