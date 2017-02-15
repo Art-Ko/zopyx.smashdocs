@@ -1,4 +1,12 @@
+# -*- coding: utf-8 -*-
 
+################################################################
+# zopyx.plone.smashdocs
+# (C) 2016,  Andreas Jung, www.zopyx.com, Tuebingen, Germany
+################################################################
+
+
+import os
 import sys
 import tempfile
 import lxml.etree
@@ -86,6 +94,20 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css'):
         fp.write(lxml.etree.tostring(body, encoding='utf8', pretty_print=1))
 
     return out_name
+
+
+def sdxml2html_data(xml_data):
+
+    xml_fn = tempfile.mktemp(suffix='.xml')
+    with open(xml_fn, 'wb') as fp:
+        fp.write(xml_data)
+
+    out_fn = sdxml2html(xml_fn)
+    with open(out_fn, 'rb') as fp:
+        data = fp.read()
+    os.unlink(out_fn)
+    os.unlink(xml_fn)
+    return data
 
 
 if __name__ == '__main__':
