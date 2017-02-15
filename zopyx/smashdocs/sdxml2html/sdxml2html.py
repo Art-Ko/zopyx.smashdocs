@@ -12,7 +12,7 @@ import tempfile
 import lxml.etree
 
 
-def sdxml2html(in_name, out_name=None):
+def sdxml2html(in_name, out_name=None, css_name='styles.css'):
 
     with open(in_name, 'rb') as fp:
         root = lxml.etree.fromstring(fp.read())
@@ -89,7 +89,7 @@ def sdxml2html(in_name, out_name=None):
             node.getparent().remove(node)
 
     body = root.find('body')
-    body.insert(0, lxml.etree.fromstring('<link rel="stylesheet" type="text/css" href="styles.css"/>'))
+    body.insert(0, lxml.etree.fromstring('<link rel="stylesheet" type="text/css" href="{0}"/>'.format(css_name)))
     body.tag = 'div'
     body.attrib['id'] = 'sd-content'
 
