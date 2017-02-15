@@ -19,3 +19,11 @@ def test_convert():
         html = fp.read()
         assert html.startswith(b'<div id="sd-content"')
     os.unlink(out_fn)
+
+
+def test_convert_data():
+    in_name = os.path.join(os.path.dirname(__file__), 'test.xml')
+    with open(in_name, 'rb') as fp:
+        xml = fp.read()
+    html = sdxml2html.sdxml2html_data(xml)
+    assert html.startswith(b'<div id="sd-content"')
