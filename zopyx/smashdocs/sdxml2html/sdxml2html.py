@@ -77,6 +77,12 @@ def sdxml2html(in_name, out_name=None):
         node.attrib['width'] = node.text
         node.text = None
 
+    for node in root.xpath('//table'):
+        caption = node.attrib['caption']
+        if caption:
+            del node.attrib['caption']
+            node.insert(0, lxml.etree.fromstring('<caption>{0}</caption>'.format(caption)))
+
     head = root.find('head')
     for name in ('language', 'subtitle', 'description', 'footer', 'creator'):
         for node in head.xpath('//{}'.format(name)):
