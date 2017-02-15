@@ -83,7 +83,7 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css'):
             node.getparent().remove(node)
 
     body = root.find('body')
-    body.insert(0, lxml.etree.fromstring('<link rel="stylesheet" type="text/css" href="{0}"/>').format(css_name))
+    body.insert(0, lxml.etree.fromstring('<link rel="stylesheet" type="text/css" href="{0}"/>'.format(css_name)))
     body.tag = 'div'
     body.attrib['id'] = 'sd-content'
 
