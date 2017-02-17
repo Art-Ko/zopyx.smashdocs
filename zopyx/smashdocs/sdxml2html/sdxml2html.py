@@ -38,7 +38,7 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css'):
         img_src = 'images/{0}'.format(img.text)
         img_caption = attrib.get('caption')
 
-        new_img = lxml.etree.fromstring('<img src="{0}"/>'.format(img_src))
+        new_img = lxml.etree.fromstring('<img src="{0}" width="{1}"/>'.format(img_src, attrib['width']))
         img.insert(0, new_img)
 
         if img_caption:
@@ -46,6 +46,7 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css'):
             img.append(fig_caption)
             del img.attrib['caption']
         img.tag = 'figure'
+        img.text = None
 
     for node in root.xpath('//*[@indent]'):
         value = node.attrib['indent']
