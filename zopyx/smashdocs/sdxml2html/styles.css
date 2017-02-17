@@ -140,3 +140,7 @@ img {
 .vertical-align-top {
   vertical-align: top;
 }
+
+figcaption {
+  font-size: 0.8em;
+}
