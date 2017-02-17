@@ -43,7 +43,7 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css'):
 
         if img_caption:
             fig_caption = lxml.etree.fromstring('<figcaption>{}</figcaption>'.format(img_caption))
-            img.insert(0, fig_caption)
+            img.append(fig_caption)
             del img.attrib['caption']
         img.tag = 'figure'
 
@@ -93,7 +93,7 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css'):
         caption = node.attrib['caption']
         if caption:
             del node.attrib['caption']
-            node.append(lxml.etree.fromstring('<caption>{0}</caption>'.format(caption)))
+            node.insert(0, lxml.etree.fromstring('<caption>{0}</caption>'.format(caption)))
 
     head = root.find('head')
     for name in ('language', 'subtitle', 'description', 'footer', 'creator'):
