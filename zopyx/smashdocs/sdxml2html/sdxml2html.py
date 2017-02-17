@@ -93,7 +93,7 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css'):
         caption = node.attrib['caption']
         if caption:
             del node.attrib['caption']
-            node.insert(0, lxml.etree.fromstring('<caption>{0}</caption>'.format(caption)))
+            node.append(lxml.etree.fromstring('<caption>{0}</caption>'.format(caption)))
 
     head = root.find('head')
     for name in ('language', 'subtitle', 'description', 'footer', 'creator'):
