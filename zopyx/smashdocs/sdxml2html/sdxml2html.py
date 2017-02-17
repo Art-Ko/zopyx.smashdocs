@@ -8,6 +8,7 @@
 
 import os
 import sys
+import copy
 import tempfile
 import lxml.etree
 
@@ -31,9 +32,20 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css'):
         node.tag = 'h{}'.format(int(level) +1)
 
     for img in root.xpath('//image'):
-        img.tag = 'img'
-        img.attrib['src'] = 'images/' + img.text
-        img.text = None
+
+        attrib = copy.copy(img.attrib)
+
+        img_src = 'images/{0}'.format(img.text)
+        img_caption = attrib.get('caption')
+
+        new_img = lxml.etree.fromstring('<img src="{0}"/>'.format(img_src))
+        img.insert(0, new_img)
+
+        if img_caption:
+            fig_caption = lxml.etree.fromstring('<figcaption>{}</figcaption>'.format(img_caption))
+            img.insert(0, fig_caption)
+            del img.attrib['caption']
+        img.tag = 'figure'
 
     for node in root.xpath('//*[@indent]'):
         value = node.attrib['indent']
