@@ -13,7 +13,7 @@ import tempfile
 import lxml.etree
 
 
-def sdxml2html(in_name, out_name=None, css_name='styles.css'):
+def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='images'):
 
     with open(in_name, 'rb') as fp:
         root = lxml.etree.fromstring(fp.read())
@@ -34,8 +34,9 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css'):
     for img in root.xpath('//image'):
 
         attrib = copy.copy(img.attrib)
-
-        img_src = 'images/{0}'.format(img.text)
+        img_src = img.text
+        if image_prefix:
+            img_src = '{}/{}'.format(image_prefix, img_src)
         img_caption = attrib.get('caption')
 
         new_img = lxml.etree.fromstring('<img src="{0}" width="{1}"/>'.format(img_src, attrib['width']))
@@ -115,7 +116,7 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css'):
     return out_name
 
 
-def sdxml2html_data(xml_data):
+def sdxml2html_data(xml_data, image_prefix='images'):
 
     xml_fn = tempfile.mktemp(suffix='.xml')
     with open(xml_fn, 'wb') as fp:
