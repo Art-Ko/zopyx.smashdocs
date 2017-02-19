@@ -113,9 +113,7 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
     body.attrib['id'] = 'sd-content'
 
     for node in root.xpath('//*'):
-        print(node)
         for name, value in node.attrib.items():
-            print( name, value)
             value = value.strip()
             if value:
                 node.attrib[name] = value
