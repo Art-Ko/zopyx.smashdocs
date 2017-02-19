@@ -77,3 +77,16 @@ img {
 figcaption {
     font-size: $figcaption-size;
 }
+
+figcaption[num-enabled]:before {
+    content: 'Image ' attr(num-enabled) ': ';
+}
+
+table caption[num-enabled]:before {
+    content: 'Table ' attr(num-enabled) ': ';
+}
+
+table caption {
+    text-align: left;
+
+}
