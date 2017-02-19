@@ -1,6 +1,7 @@
 body {
   font-family: Helvectia, sans-serif;
   font-size: 10pt;
+  counter-reset: c-tables 0 c-images 0;
 }
 
 p.indent-1 {
@@ -146,11 +147,13 @@ figcaption {
 }
 
 figcaption[num-enabled]:before {
-  content: "Image " attr(num-enabled) ": ";
+  content: "Image " counter(c-images) ": ";
+  counter-increment: c-images;
 }
 
 table caption[num-enabled]:before {
-  content: "Table " attr(num-enabled) ": ";
+  content: "Table " counter(c-tables) ": ";
+  counter-increment: c-tables;
 }
 
 table caption {
