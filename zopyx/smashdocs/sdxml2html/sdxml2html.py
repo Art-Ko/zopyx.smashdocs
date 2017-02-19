@@ -38,8 +38,9 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
         if image_prefix:
             img_src = '{}/{}'.format(image_prefix, img_src)
         img_caption = attrib.get('caption')
+        num_enabled = attrib.get('num-enabled')
 
-        new_img = lxml.etree.fromstring('<img src="{0}" width="{1}"/>'.format(img_src, attrib['width']))
+        new_img = lxml.etree.fromstring('<img src="{0}" width="{1}" num-enabled="{2}"/>'.format(img_src, attrib['width'], num_enabled))
         img.insert(0, new_img)
 
         if img_caption:
@@ -92,10 +93,14 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
         node.text = None
 
     for node in root.xpath('//table'):
+        num_enabled = node.attrib.get('num-enabled')
         caption = node.attrib['caption']
         if caption:
             del node.attrib['caption']
-            node.insert(0, lxml.etree.fromstring('<caption>{0}</caption>'.format(caption)))
+            if num_enabled:
+                node.insert(0, lxml.etree.fromstring('<caption num-enabled="{1}">{0}</caption>'.format(caption, num_enabled)))
+            else:
+                node.insert(0, lxml.etree.fromstring('<caption>{0}</caption>'.format(caption)))
 
     head = root.find('head')
     for name in ('language', 'subtitle', 'description', 'footer', 'creator'):
@@ -106,6 +111,16 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
     body.insert(0, lxml.etree.fromstring('<link rel="stylesheet" type="text/css" href="{0}"/>'.format(css_name)))
     body.tag = 'div'
     body.attrib['id'] = 'sd-content'
+
+    for node in root.xpath('//*'):
+        print(node)
+        for name, value in node.attrib.items():
+            print( name, value)
+            value = value.strip()
+            if value:
+                node.attrib[name] = value
+            else:
+                del node.attrib[name]
 
     if not out_name:
         out_name = tempfile.mktemp(suffix='.html')
