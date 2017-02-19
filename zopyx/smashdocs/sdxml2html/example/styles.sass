@@ -10,6 +10,8 @@ $figcaption-size: 0.8em;
 body {
     font-family: $font-stack;
     font-size: $font-size;
+
+    counter-reset: c-tables 0 c-images 0;
 }
 
 @for $i from 1 through 10 {
@@ -79,11 +81,13 @@ figcaption {
 }
 
 figcaption[num-enabled]:before {
-    content: 'Image ' attr(num-enabled) ': ';
+    content: 'Image ' counter(c-images) ': ';
+    counter-increment: c-images;
 }
 
 table caption[num-enabled]:before {
-    content: 'Table ' attr(num-enabled) ': ';
+    content: 'Table ' counter(c-tables) ': ';
+    counter-increment: c-tables;
 }
 
 table caption {
