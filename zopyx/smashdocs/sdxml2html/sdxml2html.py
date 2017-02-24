@@ -44,7 +44,7 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
         img.insert(0, new_img)
 
         if img_caption:
-            fig_caption = lxml.etree.fromstring('<figcaption num-enabled="{1}">{0}</figcaption>'.format(img_caption, num_enabled))
+            fig_caption = lxml.etree.fromstring(u'<figcaption num-enabled="{1}">{0}</figcaption>'.format(img_caption, num_enabled))
             img.append(fig_caption)
             del img.attrib['caption']
         img.tag = 'figure'
