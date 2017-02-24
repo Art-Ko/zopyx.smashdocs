@@ -2,6 +2,9 @@ install:
 	virtualenv .
 	bin/python setup.py develop
 
+release:
+	mkrelease -d pypi
+
 test:
 	bin/pytest zopyx
 
