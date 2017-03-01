@@ -159,3 +159,18 @@ table caption[num-enabled]:before {
 table caption {
   text-align: left;
 }
+
+.footnote {
+  vertical-align: super;
+  font-size: 75%;
+}
+
+#footnotes {
+  margin-top: 1em;
+  border-top: 1px solid black;
+}
+
+.footnote-num:after {
+  content: ")";
+  margin-right: 0.25em;
+}

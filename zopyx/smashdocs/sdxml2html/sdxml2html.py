@@ -102,6 +102,24 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
             else:
                 node.insert(0, lxml.etree.fromstring('<caption>{0}</caption>'.format(caption)))
 
+    footnotes = list()
+    for num, node in enumerate(root.xpath('//footnote')):
+        node.tag = 'a'
+        footnotes.append(dict(num=num+1, text=node.attrib['data-content']))
+        node.attrib['class'] = 'footnote'
+        node.text = str(num + 1)
+        node.attrib['href'] = '#fn-{}'.format(num+1)
+        del node.attrib['data-content']
+
+    if footnotes:
+        footnotes_list = []
+        footnotes_list.append(u'<ul id="footnotes">')
+        for d in footnotes:
+            footnotes_list.append(u'<li>')
+            footnotes_list.append(u'<a name="fn-{0}"><span class="footnote-num">{0}</span> {1}</a>'.format(d['num'], d['text']))
+            footnotes_list.append(u'</li>')
+        footnotes_list.append(u'</ul>')
+
     head = root.find('head')
     for name in ('language', 'subtitle', 'description', 'footer', 'creator'):
         for node in head.xpath('//{}'.format(name)):
@@ -111,6 +129,8 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
     body.insert(0, lxml.etree.fromstring('<link rel="stylesheet" type="text/css" href="{0}"/>'.format(css_name)))
     body.tag = 'div'
     body.attrib['id'] = 'sd-content'
+    if footnotes_list:
+        body.append(lxml.etree.fromstring(u''.join(footnotes_list)))
 
     for node in root.xpath('//*'):
         for name, value in node.attrib.items():
