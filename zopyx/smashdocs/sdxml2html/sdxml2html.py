@@ -115,7 +115,7 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
         footnotes_list = []
         footnotes_list.append(u'<ul id="footnotes">')
         for d in footnotes:
-            footnotes_list.append(u'<li>')
+            footnotes_list.append(u'<li class="footnote">')
             footnotes_list.append(u'<a name="fn-{0}"><span class="footnote-num">{0}</span> {1}</a>'.format(d['num'], d['text']))
             footnotes_list.append(u'</li>')
         footnotes_list.append(u'</ul>')
