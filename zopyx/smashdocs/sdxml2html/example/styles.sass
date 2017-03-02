@@ -137,3 +137,39 @@ table caption {
 #sd-content h6 {
   font-size: 1.1em;
 }
+@media print {
+    #footnotes {
+        display: none;
+    }
+    @page  {
+        @footnote {
+            border-top: dashed red 1px;
+            float: bottom;
+        }
+    }
+    .footnote-text {
+        float: footnote;
+        counter-increment: footnote;
+        color: black;
+    }
+    .footnote-text::footnote-call {
+        content: counter(footnote, decimal) " ";
+        text-decoration: none;
+        border-bottom: none;
+    }
+    .footnote-text::footnote-marker {
+        content: counter(footnote, decimal);
+        font-size: 0.9em;
+        margin-right: 0.5em;
+    }
+    a.footnote {
+        border: none;
+        text-decoration: none;
+    }
+    .footnote-number {
+        display: none;
+    }
+    .footnote-text {
+        display: inline;
+    }
+}

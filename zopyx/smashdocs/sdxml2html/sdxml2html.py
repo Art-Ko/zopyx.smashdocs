@@ -105,11 +105,14 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
     footnotes = list()
     for num, node in enumerate(root.xpath('//footnote')):
         node.tag = 'a'
-        footnotes.append(dict(num=num+1, text=node.attrib['data-content']))
+        footnote_text = node.attrib['data-content']
+        footnotes.append(dict(num=num+1, text=footnote_text))
         node.attrib['class'] = 'footnote'
-        node.text = str(num + 1)
         node.attrib['href'] = '#fn-{}'.format(num+1)
         del node.attrib['data-content']
+        node.text = None
+        node.append(lxml.etree.fromstring(u'<span class="footnote-number">{}</span>'.format(num+1)))
+        node.append(lxml.etree.fromstring(u'<span class="footnote-text">{}</span>'.format(footnote_text)))
 
     if footnotes:
         footnotes_list = []
