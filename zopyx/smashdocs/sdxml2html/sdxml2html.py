@@ -114,6 +114,7 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
         node.append(lxml.etree.fromstring(u'<span class="footnote-number">{}</span>'.format(num+1)))
         node.append(lxml.etree.fromstring(u'<span class="footnote-text">{}</span>'.format(footnote_text)))
 
+    footnotes_list = []
     if footnotes:
         footnotes_list = []
         footnotes_list.append(u'<ul id="footnotes">')
