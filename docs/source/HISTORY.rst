@@ -1,6 +1,12 @@
 Changes
 -------
 
+0.3.8 (2017-03-07)
+++++++++++++++++++
+
+- better footnote handling
+- suport for setting a document to review state
+
 0.3.7 (2017-03-06)
 ++++++++++++++++++
 

@@ -72,6 +72,21 @@ def test_create_document():
         sd.delete_document(document_id)
 
 
+def test_create_document_review_mode():
+
+    sd = make_sd()
+    result = sd.new_document(
+        title=u'My document - üöäß',
+        description=u'My document description - üöäß',
+        role='editor',
+        status='review',
+        user_data=make_user_data())
+
+    document_id = result['documentId']
+    document_info = sd.document_info(document_id)
+    assert document_info['status'] == 'review' 
+
+
 def test_create_and_open():
 
     sd = make_sd()
@@ -121,12 +136,18 @@ def test_upload_docx():
         title=u'My document',
         description=u'My document description',
         role='editor',
+        status='review',
         user_data=make_user_data())
     assert 'documentAccessLink' in result
     assert 'documentId' in result
     assert 'userIdSD' in result
 
     document_id = result['documentId']
+
+    document_info = sd.document_info(document_id)
+    assert document_info['status'] == 'review'
+
+    sd.archive_document(document_id)
     sd.delete_document(document_id)
 
 

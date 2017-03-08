@@ -115,6 +115,11 @@ def check_description(s):
     return check_length(s, 400)
 
 
+def check_status(status):
+    if not status in ('draft', 'review'):
+        raise ValueError('Status must be either "draft" or "review"')
+
+
 def check_email(s):
     return check_length(s, 150)
 
@@ -256,7 +261,7 @@ class Smashdocs(object):
             raise DocumentInfoError(msg, result)
         return result.json()
 
-    def upload_document(self, filename, title=None, description=None, role=None, user_data=None):
+    def upload_document(self, filename, title=None, description=None, role=None, user_data=None, status='draft'):
         """ Upload DOCX document
 
             :param filename: DOCX filename
@@ -264,12 +269,14 @@ class Smashdocs(object):
             :param description: description of document
             :param role: Smashdoch role: editor|reader|approver|commentator
             :param user_data: dict with user data
+            :param status: create new document in draft|review mode
             :rtype: Smashdocs return datastructure (see Partner API docs for details)
         """
 
         check_title(title)
         check_description(description)
         check_role(role)
+        check_status(status)
         check_user_data(user_data)
 
         headers = {
@@ -283,6 +290,7 @@ class Smashdocs(object):
             'description': safe_unicode(description),
             'groupId': self.group_id,
             'userRole': role,
+            'status': status,
             'sectionHistory': True
         }
 
@@ -304,18 +312,20 @@ class Smashdocs(object):
             raise UploadError(msg, result)
         return result.json()
 
-    def new_document(self, title=None, description=None, role=None, user_data=None):
+    def new_document(self, title=None, description=None, role=None, user_data=None, status='draft'):
         """ Create a new document
 
             :param title: title of document
             :param description: description of document
             :param role: Smashdocs role: editor|reader|approver|commentator
-            :param user_date: Smashdocs user data, see Smashdocs Partner API
+            :param user_data: Smashdocs user data, see Smashdocs Partner API
+            :param status: create new document in draft|review mode
         """
 
         check_title(title)
         check_description(description)
         check_role(role)
+        check_status(status)
         check_user_data(user_data)
 
         headers = {
@@ -330,6 +340,7 @@ class Smashdocs(object):
             'description': safe_unicode(description),
             'groupId': self.group_id,
             'userRole': role,
+            'status': status,
             'sectionHistory': True
         }
 
