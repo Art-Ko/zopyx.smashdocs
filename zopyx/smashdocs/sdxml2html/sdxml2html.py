@@ -11,6 +11,7 @@ import sys
 import copy
 import tempfile
 import lxml.etree
+from xml.sax.saxutils import escape
 
 
 def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='images'):
@@ -111,7 +112,7 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
         node.attrib['href'] = '#fn-{}'.format(num+1)
         del node.attrib['data-content']
         node.text = None
-        node.append(lxml.etree.fromstring(u'<span class="footnote-number">{}</span>'.format(num+1)))
+        node.append(lxml.etree.fromstring(u'<span class="footnote-number" title="{1}">{0}</span>'.format(num+1, escape(footnote_text))))
         node.append(lxml.etree.fromstring(u'<span class="footnote-text">{}</span>'.format(footnote_text)))
 
     footnotes_list = []
