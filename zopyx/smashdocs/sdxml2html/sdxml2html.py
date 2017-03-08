@@ -13,8 +13,17 @@ import tempfile
 import lxml.etree
 from xml.sax.saxutils import escape
 
+html_template = """
+<html>
+    <head>
+    </head>
+    <body>
+    </body>
+</html>
+"""
 
-def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='images'):
+
+def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='images', html_wrapper=False):
 
     with open(in_name, 'rb') as fp:
         root = lxml.etree.fromstring(fp.read())
@@ -145,6 +154,15 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
             else:
                 del node.attrib[name]
 
+    if html_wrapper:
+        root2 = lxml.xml.fromstring(html_template)
+        for link in root.xpath('//link'):
+            root2.find('head').append(link)
+            link.getparent().replace(link)
+
+        root2.find('body').insert(0, root)
+        root = root2
+
     if not out_name:
         out_name = tempfile.mktemp(suffix='.html')
 
@@ -154,13 +172,13 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
     return out_name
 
 
-def sdxml2html_data(xml_data, image_prefix='images'):
+def sdxml2html_data(xml_data, image_prefix='images', html_wrapper=False):
 
     xml_fn = tempfile.mktemp(suffix='.xml')
     with open(xml_fn, 'wb') as fp:
         fp.write(xml_data)
 
-    out_fn = sdxml2html(xml_fn)
+    out_fn = sdxml2html(xml_fn, html_wrapper=html_wrapper)
     with open(out_fn, 'rb') as fp:
         data = fp.read()
     os.unlink(out_fn)
@@ -169,4 +187,4 @@ def sdxml2html_data(xml_data, image_prefix='images'):
 
 
 if __name__ == '__main__':
-    print(sdxml2html(sys.argv[-1], 'out.html'))
+    print(sdxml2html(sys.argv[-1], 'out.html'), html_wrapper=True)
