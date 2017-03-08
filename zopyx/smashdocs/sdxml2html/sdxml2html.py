@@ -154,20 +154,24 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
             else:
                 del node.attrib[name]
 
-    if html_wrapper:
-        root2 = lxml.xml.fromstring(html_template)
-        for link in root.xpath('//link'):
-            root2.find('head').append(link)
-            link.getparent().replace(link)
-
-        root2.find('body').insert(0, root)
-        root = root2
-
     if not out_name:
         out_name = tempfile.mktemp(suffix='.html')
 
-    with open(out_name, 'wb') as fp:
-        fp.write(lxml.etree.tostring(body, encoding='utf8', pretty_print=1))
+    if html_wrapper:
+        import pdb; pdb.set_trace() 
+        root2 = lxml.etree.fromstring(html_template)
+        for link in body.xpath('//link'):
+            root2.find('head').append(copy.deepcopy(link))
+            link.getparent().remove(link)
+        root2.find('body').insert(0, lxml.etree.fromstring(lxml.etree.tostring(body, encoding='utf-8', pretty_print=1)))
+
+        with open(out_name, 'wb') as fp:
+            fp.write(lxml.etree.tostring(root2, encoding='utf8', pretty_print=1))
+
+    else:
+
+        with open(out_name, 'wb') as fp:
+            fp.write(lxml.etree.tostring(body, encoding='utf8', pretty_print=1))
 
     return out_name
 
@@ -187,4 +191,4 @@ def sdxml2html_data(xml_data, image_prefix='images', html_wrapper=False):
 
 
 if __name__ == '__main__':
-    print(sdxml2html(sys.argv[-1], 'out.html'), html_wrapper=True)
+    print(sdxml2html(sys.argv[-1], 'out.html', html_wrapper=True))
