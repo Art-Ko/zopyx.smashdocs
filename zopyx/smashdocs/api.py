@@ -53,6 +53,10 @@ class UploadError(SmashdocsError):
     """ DOCX upload or import error"""
 
 
+class ReviewError(SmashdocsError):
+    """ Unable to set document to review state """
+
+
 class ArchiveError(SmashdocsError):
     """ Archiving error """
 
@@ -371,6 +375,27 @@ class Smashdocs(object):
             msg = u'Update metadata error (HTTP {0}, {1}'.format(
                 result.status_code, result.content)
             raise UpdateMetadataError(msg, result)
+
+    def review_document(self, document_id):
+        """ Set document by ``document_id into review state``
+
+            :param document_id: Smashdocs document id
+            :rtype: None
+        """
+
+        check_uuid(document_id)
+
+        headers = {
+            'x-client-id': self.client_id,
+            'content-type': 'application/json',
+            'authorization': 'Bearer ' + self.get_token()
+        }
+        result = requests.post(
+            self.partner_url + '/partner/documents/{0}/review'.format(document_id), headers=headers, verify=VERIFY)
+        if result.status_code != 200:
+            msg = u'Review state error (HTTP {0}, {1}'.format(
+                result.status_code, result.content)
+            raise ReviewError(msg, result)
 
     def archive_document(self, document_id):
         """ Archive document by ``document_id``

@@ -147,9 +147,6 @@ def test_upload_docx():
     document_info = sd.document_info(document_id)
     assert document_info['status'] == 'review'
 
-    sd.archive_document(document_id)
-    sd.delete_document(document_id)
-
 
 def test_upload_sdxml():
 
@@ -247,6 +244,23 @@ def test_document_info_unknown_doc_id():
     sd = make_sd()
     with pytest.raises(ValueError):
         document_info = sd.document_info('no such id')
+
+def test_review():
+
+    sd = make_sd()
+    result = sd.new_document(
+        title=u'My document',
+        description=u'My document description',
+        role='editor',
+        user_data=make_user_data())
+
+    document_id = result['documentId']
+    document_info = sd.document_info(document_id)
+    assert document_info['status'] == 'draft'
+
+    sd.review_document(document_id)
+    document_info = sd.document_info(document_id)
+    assert document_info['status'] == 'review'
 
 
 def test_archiving():

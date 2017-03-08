@@ -5,7 +5,7 @@ Changes
 ++++++++++++++++++
 
 - better footnote handling
-- suport for setting a document to review state
+- support for setting a document to review state
 
 0.3.7 (2017-03-06)
 ++++++++++++++++++
