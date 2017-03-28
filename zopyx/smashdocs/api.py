@@ -264,6 +264,7 @@ class Smashdocs(object):
             msg = u'Error (HTTP {0}, {1})'.format(
                 result.status_code, result.content)
             raise OpenError(msg, result)
+        self.check_response(result)
         return result.json()
 
     def document_info(self, document_id):
@@ -286,6 +287,7 @@ class Smashdocs(object):
             msg = u'Error (HTTP {0}, {1})'.format(
                 result.status_code, result.content)
             raise DocumentInfoError(msg, result)
+        self.check_response(result)
         return result.json()
 
     def upload_document(self, filename, title=None, description=None, role=None, user_data=None, status='draft'):
@@ -337,6 +339,7 @@ class Smashdocs(object):
             msg = u'Upload error (HTTP {0}, {1}'.format(
                 result.status_code, result.content)
             raise UploadError(msg, result)
+        self.check_response(result)
         return result.json()
 
     def new_document(self, title=None, description=None, role=None, user_data=None, status='draft'):
@@ -377,6 +380,7 @@ class Smashdocs(object):
             msg = u'Create error (HTTP {0}, {1}'.format(
                 result.status_code, result.content)
             raise CreationFailed(msg, result)
+        self.check_response(result)
         return result.json()
 
     def update_metadata(self, document_id, **kw):
@@ -398,6 +402,7 @@ class Smashdocs(object):
             msg = u'Update metadata error (HTTP {0}, {1}'.format(
                 result.status_code, result.content)
             raise UpdateMetadataError(msg, result)
+        self.check_response(result)
 
     def review_document(self, document_id):
         """ Set document by ``document_id into review state``
@@ -419,6 +424,7 @@ class Smashdocs(object):
             msg = u'Review state error (HTTP {0}, {1}'.format(
                 result.status_code, result.content)
             raise ReviewError(msg, result)
+        self.check_response(result)
 
     def archive_document(self, document_id):
         """ Archive document by ``document_id``
@@ -440,6 +446,7 @@ class Smashdocs(object):
             msg = u'Archive error (HTTP {0}, {1}'.format(
                 result.status_code, result.content)
             raise ArchiveError(msg, result)
+        self.check_response(result)
 
     def delete_document(self, document_id):
         """ Delete document by ``document_id``
@@ -462,6 +469,7 @@ class Smashdocs(object):
             msg = u'DeletionError (HTTP {0}, {1}'.format(
                 result.status_code, result.content)
             raise DeletionError(msg, result)
+        self.check_response(result)
 
     def unarchive_document(self, document_id):
         """ Unarchive document by ``document_id``
@@ -484,6 +492,7 @@ class Smashdocs(object):
             msg = u'Archive error (HTTP {0}, {1})'.format(
                 result.status_code, result.content)
             raise UnarchiveError(msg, result)
+        self.check_response(result)
 
     def duplicate_document(self, document_id, title=None, description=None, creator_id=None):
         """ Duplicate document
@@ -516,6 +525,7 @@ class Smashdocs(object):
             msg = u'Copy error (HTTP {0}, {1})'.format(
                 result.status_code, result.content)
             raise CopyError(msg, result)
+        self.check_response(result)
         return result.json()
 
     def list_templates(self):
@@ -556,6 +566,7 @@ class Smashdocs(object):
             msg = u'List error (HTTP {0}, {1})'.format(
                 result.status_code, result.content)
             raise SmashdocsError(msg, result)
+        self.check_response(result)
         return result.json()
 
     def export_document(self, document_id, user_id, template_id=None, format='docx'):
@@ -602,6 +613,7 @@ class Smashdocs(object):
             msg = u'Export error (HTTP {0}, {1})'.format(
                 result.status_code, result.content)
             raise ExportError(msg, result)
+        self.check_response(result)
 
         suffix = format
         if format in ('html', 'sdxml'):
