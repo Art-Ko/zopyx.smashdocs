@@ -1,6 +1,12 @@
 Changes
 -------
 
+0.3.10 (2017-03-28)
+++++++++++++++++++
+
+- added explicit check for Partner API version
+- introduced check against Partner API minimal version
+
 0.3.8 (2017-03-07)
 ++++++++++++++++++
 

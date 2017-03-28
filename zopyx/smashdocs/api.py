@@ -21,6 +21,8 @@ from .requests_logger import debug_requests
 
 VERIFY = True
 
+API_MIN_VERSION = '1.5.5.0'
+
 
 if six.PY2:
 
@@ -39,7 +41,7 @@ else:
 
 class SmashdocsError(Exception):
 
-    def __init__(self, msg, result):
+    def __init__(self, msg, result=None):
         super(SmashdocsError, self).__init__(msg)
         self.msg = msg
         self.result = result
@@ -145,6 +147,10 @@ def check_userid(s):
         raise ValueError('"userId" not specified')
 
 
+def versiontuple(v):
+    return tuple(map(int, (v.split("."))))
+
+
 def check_uuid(uuid_string):
     """ Validate that a UUID string is in fact a valid uuid4.  Happily, the uuid
         module does the actual checking for us.  It is vital that the 'version'
@@ -195,6 +201,23 @@ class Smashdocs(object):
 
     def __repr__(self):
         return '<Smashdocs {0}>'.format(self.__dict__)
+
+    @property
+    def api_min_version(self):
+        """ Minmal API version """
+        return API_MIN_VERSION
+
+    @property
+    def api_min_version_tp(self):
+        """ Minmal API version as integer tuple """
+        return versiontuple(API_MIN_VERSION)
+
+    def check_response(self, response):
+        api_version = response.headers.get('X-Api-Version')
+        if api_version:
+            api_version_tp = versiontuple(api_version)
+            if api_version_tp < self.api_min_version_tp:
+                raise SmashdocsError('Partner API version too old ({0}, expected minimal {1})'.format(api_version, self.api_min_version), response)
 
     def get_token(self):
 
@@ -509,6 +532,7 @@ class Smashdocs(object):
             msg = u'List error (HTTP {0}, {1})'.format(
                 result.status_code, result.content)
             raise SmashdocsError(msg, result)
+        self.check_response(result)
         return result.json()
 
     def get_documents(self, group_id=None, user_id=None):
