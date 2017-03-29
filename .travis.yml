@@ -2,8 +2,8 @@ language: python
 dist: trusty
 
 os:
-- linux
 - osx
+- linux
 
 python:
 - '2.7'
