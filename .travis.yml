@@ -15,11 +15,17 @@ matrix:
       dist: trusty
       python: 3.6
     - os: osx
-      python: 3.4
+      language: generic
+      env: PYVERSION = "py34"      
     - os: osx
-      python: 3.5
+      language: generic
+      env: PYVERSION = "py35"      
     - os: osx
-      python: 3.6
+      language: generic
+      env: PYVERSION = "py36"      
+
+before_install:
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./install_python.sh; fi
 
 install: 'pip install -r requirements.txt '
 script: pytest zopyx
