@@ -5,8 +5,8 @@ matrix:
     - os: linux
       dist: trusty
       python: 
-      - 2.7 
-      - 3.4 
+        - 2.7 
+        - 3.4 
     - os: osx
       python: 3.4
 
