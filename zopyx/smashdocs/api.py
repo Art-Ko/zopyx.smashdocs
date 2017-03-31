@@ -185,6 +185,8 @@ def check_user_data(user_data):
 
 class Smashdocs(object):
 
+    # The constructor
+    # @param self it's self
     def __init__(self, partner_url, client_id, client_key, group_id=None):
         """ Constructor
 
@@ -569,13 +571,14 @@ class Smashdocs(object):
         self.check_response(result)
         return result.json()
 
-    def export_document(self, document_id, user_id, template_id=None, format='docx'):
+    def export_document(self, document_id, user_id, template_id=None, format='docx', settings={}):
         """ Duplicate document
 
             :param documen_id: Smashdocs document id to be duplicated
             :param user_id: user id of the Smashdocs user performing the export
             :param template_id: template UID of a word template (mandatory if format='docx')
             :param format: docx|html|sdxml
+            :param settings: DOCX specific export settings (https://documentation.smashdocs.net/api_guide.html#exporting-documents-to-word)
         """
 
         check_uuid(document_id)
@@ -597,7 +600,7 @@ class Smashdocs(object):
             url = self.partner_url + \
                 '/partner/documents/{0}/export/word'.format(document_id)
             data['templateId'] = template_id
-            data['settings'] = dict()
+            data['settings'] = settings
         elif format == 'sdxml':
             url = self.partner_url + \
                 '/partner/documents/{0}/export/sdxml'.format(document_id)

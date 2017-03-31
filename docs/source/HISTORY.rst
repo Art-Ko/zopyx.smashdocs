@@ -1,12 +1,20 @@
 Changes
 -------
 
+0.3.13 (2017-03-31)
++++++++++++++++++++
+- added support for DOCX specific export parameters (https://documentation.smashdocs.net/api_guide.html#exporting-documents-to-word)
+
+0.3.12 (2017-03-31)
++++++++++++++++++++
+- bug fix 
+
 0.3.11 (2017-03-28)
-++++++++++++++++++
++++++++++++++++++++
 - bug fix 
 
 0.3.10 (2017-03-28)
-++++++++++++++++++
++++++++++++++++++++
 
 - added explicit check for Partner API version
 - introduced check against Partner API minimal version
