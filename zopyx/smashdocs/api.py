@@ -185,6 +185,8 @@ def check_user_data(user_data):
 
 class Smashdocs(object):
 
+    # The constructor
+    # @param self it's self
     def __init__(self, partner_url, client_id, client_key, group_id=None):
         """ Constructor
 
