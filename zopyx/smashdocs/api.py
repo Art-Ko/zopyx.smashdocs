@@ -600,7 +600,7 @@ class Smashdocs(object):
             url = self.partner_url + \
                 '/partner/documents/{0}/export/word'.format(document_id)
             data['templateId'] = template_id
-            data['settings'] = settings()
+            data['settings'] = settings
         elif format == 'sdxml':
             url = self.partner_url + \
                 '/partner/documents/{0}/export/sdxml'.format(document_id)
