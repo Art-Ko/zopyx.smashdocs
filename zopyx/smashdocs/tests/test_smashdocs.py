@@ -38,6 +38,25 @@ def make_user_data():
         userId=u'testuser',
         company=u'Dummies Ltd')
 
+def _new_document(empty):
+
+    sd = make_sd()
+    if empty:
+        result = sd.new_document(
+            title=u'My document - üöäß',
+            description=u'My document description - üöäß',
+            role='editor',
+            user_data=make_user_data())
+        return result['documentId']
+    else:
+        filename = os.path.join(os.path.dirname(__file__), 'test.docx')
+        result = sd.upload_document(
+            filename,
+            title=u'My document',
+            description=u'My document description',
+            role='editor',
+            user_data=make_user_data())
+        return result['documentId']
 
 def test_create_document():
 
@@ -200,13 +219,7 @@ def test_upload_non_docx():
 def test_duplicate_document():
 
     sd = make_sd()
-    result = sd.new_document(
-        title=u'My document',
-        description=u'My document description',
-        role='editor',
-        user_data=make_user_data())
-
-    document_id = result['documentId']
+    document_id = _new_document(False)
     new_result = sd.duplicate_document(
         document_id,
         title=u'My new title',
@@ -248,13 +261,8 @@ def test_document_info_unknown_doc_id():
 def test_review():
 
     sd = make_sd()
-    result = sd.new_document(
-        title=u'My document',
-        description=u'My document description',
-        role='editor',
-        user_data=make_user_data())
 
-    document_id = result['documentId']
+    document_id = _new_document(False)
     document_info = sd.document_info(document_id)
     assert document_info['status'] == 'draft'
 
