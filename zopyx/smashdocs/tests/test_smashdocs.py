@@ -131,7 +131,7 @@ def test_open_invalid_document_id():
     sd = make_sd()
 
     with pytest.raises(ValueError):
-        result = sd.open_document(
+        sd.open_document(
             'no such documentid',
             'reader',
             user_data=make_user_data())
@@ -141,7 +141,7 @@ def test_create_document_long_title():
 
     sd = make_sd()
     with pytest.raises(ValueError):
-        result = sd.new_document(
+        sd.new_document(
             title=u'My document' * 500,
             description=u'My document description' * 500,
             role='editor',
@@ -210,7 +210,7 @@ def test_upload_non_docx():
     sd = make_sd()
     filename = os.path.join(os.path.dirname(__file__), 'test_smashdocs.py')
     with pytest.raises(api.UploadError):
-        result = sd.upload_document(
+        sd.upload_document(
             filename,
             title=u'My document',
             description=u'My document description',
@@ -258,7 +258,7 @@ def test_document_info_unknown_doc_id():
 
     sd = make_sd()
     with pytest.raises(ValueError):
-        document_info = sd.document_info('no such id')
+        sd.document_info('no such id')
 
 
 def test_review():
@@ -300,12 +300,12 @@ def test_archiving():
 def test_listings():
 
     sd = make_sd()
-    result = sd.new_document(
+    sd.new_document(
         title=u'My document',
         description=u'My document description',
         role='editor',
         user_data=make_user_data())
-    result = sd.get_documents(user_id='testuser')
+    sd.get_documents(user_id='testuser')
 
 
 def test_list_templates():

@@ -17,8 +17,6 @@ import requests
 import six
 
 
-from .requests_logger import debug_requests
-
 VERIFY = True
 
 API_MIN_VERSION = '1.5.5.0'
