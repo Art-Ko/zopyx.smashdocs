@@ -1,5 +1,8 @@
 Changes
 -------
+0.3.14 (2017-10-12)
++++++++++++++++++++
+- support for pyfilesystem2 for upload_document()
 
 0.3.13 (2017-03-31)
 +++++++++++++++++++

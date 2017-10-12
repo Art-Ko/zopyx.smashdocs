@@ -8,7 +8,7 @@
 import uuid
 import os
 import fs
-from fs.osf import OSFS
+from fs.osfs import OSFS
 import jwt
 import json
 import uuid
@@ -311,12 +311,13 @@ class Smashdocs(object):
         check_role(role)
         check_status(status)
         check_user_data(user_data)
-        raise 1
-        import pdb; pdb.set_trace() 
-        if instance(filename, str):
+
+        if isinstance(filename, str):
             full_filename= os.path.abspath(filename)
-            dirname = os.path.dirname(full_filename)
-            handle = OSFS(dirname) 
+            dirname, fn = os.path.split(full_filename)
+            handle = OSFS(dirname)
+        elif isinstance(filename, tuple):
+            handle, fn = filename
 
         headers = {
             'x-client-id': self.client_id,
@@ -333,11 +334,11 @@ class Smashdocs(object):
             'sectionHistory': True
         }
 
-        base, ext = os.path.splitext(filename)
+        base, ext = os.path.splitext(fn)
         suffix = 'docx' if ext.lower() == '.docx' else 'zip'
         endpoint = 'word' if ext.lower() == '.docx' else 'sdxml'
 
-        with handle.open(filename, 'rb') as fp:
+        with handle.open(fn, 'rb') as fp:
             files = {
                 'data': (None, json.dumps(data), 'application/json'),
                 'file': ('dummy.{}'.format(suffix), fp, 'application/octet-stream'),
