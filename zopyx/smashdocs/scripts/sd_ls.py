@@ -24,5 +24,6 @@ def list_documents(user=None, group=None):
     for x in client.get_documents(user_id=user, group_id=group):
         pprint.pprint(x)
 
+
 if __name__ == '__main__':
     list_documents()

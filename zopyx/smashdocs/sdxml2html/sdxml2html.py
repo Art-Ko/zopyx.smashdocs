@@ -39,7 +39,7 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
 
     for node in root.xpath('//heading'):
         level = node.attrib.get('level', '0')
-        node.tag = 'h{}'.format(int(level) +1)
+        node.tag = 'h{}'.format(int(level) + 1)
 
     for img in root.xpath('//image'):
 
@@ -50,11 +50,13 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
         img_caption = attrib.get('caption')
         num_enabled = attrib.get('num-enabled')
 
-        new_img = lxml.etree.fromstring('<img src="{0}" width="{1}"/>'.format(img_src, attrib['width']))
+        new_img = lxml.etree.fromstring(
+            '<img src="{0}" width="{1}"/>'.format(img_src, attrib['width']))
         img.insert(0, new_img)
 
         if img_caption:
-            fig_caption = lxml.etree.fromstring(u'<figcaption num-enabled="{1}">{0}</figcaption>'.format(img_caption, num_enabled))
+            fig_caption = lxml.etree.fromstring(
+                u'<figcaption num-enabled="{1}">{0}</figcaption>'.format(img_caption, num_enabled))
             img.append(fig_caption)
             del img.attrib['caption']
         img.tag = 'figure'
@@ -108,21 +110,25 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
         if caption:
             del node.attrib['caption']
             if num_enabled:
-                node.insert(0, lxml.etree.fromstring('<caption num-enabled="{1}">{0}</caption>'.format(caption, num_enabled)))
+                node.insert(0, lxml.etree.fromstring(
+                    '<caption num-enabled="{1}">{0}</caption>'.format(caption, num_enabled)))
             else:
-                node.insert(0, lxml.etree.fromstring('<caption>{0}</caption>'.format(caption)))
+                node.insert(0, lxml.etree.fromstring(
+                    '<caption>{0}</caption>'.format(caption)))
 
     footnotes = list()
     for num, node in enumerate(root.xpath('//footnote')):
         node.tag = 'a'
         footnote_text = node.attrib['data-content']
-        footnotes.append(dict(num=num+1, text=footnote_text))
+        footnotes.append(dict(num=num + 1, text=footnote_text))
         node.attrib['class'] = 'footnote'
-        node.attrib['href'] = '#fn-{}'.format(num+1)
+        node.attrib['href'] = '#fn-{}'.format(num + 1)
         del node.attrib['data-content']
         node.text = None
-        node.append(lxml.etree.fromstring(u'<span class="footnote-number" title="{1}">{0}</span>'.format(num+1, escape(footnote_text))))
-        node.append(lxml.etree.fromstring(u'<span class="footnote-text">{}</span>'.format(footnote_text)))
+        node.append(lxml.etree.fromstring(
+            u'<span class="footnote-number" title="{1}">{0}</span>'.format(num + 1, escape(footnote_text))))
+        node.append(lxml.etree.fromstring(
+            u'<span class="footnote-text">{}</span>'.format(footnote_text)))
 
     footnotes_list = []
     if footnotes:
@@ -130,7 +136,8 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
         footnotes_list.append(u'<ul id="footnotes">')
         for d in footnotes:
             footnotes_list.append(u'<li class="footnote">')
-            footnotes_list.append(u'<a name="fn-{0}" id="fn-{0}"></a><span class="footnote-num">{0}</span><span>{1}</span>'.format(d['num'], d['text']))
+            footnotes_list.append(
+                u'<a name="fn-{0}" id="fn-{0}"></a><span class="footnote-num">{0}</span><span>{1}</span>'.format(d['num'], d['text']))
             footnotes_list.append(u'</li>')
         footnotes_list.append(u'</ul>')
 
@@ -140,7 +147,8 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
             node.getparent().remove(node)
 
     body = root.find('body')
-    body.insert(0, lxml.etree.fromstring('<link rel="stylesheet" type="text/css" href="{0}"/>'.format(css_name)))
+    body.insert(0, lxml.etree.fromstring(
+        '<link rel="stylesheet" type="text/css" href="{0}"/>'.format(css_name)))
     body.tag = 'div'
     body.attrib['id'] = 'sd-content'
     if footnotes_list:
@@ -158,20 +166,24 @@ def sdxml2html(in_name, out_name=None, css_name='styles.css', image_prefix='imag
         out_name = tempfile.mktemp(suffix='.html')
 
     if html_wrapper:
-        import pdb; pdb.set_trace() 
+        import pdb
+        pdb.set_trace()
         root2 = lxml.etree.fromstring(html_template)
         for link in body.xpath('//link'):
             root2.find('head').append(copy.deepcopy(link))
             link.getparent().remove(link)
-        root2.find('body').insert(0, lxml.etree.fromstring(lxml.etree.tostring(body, encoding='utf-8', pretty_print=1)))
+        root2.find('body').insert(0, lxml.etree.fromstring(
+            lxml.etree.tostring(body, encoding='utf-8', pretty_print=1)))
 
         with open(out_name, 'wb') as fp:
-            fp.write(lxml.etree.tostring(root2, encoding='utf8', pretty_print=1))
+            fp.write(lxml.etree.tostring(
+                root2, encoding='utf8', pretty_print=1))
 
     else:
 
         with open(out_name, 'wb') as fp:
-            fp.write(lxml.etree.tostring(body, encoding='utf8', pretty_print=1))
+            fp.write(lxml.etree.tostring(
+                body, encoding='utf8', pretty_print=1))
 
     return out_name
 

@@ -221,7 +221,8 @@ class Smashdocs(object):
         if api_version:
             api_version_tp = versiontuple(api_version)
             if api_version_tp < self.api_min_version_tp:
-                raise SmashdocsError('Partner API version too old ({0}, expected minimal {1})'.format(api_version, self.api_min_version), response)
+                raise SmashdocsError('Partner API version too old ({0}, expected minimal {1})'.format(
+                    api_version, self.api_min_version), response)
 
     def get_token(self):
 
@@ -313,7 +314,7 @@ class Smashdocs(object):
         check_user_data(user_data)
 
         if isinstance(filename, str):
-            full_filename= os.path.abspath(filename)
+            full_filename = os.path.abspath(filename)
             dirname, fn = os.path.split(full_filename)
             handle = OSFS(dirname)
         elif isinstance(filename, tuple):
@@ -636,7 +637,7 @@ class Smashdocs(object):
             output_filename = tempfile.mktemp(suffix='.' + suffix)
 
         if isinstance(output_filename, str):
-            full_filename= os.path.abspath(output_filename)
+            full_filename = os.path.abspath(output_filename)
             dirname, fn = os.path.split(full_filename)
             handle = OSFS(dirname)
         elif isinstance(output_filename, tuple):

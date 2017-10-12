@@ -38,6 +38,7 @@ def make_user_data():
         userId=u'testuser',
         company=u'Dummies Ltd')
 
+
 def _new_document(empty):
 
     sd = make_sd()
@@ -57,6 +58,7 @@ def _new_document(empty):
             role='editor',
             user_data=make_user_data())
         return result['documentId']
+
 
 def test_create_document():
 
@@ -103,7 +105,7 @@ def test_create_document_review_mode():
 
     document_id = result['documentId']
     document_info = sd.document_info(document_id)
-    assert document_info['status'] == 'review' 
+    assert document_info['status'] == 'review'
 
 
 def test_create_and_open():
@@ -257,6 +259,7 @@ def test_document_info_unknown_doc_id():
     sd = make_sd()
     with pytest.raises(ValueError):
         document_info = sd.document_info('no such id')
+
 
 def test_review():
 

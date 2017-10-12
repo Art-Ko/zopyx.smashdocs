@@ -23,5 +23,6 @@ def remove_documents(user=None, documents=[]):
         except api.DeletionError as e:
             print('ERROR: {}'.format(e))
 
+
 if __name__ == '__main__':
     remove_documents()
