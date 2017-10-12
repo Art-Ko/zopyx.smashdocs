@@ -6,10 +6,11 @@
 ################################################################
 
 
-import os
 import click
 
 from .util import client
+
+from zopyx.smashdocs import api
 
 
 @click.command()

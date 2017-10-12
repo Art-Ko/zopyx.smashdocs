@@ -7,11 +7,9 @@
 
 import uuid
 import os
-import fs
 from fs.osfs import OSFS
 import jwt
 import json
-import uuid
 import time
 import tempfile
 import datetime
@@ -124,7 +122,7 @@ def check_description(s):
 
 
 def check_status(status):
-    if not status in ('draft', 'review'):
+    if status not in ('draft', 'review'):
         raise ValueError('Status must be either "draft" or "review"')
 
 
