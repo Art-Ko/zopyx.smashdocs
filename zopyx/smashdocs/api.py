@@ -581,7 +581,7 @@ class Smashdocs(object):
         self.check_response(result)
         return result.json()
 
-    def export_document(self, document_id, user_id, template_id=None, format='docx', settings={}):
+    def export_document(self, document_id, user_id, template_id=None, format='docx', settings={}, output_directory=None):
         """ Duplicate document
 
             :param documen_id: Smashdocs document id to be duplicated
@@ -631,7 +631,17 @@ class Smashdocs(object):
         suffix = format
         if format in ('html', 'sdxml'):
             suffix = 'zip'
-        out_fn = tempfile.mktemp(suffix='.' + suffix)
-        with open(out_fn, 'wb') as fp:
+
+        if not output_filename:
+            output_filename = tempfile.mktemp(suffix='.' + suffix)
+
+        if isinstance(output_filename, str):
+            full_filename= os.path.abspath(filename)
+            dirname, fn = os.path.split(full_filename)
+            handle = OSFS(dirname)
+        elif isinstance(output_filename, tuple):
+            handle, fn = output_filename
+
+        with handle.open(fn, 'wb') as fp:
             fp.write(result.content)
         return out_fn
