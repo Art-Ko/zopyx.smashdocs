@@ -7,6 +7,8 @@
 
 import uuid
 import os
+import fs
+from fs.osf import OSFS
 import jwt
 import json
 import uuid
@@ -309,6 +311,12 @@ class Smashdocs(object):
         check_role(role)
         check_status(status)
         check_user_data(user_data)
+        raise 1
+        import pdb; pdb.set_trace() 
+        if instance(filename, str):
+            full_filename= os.path.abspath(filename)
+            dirname = os.path.dirname(full_filename)
+            handle = OSFS(dirname) 
 
         headers = {
             'x-client-id': self.client_id,
@@ -329,13 +337,14 @@ class Smashdocs(object):
         suffix = 'docx' if ext.lower() == '.docx' else 'zip'
         endpoint = 'word' if ext.lower() == '.docx' else 'sdxml'
 
-        files = {
-            'data': (None, json.dumps(data), 'application/json'),
-            'file': ('dummy.{}'.format(suffix), open(filename, 'rb'), 'application/octet-stream'),
-        }
+        with handle.open(filename, 'rb') as fp:
+            files = {
+                'data': (None, json.dumps(data), 'application/json'),
+                'file': ('dummy.{}'.format(suffix), fp, 'application/octet-stream'),
+            }
 
-        result = requests.post(
-            self.partner_url + '/partner/imports/{0}/upload'.format(endpoint), headers=headers, files=files, verify=VERIFY)
+            result = requests.post(
+                self.partner_url + '/partner/imports/{0}/upload'.format(endpoint), headers=headers, files=files, verify=VERIFY)
 
         if result.status_code != 200:
             msg = u'Upload error (HTTP {0}, {1}'.format(
