@@ -2,7 +2,7 @@ import io
 import os
 from setuptools import setup, find_packages
 
-version = '0.3.14'
+version = '0.3.15'
 
 setup(name='zopyx.smashdocs',
       version=version,
