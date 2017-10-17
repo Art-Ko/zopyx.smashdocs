@@ -312,6 +312,8 @@ class Smashdocs(object):
         if isinstance(filename, str):
             full_filename = os.path.abspath(filename)
             dirname, fn = os.path.split(full_filename)
+            dirname = safe_unicode(dirname)
+            fn = safe_unicode(fn)
             handle = OSFS(dirname)
         elif isinstance(filename, tuple):
             handle, fn = filename
@@ -635,6 +637,8 @@ class Smashdocs(object):
         if isinstance(output_filename, str):
             full_filename = os.path.abspath(output_filename)
             dirname, fn = os.path.split(full_filename)
+            dirname = safe_unicode(dirname)
+            fn = safe_unicode(fn)
             handle = OSFS(dirname)
         elif isinstance(output_filename, tuple):
             handle, fn = output_filename
