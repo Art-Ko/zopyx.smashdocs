@@ -9,6 +9,7 @@
 import os
 import uuid
 import pytest
+import zipfile
 
 from zopyx.smashdocs import api
 
@@ -330,6 +331,23 @@ def _make_export_document():
         user_data=make_user_data())
 
     return result['documentId']
+
+
+def test_export_parsx():
+
+    sd = make_sd()
+    document_id = _make_export_document()
+    user_id = 'admin'
+
+    templates = sd.list_templates()
+
+    out_fn = sd.export_document(
+        document_id, user_id, format='parsx')
+    assert out_fn.endswith('.zip')     
+    with zipfile.ZipFile(out_fn, 'r') as fp:
+        assert 'parsx.xml' in fp.namelist()
+    sd.delete_document(document_id)
+    os.unlink(out_fn)
 
 
 def test_export_docx():

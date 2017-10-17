@@ -586,14 +586,14 @@ class Smashdocs(object):
             :param documen_id: Smashdocs document id to be duplicated
             :param user_id: user id of the Smashdocs user performing the export
             :param template_id: template UID of a word template (mandatory if format='docx')
-            :param format: docx|html|sdxml
+            :param format: docx|html|sdxml|parsx
             :param settings: DOCX specific export settings (https://documentation.smashdocs.net/api_guide.html#exporting-documents-to-word)
         """
 
         check_uuid(document_id)
 
-        if format not in ('docx', 'html', 'sdxml'):
-            raise ValueError('"format" must be sdxml|html|docx')
+        if format not in ('docx', 'html', 'sdxml', 'parsx'):
+            raise ValueError('"format" must be sdxml|html|docx|parsx')
 
         headers = {
             'x-client-id': self.client_id,
@@ -616,6 +616,9 @@ class Smashdocs(object):
         elif format == 'html':
             url = self.partner_url + \
                 '/partner/documents/{0}/export/html'.format(document_id)
+        elif format == 'parsx':
+            url = self.partner_url + \
+                '/partner/documents/{0}/export/parsx'.format(document_id)
         else:
             raise ValueError(u'Unsupported format: {}'.format(format))
 
@@ -628,7 +631,7 @@ class Smashdocs(object):
         self.check_response(result)
 
         suffix = format
-        if format in ('html', 'sdxml'):
+        if format in ('html', 'sdxml', 'parsx'):
             suffix = 'zip'
 
         if not output_filename:

@@ -1,5 +1,9 @@
 Changes
 -------
+0.3.15 (2017-10-17)
++++++++++++++++++++
+- support for PARSX export
+
 0.3.14 (2017-10-12)
 +++++++++++++++++++
 - support for pyfilesystem2 for upload_document()
