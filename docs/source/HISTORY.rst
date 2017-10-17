@@ -1,5 +1,9 @@
 Changes
 -------
+0.3.16 (2017-10-17)
++++++++++++++++++++
+- support for various modes for export_html() API
+
 0.3.15 (2017-10-17)
 +++++++++++++++++++
 - support for PARSX export
