@@ -365,16 +365,32 @@ def test_export_docx():
     os.unlink(out_fn)
 
 
-def test_export_html():
+def _test_export_html(mode):
 
     sd = make_sd()
     document_id = _make_export_document()
     user_id = 'admin'
 
-    out_fn = sd.export_document(document_id, user_id, format='html')
+    out_fn = sd.export_document(document_id, user_id, format='html', mode=mode)
     assert out_fn.endswith('.zip')
     sd.delete_document(document_id)
     os.unlink(out_fn)
+
+
+def test_export_html_final():
+    _test_export_html('final')
+
+
+def test_export_html_redline():
+    _test_export_html('redlineAndPending')
+
+
+def test_export_html_news():
+    _test_export_html('news')
+
+
+def test_export_html_allInOne():
+    _test_export_html('allInOne')
 
 
 def test_export_sdxml():

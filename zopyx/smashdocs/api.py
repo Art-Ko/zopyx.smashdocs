@@ -580,7 +580,7 @@ class Smashdocs(object):
         self.check_response(result)
         return result.json()
 
-    def export_document(self, document_id, user_id, template_id=None, format='docx', settings={}, output_filename=None):
+    def export_document(self, document_id, user_id, template_id=None, format='docx', settings={}, output_filename=None, mode='final'):
         """ Duplicate document
 
             :param documen_id: Smashdocs document id to be duplicated
@@ -588,12 +588,17 @@ class Smashdocs(object):
             :param template_id: template UID of a word template (mandatory if format='docx')
             :param format: docx|html|sdxml|parsx
             :param settings: DOCX specific export settings (https://documentation.smashdocs.net/api_guide.html#exporting-documents-to-word)
+            :param mode: final|news|allInOne|redlineAndPending
         """
 
         check_uuid(document_id)
 
         if format not in ('docx', 'html', 'sdxml', 'parsx'):
             raise ValueError('"format" must be sdxml|html|docx|parsx')
+
+        if format == 'html':
+            if mode not in ('final', 'news', 'allInOne', 'redlineAndPending'):
+                raise ValueError('"mode" must be final|news|allInOne|redlineAndPending')
 
         headers = {
             'x-client-id': self.client_id,
@@ -614,6 +619,7 @@ class Smashdocs(object):
             url = self.partner_url + \
                 '/partner/documents/{0}/export/sdxml'.format(document_id)
         elif format == 'html':
+            data['mode'] = mode
             url = self.partner_url + \
                 '/partner/documents/{0}/export/html'.format(document_id)
         elif format == 'parsx':
