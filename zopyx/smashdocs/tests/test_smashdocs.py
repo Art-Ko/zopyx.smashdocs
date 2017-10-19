@@ -339,11 +339,9 @@ def test_export_parsx():
     document_id = _make_export_document()
     user_id = 'admin'
 
-    templates = sd.list_templates()
-
     out_fn = sd.export_document(
         document_id, user_id, format='parsx')
-    assert out_fn.endswith('.zip')     
+    assert out_fn.endswith('.zip')
     with zipfile.ZipFile(out_fn, 'r') as fp:
         assert 'parsx.xml' in fp.namelist()
     sd.delete_document(document_id)
