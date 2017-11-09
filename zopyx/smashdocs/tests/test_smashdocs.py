@@ -337,7 +337,7 @@ def test_export_parsx():
 
     sd = make_sd()
     document_id = _make_export_document()
-    user_id = 'admin'
+    user_id = 'testuser'
 
     out_fn = sd.export_document(
         document_id, user_id, format='parsx')
@@ -352,7 +352,7 @@ def test_export_docx():
 
     sd = make_sd()
     document_id = _make_export_document()
-    user_id = 'admin'
+    user_id = 'testuser'
 
     templates = sd.list_templates()
 
@@ -367,7 +367,7 @@ def _test_export_html(mode):
 
     sd = make_sd()
     document_id = _make_export_document()
-    user_id = 'admin'
+    user_id = 'testuser'
 
     out_fn = sd.export_document(document_id, user_id, format='html', mode=mode)
     assert out_fn.endswith('.zip')
@@ -395,7 +395,7 @@ def test_export_sdxml():
 
     sd = make_sd()
     document_id = _make_export_document()
-    user_id = 'admin'
+    user_id = 'testuser'
 
     out_fn = sd.export_document(document_id, user_id, format='sdxml')
     assert out_fn.endswith('.zip')
