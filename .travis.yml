@@ -28,7 +28,7 @@ matrix:
 before_install:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./install_python.sh; fi
 
-install: 'python -m ensurepip; pip install -r requirements.txt '
+install: 'pip install -r requirements.txt '
 script: pytest zopyx
 env:
   global:
