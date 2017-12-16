@@ -29,7 +29,6 @@ matrix:
       env: PYVERSION = "py36"      
 
 before_install:
-- sudo python -m ensurepip
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./install_python.sh; fi
 
 install: 'pip install -r requirements.txt '
