@@ -18,15 +18,15 @@ matrix:
     - os: linux
       dist: trusty
       python: 3.7-dev
-    - os: osx
-      language: generic
-      env: PYVERSION = "py34"      
-    - os: osx
-      language: generic
-      env: PYVERSION = "py35"      
-    - os: osx
-      language: generic
-      env: PYVERSION = "py36"      
+      #    - os: osx
+      #      language: generic
+      #      env: PYVERSION = "py34"      
+      #    - os: osx
+      #      language: generic
+      #      env: PYVERSION = "py35"      
+      #    - os: osx
+      #      language: generic
+      #      env: PYVERSION = "py36"      
 
 before_install:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./install_python.sh; fi
