@@ -1,12 +1,12 @@
 appdirs==1.4.3
-furl==0.5.6
+furl==1.0.1
 orderedmultidict==0.7.11
-packaging==16.8
-py==1.4.32
-PyJWT==1.4.2
-pyparsing==2.1.10
-pytest==3.0.6
-requests==2.13.0
+packaging==17.1
+py==1.5.3
+PyJWT==1.6.1
+pyparsing==2.2.0
+pytest==3.5.1
+requests==2.18.4
 six==1.10.0
 fs>2.0.10
 -e git://github.com/zopyx/zopyx.smashdocs.git#egg=zopyx.smashdocs
