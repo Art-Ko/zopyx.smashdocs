@@ -581,9 +581,9 @@ class Smashdocs(object):
         return result.json()
 
     def export_document(self, document_id, user_id, template_id=None, format='docx', settings={}, output_filename=None, mode='final'):
-        """ Duplicate document
+        """ Export document
 
-            :param documen_id: Smashdocs document id to be duplicated
+            :param documen_id: Smashdocs document id to be exported
             :param user_id: user id of the Smashdocs user performing the export
             :param template_id: template UID of a word template (mandatory if format='docx')
             :param format: docx|html|sdxml|parsx
