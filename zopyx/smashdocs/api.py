@@ -5,21 +5,22 @@
 # (C) 2017, ZOPYX/Andreas Jung, D-72074 Tübingen
 ################################################################
 
-import uuid
-import os
-from fs.osfs import OSFS
-import jwt
-import json
-import time
-import tempfile
 import datetime
+import json
+import os
+import tempfile
+import time
+import uuid
+
 import requests
 import six
 
+import jwt
+from fs.osfs import OSFS
 
 VERIFY = True
 
-API_MIN_VERSION = '1.5.5.0'
+API_MIN_VERSION = '2.6.0.0'
 
 
 if six.PY2:
