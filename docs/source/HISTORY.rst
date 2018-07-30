@@ -1,5 +1,10 @@
 Changes
 -------
+
+0.3.17 (2018-07-30)
++++++++++++++++++++
+- support for list unseen changes and unseen count API
+
 0.3.16 (2017-10-17)
 +++++++++++++++++++
 - support for various modes for export_html() API

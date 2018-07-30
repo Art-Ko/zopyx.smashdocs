@@ -401,3 +401,19 @@ def test_export_sdxml():
     assert out_fn.endswith('.zip')
     sd.delete_document(document_id)
     os.unlink(out_fn)
+
+
+def test_unseen_count():
+
+    sd = make_sd()
+    user_id = 'testuser'
+
+    result = sd.unseen_count(user_id)
+
+
+def test_list_unseen_changes():
+
+    sd = make_sd()
+    user_id = 'testuser'
+
+    result = sd.list_unseen_changes(user_id)

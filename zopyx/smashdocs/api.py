@@ -89,6 +89,14 @@ class ExportError(SmashdocsError):
     """ Export error"""
 
 
+class UnseenCountError(SmashdocsError):
+    """ Unseen counts error """
+
+
+class ListUnseenChangesError(SmashdocsError):
+    """ Unseen counts error """
+
+
 allowed_sd_roles = ('editor', 'reader', 'approver', 'commentator')
 
 
@@ -655,3 +663,56 @@ class Smashdocs(object):
         with handle.open(fn, 'wb') as fp:
             fp.write(result.content)
         return output_filename
+
+    def unseen_count(self, user_id=None):
+        """ Get unseen count changes across all documents.
+
+            :param user_id: user id of the Smashdocs user performing the export
+        """
+
+        headers = {
+            'x-client-id': self.client_id,
+            'content-type': 'application/json',
+            'authorization': 'Bearer ' + self.get_token(),
+        }
+
+        data = {
+            'userId': user_id,
+        }
+
+        url = self.partner_url + '/partner/documents/unseen/count'
+        result = requests.get(url, headers=headers,
+                               params=data, verify=VERIFY)
+        if result.status_code != 200:
+            msg = u'Count unseen error(HTTP {0}, {1})'.format(
+                result.status_code, result.content)
+            raise CountUnseenError(msg, result)
+        self.check_response(result)
+        return result.json()
+
+
+    def list_unseen_changes(self, user_id=None):
+        """ List documents with unseen changes 
+
+            :param user_id: user id of the Smashdocs user performing the export
+        """
+
+        headers = {
+            'x-client-id': self.client_id,
+            'content-type': 'application/json',
+            'authorization': 'Bearer ' + self.get_token(),
+        }
+
+        data = {
+            'userId': user_id,
+        }
+
+        url = self.partner_url + '/partner/documents/unseen/list'
+        result = requests.get(url, headers=headers,
+                               params=data, verify=VERIFY)
+        if result.status_code != 200:
+            msg = u'List unseen changes error(HTTP {0}, {1})'.format(
+                result.status_code, result.content)
+            raise ListUnseenChangesError(msg, result)
+        self.check_response(result)
+        return result.json()
