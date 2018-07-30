@@ -14,7 +14,7 @@ matrix:
       python: 3.6
     - os: linux
       dist: trusty
-      python: pypy2.7
+      python: pypy
     - os: linux
       dist: trusty
       python: pypy3.5
