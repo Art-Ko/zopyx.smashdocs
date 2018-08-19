@@ -1,8 +1,13 @@
 Changes
 -------
-0.3.17 (2017-10-17)
+0.3.18 (2018-08-19)
 +++++++++++++++++++
 - support for optional `userId` parameter in `document_info()`
+=======
+
+0.3.17 (2018-07-30)
++++++++++++++++++++
+- support for list unseen changes and unseen count API
 
 0.3.16 (2017-10-17)
 +++++++++++++++++++
