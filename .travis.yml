@@ -14,12 +14,9 @@ matrix:
       python: 3.6
     - os: linux
       dist: trusty
-<<<<<<< HEAD
-=======
       python: pypy
     - os: linux
       dist: trusty
->>>>>>> 4315da334a2a279dd7176b59a806b49ad21af7f5
       python: pypy3.5
     - os: linux
       dist: xenial
