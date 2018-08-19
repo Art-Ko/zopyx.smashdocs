@@ -1,5 +1,9 @@
 Changes
 -------
+0.3.17 (2017-10-17)
++++++++++++++++++++
+- support for optional `userId` parameter in `document_info()`
+
 0.3.16 (2017-10-17)
 +++++++++++++++++++
 - support for various modes for export_html() API

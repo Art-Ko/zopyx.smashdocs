@@ -268,7 +268,7 @@ class Smashdocs(object):
         self.check_response(result)
         return result.json()
 
-    def document_info(self, document_id):
+    def document_info(self, document_id, userId=None):
         """ Get document information
 
             :param document_id: Smashdocs document id
@@ -282,8 +282,12 @@ class Smashdocs(object):
             'authorization': 'Bearer ' + self.get_token()
         }
 
+        params = dict()
+        if userId:
+            params['userId'] = userId
+
         url = self.partner_url + '/partner/documents/{0}'.format(document_id)
-        result = requests.get(url, headers=headers, verify=VERIFY)
+        result = requests.get(url, headers=headers, params=params, verify=VERIFY)
         if result.status_code != 200:
             msg = u'Error (HTTP {0}, {1})'.format(
                 result.status_code, result.content)
