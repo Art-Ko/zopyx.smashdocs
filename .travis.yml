@@ -34,8 +34,8 @@ matrix:
 before_install:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./install_python.sh; fi
 
-install: 'pip install -r requirements.txt '
-script: pytest zopyx
+install: 'pip install -r requirements.txt; pip install pytest-rerunfailures '
+script: pytest --reruns 5 zopyx
 env:
   global:
   - secure: k6KRVBEgu/Cv/UCZ949imHqZXjDTxR07IKNPaelYSwSRwmjQ9J2F6Oci/oYcE49SdfjAxCOML3BILHeM1SAVHC6b5RTz78kJWtVZZvC0dgAH/4EEb9QU/bRALy3i8gQsF8fz2bqcS5pLDqLEyl8U0pkCw/BBuJJsl4YeczNHurMq8murJ/jxcb7CC18ntOlV86q2qmf5HMd4TH5xis4RsbInulmsdZU90gnqfPCJFVpQftkOaekCAJGJsjaBOxS00f5QHE1imNoC/XEH0WhhsQ98IAh+KPj4PLMHW3f82y7ZTTSN+EQk5JWcaKGZpZFZkcqDtwRipvt70j0T1mDBmiX9vO75jIiPCAi+o7/0EtY0sc3PtycYqfstasfHuOEXCUC+DoPcseH2JTla00Up7EeHEfeOZ9yJOF3MIdHkyX2h9KNlVbR1EyGlkVrV9mP7NqaTFp1u0n97hD2FqDX7Stm7R9m3NBN1bxn6xQaY7vbl5NjDA3OMuKTLHkLq7/QdNeir4h6gdov3VlkSzY7IRlZTEJ8GK36p7nXzgdSJ60vNJF0cL/xblaN/qQLT4/yKNQ7mgTVgxKFBSzqcnCiwPCtfEIHOzAw/ZX0ZboO/YC6RYj6QvybHwZcqbrL4FxbzObA7kGL5URFcxCNFMYHDhX6XHdu4n0GDSWQcvFOcmn0=
