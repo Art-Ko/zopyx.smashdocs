@@ -1,0 +1,789 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- === Metadaten allgemein === -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="smashdoc">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" ref="meta"/>
+                <xs:element ref="document"/>
+                <xs:element minOccurs="0" ref="indexes"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="smashdoc_attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="smashdoc_attlist">
+        <xs:attribute name="version"/>
+        <xs:attribute name="id"/>
+    </xs:attributeGroup>
+    <xs:element name="meta">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" ref="language"/>
+                <xs:element ref="title"/>
+                <xs:element minOccurs="0" ref="filename"/>
+                <xs:element ref="subtitle"/>
+                <xs:element ref="description"/>
+                <xs:element ref="footer"/>
+                <xs:element ref="creator"/>
+                <xs:element minOccurs="0" ref="tags"/>
+                <xs:element minOccurs="0" ref="word-export-presets"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <!-- Dokumentmeta -->
+    <xs:element name="language">
+        <xs:complexType>
+            <xs:attributeGroup ref="language_attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="language_attlist">
+        <xs:attribute name="value" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="de_DE"/>
+                    <xs:enumeration value="en_EN"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="title" type="xs:string"/>
+    <xs:element name="filename" type="xs:string"/>
+    <xs:element name="subtitle" type="xs:string"/>
+    <xs:element name="description" type="xs:string"/>
+    <xs:element name="footer" type="xs:string"/>
+    <xs:element name="creator" type="xs:string"/>
+    <xs:element name="tags">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tag"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="tag" type="xs:string"/>
+    <xs:element name="word-export-presets">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tag"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="word-export-presets_attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="word-export-presets_attlist">
+        <xs:attribute name="template_id" use="required"/>
+        <xs:attribute name="language" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="de_DE"/>
+                    <xs:enumeration value="en_EN"/>
+                    <xs:enumeration value="en_US"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="toc_text" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="toc_image" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="toc_table" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="caption_image" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="caption_table" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- === Parameter-Entities === -->
+    <xs:complexType name="heading_content" mixed="true">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="b"/>
+            <xs:element ref="i"/>
+            <xs:element ref="u"/>
+            <xs:element ref="a"/>
+            <xs:element ref="sub"/>
+            <xs:element ref="sup"/>
+            <xs:element ref="s"/>
+            <xs:element ref="kbd"/>
+            <xs:element ref="sd-sc"/>
+            <xs:element ref="footnote"/>
+            <xs:element ref="xref"/>
+            <xs:element ref="index"/>
+            <xs:element ref="inline"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="mixed_content" mixed="true">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="b"/>
+            <xs:element ref="i"/>
+            <xs:element ref="u"/>
+            <xs:element ref="a"/>
+            <xs:element ref="sub"/>
+            <xs:element ref="sup"/>
+            <xs:element ref="s"/>
+            <xs:element ref="kbd"/>
+            <xs:element ref="sd-sc"/>
+            <xs:element ref="footnote"/>
+            <xs:element ref="xref"/>
+            <xs:element ref="index"/>
+            <xs:element ref="inline"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="footnote_content" mixed="true">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="b"/>
+            <xs:element ref="i"/>
+            <xs:element ref="u"/>
+            <xs:element ref="a"/>
+            <xs:element ref="sub"/>
+            <xs:element ref="sup"/>
+            <xs:element ref="s"/>
+            <xs:element ref="kbd"/>
+            <xs:element ref="sd-sc"/>
+            <xs:element ref="br"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:simpleType name="values_indent">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="0"/>
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="2"/>
+            <xs:enumeration value="3"/>
+            <xs:enumeration value="4"/>
+            <xs:enumeration value="5"/>
+            <xs:enumeration value="6"/>
+            <xs:enumeration value="7"/>
+            <xs:enumeration value="8"/>
+            <xs:enumeration value="9"/>
+            <xs:enumeration value="10"/>
+            <xs:enumeration value="11"/>
+            <xs:enumeration value="12"/>
+            <xs:enumeration value="13"/>
+            <xs:enumeration value="14"/>
+            <xs:enumeration value="15"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="values_enumeration-level">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="0"/>
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="2"/>
+            <xs:enumeration value="3"/>
+            <xs:enumeration value="4"/>
+            <xs:enumeration value="5"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="alignment">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="right"/>
+            <xs:enumeration value="justify"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:attributeGroup name="id">
+        <xs:attribute name="id"/>
+    </xs:attributeGroup>
+    <!-- Dokumentstruktur -->
+    <xs:element name="document">
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="heading"/>
+                <xs:element ref="paragraph"/>
+                <xs:element ref="image"/>
+                <xs:element ref="table"/>
+                <xs:element ref="ol-li"/>
+                <xs:element ref="ul-li"/>
+                <xs:element ref="pagebreak"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <!-- Headings -->
+    <!-- with @enumeration for numbered heading -->
+    <!-- with @level for heading without numbering -->
+    <xs:element name="heading">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="heading_content">
+                    <xs:attributeGroup ref="heading_attlist"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="heading_attlist">
+        <xs:attribute name="enumeration" type="values_enumeration-level"/>
+        <xs:attribute name="level" type="values_enumeration-level"/>
+        <xs:attribute name="indent" default="0" type="values_indent"/>
+        <xs:attribute name="alignment" default="left" type="alignment"/>
+        <xs:attribute name="restartNumbering" default="0">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="origin_ids"/>
+        <xs:attributeGroup ref="id"/>
+    </xs:attributeGroup>
+    <!-- Paragraph -->
+    <!-- @enumeration optional for numbered paragraph -->
+    <xs:element name="paragraph">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="mixed_content">
+                    <xs:attributeGroup ref="paragraph_attlist"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="paragraph_attlist">
+        <xs:attribute name="enumeration" type="values_enumeration-level"/>
+        <xs:attribute name="stylename"/>
+        <xs:attribute name="indent" use="required" type="values_indent"/>
+        <xs:attribute name="alignment" default="left" type="alignment"/>
+        <xs:attribute name="restartNumbering" default="0">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="origin_ids"/>
+        <xs:attributeGroup ref="id"/>
+    </xs:attributeGroup>
+    <!-- Lists -->
+    <xs:element name="ol-li">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="mixed_content">
+                    <xs:attributeGroup ref="ol-li_attlist"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="ol-li_attlist">
+        <xs:attribute name="enumeration" type="values_enumeration-level"/>
+        <xs:attribute name="indent" type="values_indent"/>
+        <xs:attribute name="alignment" default="left">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="origin_ids"/>
+        <xs:attribute name="list-id"/>
+        <xs:attributeGroup ref="id"/>
+    </xs:attributeGroup>
+    <xs:element name="ul-li">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="mixed_content">
+                    <xs:attributeGroup ref="ul-li_attlist"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="ul-li_attlist">
+        <xs:attribute name="enumeration" type="values_enumeration-level"/>
+        <xs:attribute name="indent" type="values_indent"/>
+        <xs:attribute name="alignment" default="left">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="origin_ids"/>
+        <xs:attribute name="list-id"/>
+        <xs:attributeGroup ref="id"/>
+    </xs:attributeGroup>
+    <xs:element name="index">
+        <xs:complexType>
+            <xs:attributeGroup ref="index_attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="index_attlist">
+        <xs:attribute name="data-id" use="required"/>
+    </xs:attributeGroup>
+    <xs:element name="indexes">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="index-node"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="index-node">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="index-node"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="index-node_attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="index-node_attlist">
+        <xs:attribute name="id" use="required"/>
+        <xs:attribute name="target-reference-id"/>
+        <xs:attribute name="title" use="required"/>
+        <xs:attribute name="description"/>
+        <xs:attribute name="sorting-key"/>
+    </xs:attributeGroup>
+    <!-- Image -->
+    <xs:element name="image">
+        <xs:complexType mixed="true">
+            <xs:attributeGroup ref="image_attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="image_attlist">
+        <xs:attribute name="indent" default="0" type="values_indent"/>
+        <xs:attribute name="caption"/>
+        <xs:attribute name="width" default="100%"/>
+        <xs:attribute name="alignment" default="left" type="alignment"/>
+        <xs:attribute name="num-enabled" default="1">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="origin_ids"/>
+        <xs:attribute name="stylename"/>
+        <xs:attributeGroup ref="id"/>
+    </xs:attributeGroup>
+    <!-- Table -->
+    <xs:element name="table">
+        <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element ref="column_width"/>
+                <xs:element ref="tr"/>
+            </xs:choice>
+            <xs:attributeGroup ref="table_attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <!-- border-color must match ^#[0-9a-fA-F]{6}$ -->
+    <xs:attributeGroup name="table_attlist">
+        <xs:attribute name="indent" default="0" type="values_indent"/>
+        <xs:attribute name="caption"/>
+        <xs:attribute name="width" default="100%"/>
+        <xs:attribute name="alignment" default="left" type="alignment"/>
+        <xs:attribute name="num-enabled" default="1">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-color" default="#000000"/>
+        <xs:attribute name="origin_ids"/>
+        <xs:attribute name="stylename"/>
+        <xs:attributeGroup ref="id"/>
+    </xs:attributeGroup>
+    <xs:element name="column_width">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="item"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="item" type="xs:string"/>
+    <xs:element name="tr">
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="th"/>
+                <xs:element ref="td"/>
+            </xs:choice>
+            <xs:attributeGroup ref="tr_attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="tr_attlist">
+        <xs:attribute name="row-id"/>
+        <xs:attribute name="min-height"/>
+    </xs:attributeGroup>
+    <xs:element name="th">
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="p"/>
+                <xs:element ref="ol-li"/>
+                <xs:element ref="ul-li"/>
+            </xs:choice>
+            <xs:attributeGroup ref="th_attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="td">
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="p"/>
+                <xs:element ref="ol-li"/>
+                <xs:element ref="ul-li"/>
+            </xs:choice>
+            <xs:attributeGroup ref="td_attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="td_attlist">
+        <xs:attribute name="col-ids"/>
+        <xs:attribute name="colspan"/>
+        <xs:attribute name="rowspan"/>
+        <xs:attribute name="border-top">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-right">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-bottom">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-left">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="font-size"/>
+        <xs:attribute name="text-align" default="left">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="justify"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="vertical-align" default="top">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="top"/>
+                    <xs:enumeration value="middle"/>
+                    <xs:enumeration value="bottom"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="background-color" default="#000000"/>
+        <xs:attribute name="background-intensity"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="th_attlist">
+        <xs:attribute name="col-ids"/>
+        <xs:attribute name="colspan"/>
+        <xs:attribute name="rowspan"/>
+        <xs:attribute name="border-top">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-right">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-bottom">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="border-left">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="font-size"/>
+        <xs:attribute name="text-align" default="left">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="center"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="justify"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="vertical-align" default="top">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="top"/>
+                    <xs:enumeration value="middle"/>
+                    <xs:enumeration value="bottom"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="background-color" default="#000000"/>
+        <xs:attribute name="background-intensity"/>
+    </xs:attributeGroup>
+    <xs:element name="p">
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="b"/>
+                <xs:element ref="i"/>
+                <xs:element ref="u"/>
+                <xs:element ref="s"/>
+                <xs:element ref="br"/>
+                <xs:element ref="a"/>
+                <xs:element ref="kbd"/>
+                <xs:element ref="sd-sc"/>
+                <xs:element ref="inline"/>
+                <xs:element ref="footnote"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <!-- Pagebreak -->
+    <xs:element name="pagebreak">
+        <xs:complexType/>
+    </xs:element>
+    <!-- Newline -->
+    <xs:element name="br">
+        <xs:complexType/>
+    </xs:element>
+    <!-- Inline-Elements -->
+    <!-- Weblink -->
+    <xs:element name="a">
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="br"/>
+                <xs:element ref="b"/>
+                <xs:element ref="i"/>
+                <xs:element ref="u"/>
+                <xs:element ref="sub"/>
+                <xs:element ref="sup"/>
+                <xs:element ref="s"/>
+                <xs:element ref="kbd"/>
+                <xs:element ref="sd-sc"/>
+                <xs:element ref="inline"/>
+            </xs:choice>
+            <xs:attributeGroup ref="a_attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="a_attlist">
+        <xs:attribute name="href" use="required"/>
+    </xs:attributeGroup>
+    <!-- Crossreference (to @id) -->
+    <xs:element name="xref">
+        <xs:complexType>
+            <xs:attributeGroup ref="xref_attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="xref_attlist">
+        <xs:attribute name="href" use="required"/>
+        <xs:attribute name="data-num-enabled" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="data-content-enabled" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="0"/>
+                    <xs:enumeration value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!-- Footnote -->
+    <xs:element name="footnote" type="footnote_content"/>
+    <!-- Formatting -->
+    <!-- b/i/u can be descendant of paragraph, ol/ul or table cell -->
+    <xs:element name="b">
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="i"/>
+                <xs:element ref="u"/>
+                <xs:element ref="sub"/>
+                <xs:element ref="sup"/>
+                <xs:element ref="s"/>
+                <xs:element ref="br"/>
+                <xs:element ref="a"/>
+                <xs:element ref="inline"/>
+                <xs:element ref="kbd"/>
+                <xs:element ref="sd-sc"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="i">
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="b"/>
+                <xs:element ref="u"/>
+                <xs:element ref="sub"/>
+                <xs:element ref="sup"/>
+                <xs:element ref="s"/>
+                <xs:element ref="br"/>
+                <xs:element ref="a"/>
+                <xs:element ref="inline"/>
+                <xs:element ref="kbd"/>
+                <xs:element ref="sd-sc"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="u">
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="b"/>
+                <xs:element ref="i"/>
+                <xs:element ref="sub"/>
+                <xs:element ref="sup"/>
+                <xs:element ref="s"/>
+                <xs:element ref="br"/>
+                <xs:element ref="a"/>
+                <xs:element ref="inline"/>
+                <xs:element ref="kbd"/>
+                <xs:element ref="sd-sc"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <!-- sup/sub only as descendant of paragraph and ol/ul -->
+    <xs:element name="sup">
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="b"/>
+                <xs:element ref="i"/>
+                <xs:element ref="u"/>
+                <xs:element ref="br"/>
+                <xs:element ref="s"/>
+                <xs:element ref="inline"/>
+                <xs:element ref="kbd"/>
+                <xs:element ref="sd-sc"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="sub">
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="b"/>
+                <xs:element ref="i"/>
+                <xs:element ref="u"/>
+                <xs:element ref="br"/>
+                <xs:element ref="s"/>
+                <xs:element ref="inline"/>
+                <xs:element ref="kbd"/>
+                <xs:element ref="sd-sc"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="s">
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="b"/>
+                <xs:element ref="i"/>
+                <xs:element ref="u"/>
+                <xs:element ref="sub"/>
+                <xs:element ref="sup"/>
+                <xs:element ref="br"/>
+                <xs:element ref="a"/>
+                <xs:element ref="inline"/>
+                <xs:element ref="kbd"/>
+                <xs:element ref="sd-sc"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="kbd">
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="b"/>
+                <xs:element ref="i"/>
+                <xs:element ref="u"/>
+                <xs:element ref="sub"/>
+                <xs:element ref="sup"/>
+                <xs:element ref="br"/>
+                <xs:element ref="a"/>
+                <xs:element ref="s"/>
+                <xs:element ref="sd-sc"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="sd-sc">
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="b"/>
+                <xs:element ref="i"/>
+                <xs:element ref="u"/>
+                <xs:element ref="sub"/>
+                <xs:element ref="sup"/>
+                <xs:element ref="br"/>
+                <xs:element ref="a"/>
+                <xs:element ref="s"/>
+                <xs:element ref="inline"/>
+                <xs:element ref="kbd"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="inline">
+        <xs:complexType mixed="true">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="b"/>
+                <xs:element ref="i"/>
+                <xs:element ref="u"/>
+                <xs:element ref="sub"/>
+                <xs:element ref="sup"/>
+                <xs:element ref="br"/>
+                <xs:element ref="a"/>
+                <xs:element ref="s"/>
+                <xs:element ref="sd-sc"/>
+                <xs:element ref="kbd"/>
+            </xs:choice>
+            <xs:attributeGroup ref="inline_attlist"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="inline_attlist">
+        <xs:attribute name="stylename" use="required"/>
+    </xs:attributeGroup>
+</xs:schema>

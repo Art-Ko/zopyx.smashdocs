@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--=== Metadaten allgemein ===-->
+<!ELEMENT smashdoc (meta?, document, indexes?) >
+<!ATTLIST	smashdoc
+            version CDATA #IMPLIED
+            id CDATA #IMPLIED >
+
+<!ELEMENT meta (language?, title, filename?, subtitle, description, footer, creator, tags?, word-export-presets?) >
+
+<!-- Dokumentmeta -->
+<!ELEMENT language EMPTY>
+<!ATTLIST	language value ( de_DE | en_EN ) #REQUIRED >
+
+<!ELEMENT title (#PCDATA) >
+<!ELEMENT filename (#PCDATA) >
+<!ELEMENT subtitle (#PCDATA) >
+<!ELEMENT description (#PCDATA) >
+<!ELEMENT footer (#PCDATA) >
+<!ELEMENT creator (#PCDATA) >
+<!ELEMENT tags (tag)* >
+
+<!ELEMENT tag (#PCDATA) >
+
+
+<!ELEMENT word-export-presets (tag)* >
+<!ATTLIST	word-export-presets
+			template_id CDATA #REQUIRED
+			language ( de_DE | en_EN | en_US ) #REQUIRED
+			toc_text (0 | 1) #REQUIRED
+			toc_image (0 | 1) #REQUIRED
+			toc_table (0 | 1) #REQUIRED
+			caption_image (0 | 1) #REQUIRED
+			caption_table (0 | 1) #REQUIRED >
+
+
+<!--=== Parameter-Entities ===-->
+<!ENTITY % heading_content "(#PCDATA | b | i | u | a | sub | sup | s | kbd | sd-sc | footnote | xref | index | inline)*" >
+<!ENTITY % mixed_content "(#PCDATA | b | i | u | a | sub | sup | s | kbd | sd-sc | footnote | xref | index | inline)*" >
+<!ENTITY % footnote_content "(#PCDATA | b | i | u | a | sub | sup | s | kbd | sd-sc | br)*" >
+<!ENTITY % values_indent "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15" >
+<!ENTITY % values_enumeration-level "0|1|2|3|4|5" >
+<!ENTITY % alignment "left | center | right | justify" >
+<!ENTITY % id "
+ id CDATA #IMPLIED" >
+
+<!-- Dokumentstruktur -->
+<!ELEMENT document (heading | paragraph | image | table | ol-li | ul-li | pagebreak)* >
+
+
+<!-- Headings -->
+<!-- with @enumeration for numbered heading -->
+<!-- with @level for heading without numbering -->
+<!ELEMENT heading %heading_content; >
+<!ATTLIST	heading
+			enumeration (%values_enumeration-level;) #IMPLIED
+			level (%values_enumeration-level;) #IMPLIED
+			indent (%values_indent;) "0"
+			alignment (%alignment;) "left"
+			restartNumbering (0|1) "0"
+			origin_ids CDATA #IMPLIED
+			%id; >
+
+<!-- Paragraph -->
+<!-- @enumeration optional for numbered paragraph -->
+<!ELEMENT paragraph %mixed_content; >
+<!ATTLIST	paragraph
+			enumeration (%values_enumeration-level;) #IMPLIED
+			stylename CDATA #IMPLIED
+			indent (%values_indent;) #REQUIRED
+			alignment (%alignment;) "left"
+			restartNumbering (0|1) "0"
+			origin_ids CDATA #IMPLIED
+			%id; >
+<!-- Lists -->
+
+<!ELEMENT ol-li %mixed_content; >
+<!ATTLIST	ol-li
+			enumeration (%values_enumeration-level;) #IMPLIED
+			indent (%values_indent;) #IMPLIED
+            alignment (%alignment;) #FIXED "left"
+			origin_ids CDATA #IMPLIED
+		    list-id CDATA #IMPLIED
+			%id;>
+
+<!ELEMENT ul-li %mixed_content; >
+<!ATTLIST	ul-li
+			enumeration (%values_enumeration-level;) #IMPLIED
+			indent (%values_indent;) #IMPLIED
+            alignment (%alignment;) #FIXED "left"
+			origin_ids CDATA #IMPLIED
+		    list-id CDATA #IMPLIED
+			%id;>
+
+<!ELEMENT index EMPTY >
+<!ATTLIST	index
+			data-id CDATA #REQUIRED >
+
+<!ELEMENT indexes (index-node)* >
+
+<!ELEMENT index-node (index-node)* >
+<!ATTLIST index-node
+			id					CDATA #REQUIRED
+			target-reference-id	CDATA #IMPLIED
+			title				CDATA #REQUIRED
+			description			CDATA #IMPLIED
+			sorting-key			CDATA #IMPLIED >
+
+
+<!-- Image -->
+<!ELEMENT image (#PCDATA) >
+<!ATTLIST	image
+			indent (%values_indent;) "0"
+			caption CDATA #IMPLIED
+			width CDATA "100%"
+			alignment (%alignment;) "left"
+			num-enabled (0|1) "1"
+			origin_ids CDATA #IMPLIED
+			stylename CDATA #IMPLIED
+			%id; >
+
+<!-- Table -->
+<!ELEMENT table (column_width | tr)+ >
+<!-- border-color must match ^#[0-9a-fA-F]{6}$ -->
+<!ATTLIST	table
+			indent (%values_indent;) "0"
+			caption CDATA #IMPLIED
+			width CDATA "100%"
+			alignment (%alignment;) "left"
+			num-enabled (0|1) "1"
+			border-color CDATA "#000000"
+			origin_ids CDATA #IMPLIED
+			stylename CDATA #IMPLIED
+			%id; >
+
+<!ELEMENT column_width (item)+ >
+<!ELEMENT item (#PCDATA) >
+<!ELEMENT tr (th | td)* >
+<!ATTLIST	tr
+		    row-id CDATA #IMPLIED
+			min-height CDATA #IMPLIED >
+<!ELEMENT th (p | ol-li | ul-li)* >
+<!ELEMENT td (p | ol-li | ul-li)* >
+<!ATTLIST	td
+		    col-ids CDATA #IMPLIED
+			colspan CDATA #IMPLIED
+			rowspan CDATA #IMPLIED
+			border-top (0|1) #IMPLIED
+			border-right (0|1) #IMPLIED
+			border-bottom (0|1) #IMPLIED
+			border-left (0|1) #IMPLIED
+			font-size CDATA #IMPLIED
+			text-align (left|center|right|justify) "left"
+			vertical-align (top|middle|bottom) "top"
+			background-color CDATA "#000000"
+            background-intensity CDATA #IMPLIED >
+<!ATTLIST	th
+			col-ids CDATA #IMPLIED
+			colspan CDATA #IMPLIED
+			rowspan CDATA #IMPLIED
+			border-top (0|1) #IMPLIED
+			border-right (0|1) #IMPLIED
+			border-bottom (0|1) #IMPLIED
+			border-left (0|1) #IMPLIED
+			font-size CDATA #IMPLIED
+			text-align (left|center|right|justify) "left"
+			vertical-align (top|middle|bottom) "top"
+			background-color CDATA "#000000"
+            background-intensity CDATA #IMPLIED >
+
+<!ELEMENT p (#PCDATA | b | i | u | s | br | a | kbd | sd-sc | inline | footnote)* >
+
+<!-- Pagebreak -->
+<!ELEMENT pagebreak EMPTY>
+
+<!-- Newline -->
+<!ELEMENT br EMPTY>
+
+<!-- Inline-Elements -->
+
+<!-- Weblink -->
+<!ELEMENT a (#PCDATA | br | b | i | u | sub | sup | s | kbd | sd-sc | inline )* >
+<!ATTLIST	a
+			href CDATA #REQUIRED >
+
+<!-- Crossreference (to @id) -->
+<!ELEMENT xref EMPTY >
+<!ATTLIST	xref
+			href CDATA #REQUIRED
+			data-num-enabled  (0 | 1) #REQUIRED
+			data-content-enabled (0 | 1) #REQUIRED >
+
+<!-- Footnote -->
+<!ELEMENT footnote %footnote_content; >
+
+<!-- Formatting -->
+<!-- b/i/u can be descendant of paragraph, ol/ul or table cell -->
+<!ELEMENT b (#PCDATA | i | u | sub | sup | s | br | a | inline | kbd | sd-sc )* >
+<!ELEMENT i (#PCDATA | b | u | sub | sup | s | br | a | inline | kbd | sd-sc )* >
+<!ELEMENT u (#PCDATA | b | i | sub | sup | s | br | a | inline | kbd | sd-sc )* >
+
+<!-- sup/sub only as descendant of paragraph and ol/ul -->
+<!ELEMENT sup (#PCDATA | b | i | u | br | s | inline | kbd | sd-sc )* >
+<!ELEMENT sub (#PCDATA | b | i | u | br | s | inline | kbd | sd-sc )* >
+
+<!ELEMENT s (#PCDATA | b | i | u | sub | sup | br | a | inline | kbd | sd-sc )* >
+<!ELEMENT kbd (#PCDATA | b | i | u | sub | sup | br | a | s | sd-sc )* >
+<!ELEMENT sd-sc (#PCDATA | b | i | u | sub | sup | br | a | s | inline | kbd )* >
+
+<!ELEMENT inline (#PCDATA | b | i | u | sub | sup | br | a | s | sd-sc | kbd )* >
+<!ATTLIST	inline
+			stylename CDATA #REQUIRED >
