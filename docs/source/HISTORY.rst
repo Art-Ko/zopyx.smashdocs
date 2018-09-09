@@ -1,6 +1,6 @@
 Changes
 -------
-0.3.19 (unreleased)
+0.3.19 (2018-09-09)
 +++++++++++++++++++
 - added SDXML validation support
 =======
