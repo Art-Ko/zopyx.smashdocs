@@ -11,8 +11,11 @@ import os
 import tempfile
 import time
 import uuid
+import zipfile
 
 import requests
+import pkg_resources
+import lxml.etree
 import six
 
 import jwt
@@ -350,6 +353,12 @@ class Smashdocs(object):
         suffix = 'docx' if ext.lower() == '.docx' else 'zip'
         endpoint = 'word' if ext.lower() == '.docx' else 'sdxml'
 
+        if endpoint == 'sdxml' and filename.endswith('.zip'):
+            zf = zipfile.ZipFile(filename)
+            sdxml = zf.read('sd.xml')
+            zf.close()
+            self.validate_sdxml(sdxml)
+
         with handle.open(fn, 'rb') as fp:
             files = {
                 'data': (None, json.dumps(data), 'application/json'),
@@ -653,6 +662,16 @@ class Smashdocs(object):
         if format in ('html', 'sdxml', 'parsx'):
             suffix = 'zip'
 
+        if format == 'sdxml':
+            tmp_fn = tempfile.mktemp(suffix='.zip')
+            with open(tmp_fn, 'wb') as fp:
+                fp.write(result.content)
+            zf = zipfile.ZipFile(tmp_fn)
+            sdxml = zf.read('sd.xml')
+            zf.close()
+            os.unlink(tmp_fn)
+            self.validate_sdxml(sdxml)
+
         if not output_filename:
             output_filename = tempfile.mktemp(suffix='.' + suffix)
 
@@ -721,3 +740,11 @@ class Smashdocs(object):
             raise ListUnseenChangesError(msg, result)
         self.check_response(result)
         return result.json()
+
+    def validate_sdxml(self, xml):
+        """ Validate given XML SDXML string against SDXML XSD """
+        schema_text = pkg_resources.resource_string('zopyx.smashdocs', 'sdxml_import.xsd')
+        xmlschema_doc = lxml.etree.fromstring(schema_text)
+        xmlschema = lxml.etree.XMLSchema(xmlschema_doc)
+        doc = lxml.etree.fromstring(xml)
+        xmlschema.assertValid(doc)

@@ -1,5 +1,10 @@
 Changes
 -------
+0.3.19 (unreleased)
++++++++++++++++++++
+- added SDXML validation support
+=======
+
 0.3.18 (2018-08-19)
 +++++++++++++++++++
 - support for optional `userId` parameter in `document_info()`
