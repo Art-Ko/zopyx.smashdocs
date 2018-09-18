@@ -25,6 +25,8 @@ VERIFY = True
 
 API_MIN_VERSION = '2.6.0.0'
 
+VALIDATE_SDXML = 'SMASHDOCS_VALIDATE' in os.environ
+
 
 if six.PY2:
 
@@ -743,8 +745,12 @@ class Smashdocs(object):
 
     def validate_sdxml(self, xml):
         """ Validate given XML SDXML string against SDXML XSD """
+
+        if not VALIDATE_SDXML:
+            return
         schema_text = pkg_resources.resource_string('zopyx.smashdocs', 'sdxml_import.xsd')
         xmlschema_doc = lxml.etree.fromstring(schema_text)
         xmlschema = lxml.etree.XMLSchema(xmlschema_doc)
         doc = lxml.etree.fromstring(xml)
+        import pdb; pdb.set_trace() 
         xmlschema.assertValid(doc)
