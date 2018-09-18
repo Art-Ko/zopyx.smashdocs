@@ -3,41 +3,30 @@ dist: trusty
 sudo: required
 matrix:
   include:
-    - os: linux
-      dist: trusty
-      python: 2.7
-    - os: linux
-      dist: trusty
-      python: 3.5
-    - os: linux
-      dist: trusty
-      python: 3.6
-    - os: linux
-      dist: trusty
-      python: pypy
-    - os: linux
-      dist: trusty
-      python: pypy3.5
-    - os: linux
-      dist: xenial
-      python: 3.7
-      #    - os: osx
-      #      language: generic
-      #      env: PYVERSION = "py34"      
-      #    - os: osx
-      #      language: generic
-      #      env: PYVERSION = "py35"      
-      #    - os: osx
-      #      language: generic
-      #      env: PYVERSION = "py36"      
-
+  - os: linux
+    dist: trusty
+    python: 2.7
+  - os: linux
+    dist: trusty
+    python: 3.5
+  - os: linux
+    dist: trusty
+    python: 3.6
+  - os: linux
+    dist: trusty
+    python: pypy
+  - os: linux
+    dist: trusty
+    python: pypy3.5
+  - os: linux
+    dist: xenial
+    python: 3.7
 before_install:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./install_python.sh; fi
-
 install: 'pip install -r requirements.txt; pip install pytest-rerunfailures '
 script: pytest --reruns 5 -v zopyx
 env:
   global:
-  - secure: k6KRVBEgu/Cv/UCZ949imHqZXjDTxR07IKNPaelYSwSRwmjQ9J2F6Oci/oYcE49SdfjAxCOML3BILHeM1SAVHC6b5RTz78kJWtVZZvC0dgAH/4EEb9QU/bRALy3i8gQsF8fz2bqcS5pLDqLEyl8U0pkCw/BBuJJsl4YeczNHurMq8murJ/jxcb7CC18ntOlV86q2qmf5HMd4TH5xis4RsbInulmsdZU90gnqfPCJFVpQftkOaekCAJGJsjaBOxS00f5QHE1imNoC/XEH0WhhsQ98IAh+KPj4PLMHW3f82y7ZTTSN+EQk5JWcaKGZpZFZkcqDtwRipvt70j0T1mDBmiX9vO75jIiPCAi+o7/0EtY0sc3PtycYqfstasfHuOEXCUC+DoPcseH2JTla00Up7EeHEfeOZ9yJOF3MIdHkyX2h9KNlVbR1EyGlkVrV9mP7NqaTFp1u0n97hD2FqDX7Stm7R9m3NBN1bxn6xQaY7vbl5NjDA3OMuKTLHkLq7/QdNeir4h6gdov3VlkSzY7IRlZTEJ8GK36p7nXzgdSJ60vNJF0cL/xblaN/qQLT4/yKNQ7mgTVgxKFBSzqcnCiwPCtfEIHOzAw/ZX0ZboO/YC6RYj6QvybHwZcqbrL4FxbzObA7kGL5URFcxCNFMYHDhX6XHdu4n0GDSWQcvFOcmn0=
-  - secure: bhj5pwz9F/4OguDuh4upYjeLWFmkALyelImEdCCMuhGxYwXBjUCA0qqx/sM2Mrezqni7CrBRY1GYM9RlhRNELKq5j9NHDe5kjALV+8VajqYlFnuAsCd/2a51ZI/DGstmj+LUMzS3vzxfwfaPss+lKOF7BWG/1+GOji5a4KsE64ll2LmZKOuepnRd3hxkXDOElsfzuejN3jEDsFhj0X/5Qrdar8khZRQd4cThQIEx0me5daKhnRcC031L457QnRFDai5ubM7Oka32et1QeFThlLLKxMS4h4RvGY8xlSyy57lstkqDbtxrD5rVRoaIn1SMkgbT88qu22KcyMA9DtWl8N02A5S1gZfbB+abtLhrk0NprCeUsyOcnsqI9t99Vy3vxNwyiVkTVmSynkxIv8i9JtGV3cfJ6cGE46+4IkYtjGsFe4rLfwvZPjCIf6e+AVHDhccCO8zAao+VwFEZUaABdUUzQLTsCAj4hM6ez/0gB6/8f0nGYK2n6sJn/jCvbxqSdf0ious+r3pbSBv3CpMOvYa/8n0k5471OTDTDUanEFLf+Ptg7jDbJX9pT3LdZjhpbCZO5jXYbFEgm17z5Xz3RcS2Qnrc4NqiW9Uk5lEwHbG6q3pmjfEjC09Ej9x9X7aNyrOnk5uSeg7W7h+eTF7i39CrG+iw2BMAG91qC2T0BKQ=
-  - secure: uYExQ5WGKMHbHGXE55NUVYwB+kdXV+PQHzpEI59ABS3Vsme+sNNdx8RXrs05gA9tEYPVUDeN5/Lrq3JEY6kl8fgawkCIh21OiUY2J7387NC6rwkIKH/21y2hGmXyWD7n1ftvpOOmj+oIE2ngyl75EFPIMCuyi++odldnCobSZfkdJIlv+A8Akji3hCduutzWKh3Cwupfv0gMLKb+rt0FvYIH3nbOrVlX2ksxPr/5XBcvkYAsm7XQoaVhQbBExFWJtmATRWAmsD5nj5+9g6jWrfOxsqomxoB5ijXygizw2z1qpmTqsJrnonzqDmoE4QfgPfUgmLJVmfXE8A5+YWK5+w0DIgrggChd+Kx1Mi4ErttKc55+g4pZ/g32mpHiL4fSokMC1gGhUsD/lp1Aye98rsjeT/6bjyqo0zeZTbHFpxYWGINPJwBxUatDBvqc3n6cN5oyMDaGYggxltPCbuApGqQAGtQHNf5E0BWTMEXJU5+sUGoYDXn6Mz7ycd358NgbiZaQF7UVDwUWC9FKJCXvpuJXuygfBS4xraWOJCROE5NgbhXL/e/ghk2lzaEwVL3/d9WoTKWDGblCHc0DUWgk+sbDbqjBGUaNXoGe8lVRj2UfuBGkfWZEPWeLey6VmqfbaHcUYItQ/Mo1DT5p0Er9RJI+GL0giarpx2cGEyctVtE=
+  - secure: k1EZXzjPuRTI7BYj13m7iY0sDRc5pMuXh2m0MENu7004ZFOUzMXqYIPsvpUbDHINGJxhFcqUqnfaiE0tIqSudvisgFc52zYBBx+WHf8l0nt/JC7vesFO1y/ZKE24Ud2UfqKyZvlb/azBHMN89bIaQZbg7zOht5gPI7lbLHd5TSlfQ9wP5kenpc8vUHVgt/7siDOsiuHa9t5EvINLzt+Qcyuw3I5z5meejXxiCyV9dC2oWNrMHIJ7LsZ39Fr3dE+18qUppYCW4Ru/Qw2BmbSWP0HBk9wu8QxtiveLRRzfGHnepOR/Srdb/QPcJx5JEPEPhyVM8HIAMbPSsbWffWHgL24YoP9cKCR+sJ6ivYzksyWTkChCav5Re0JNmfDD9xVfkVY570QJCuh/g7O9ApXw72f1+9U6xNYz508/DHrkosvpkq7lDfjDBwI41iO5b10v4ZMYeVPEAlsQULvtcSKUYcapUnc8p5Of5yG5aer84NhtFVwbFkUoMaTiHQ1H327U1IxZgNLEeeP6wZAYWin/njJVkpzGbRv0AJs6YL0aQQDevVxjetNSmjIDqLGCQJHNQt43f6vwOQazLnex8esC0LangDsCwY3Nu2UCmTzHZFDv4I0SjOpvpd3UKkOXoXY+ORAhF5Tn4DFf7gLBoCTdoF10C3w8Is3MVGMN2R1vyrk=
+  - secure: qRCTnDwUY0eXWQia8B5aHkjYKSE0rcjq1iaoKvMIru3fX5GmM6mJ7sBF09rQeL7CS/vcqSFwhBSp9Rp0NaaX4Z6xK1u1i3InGZsAIKTUGWTUrk/aDyD8FVEiWHF+OgDbmtV+/tvhxWTglEE02Vid7nA0LzZvxp5YqcMv6bIXKE9YVPwFGcVolwOla0IP4xuXqI3TuPjzgHWWhxMurpIzTes8iFSJgIdq0ojXzSDyxxGQvtfwaI3M9iuMF0VycLtfKpTBF6o/268nFqPtqiuBCMZMhbIAd8iX1axCtvFeITM6Y0jljE+J74aZ2NWHaIksBrH20EXmnnLuyf5GViVZpwENqciMdPcAMyCzaOe0TpkNklQRTir+ytDf9edl5LJYcnuaBh3hwT2OrUkMlACU3Ng20g+6tRY7vyFNq4mftQK6Li4gcAO4/RTyIiPsLAqHctjyAglFhImnv5yeK+19pDuBjSpf/jGvjI9tTQNKfjijGx9DfdlhsQaqHDF3JIGnqfgtqoIklfo0N4PPOAEW7ussYoAt5MH694iToQdMuU1bFpn1tbxlqheOJKEzy0XXVOcRX5lsizd4IWpmtJsRhWYZ4zdIVsptlKWv2PtLrPSiIIdXdpvVpcyCNXcDEFO7ypbwITnL3Hm69HKNB/UE2pUxEXA9jlyyQARnY3VzR/U=
+  - secure: YcFXKI9r1o1kNxt1lCMGCWu/M/bbs81JOGISlsUSm6rfRRfZG/s4x2l/3iABmH4BUJgNXt4YKlKT07k1O3TQPqS1U2GgJupny+FtTScjLzsS7xohTEct/Hgxwg0uTTwYwKXUoRvF3BOkbSmhkcPMWy55OjpRHqvBOW/rqIMNSN5mRHRZlJ3pbLUh8m349DE82JjPzrlZzVzbYB0JqFBYtDPCdK3Om6Bus4EzVTDnrG3ssnvPK2FS40COeNmF3JKat/0em0hIPxvuzxIcszBYQrJ5Rq/LvYLhhzUGgVIHnzmmOy8+efH2GQamfZfxOfNA2JW/7dAgSxRpKtSSxTtu2RLx2xSCh/RA37x1eFs0iNhrhRp5HTRNupd+gdoRxLzLaEOHtV9Kr4IQ1vWYYtbHqEG4plm/d4jTMg9CCRiI/fXZd0P5gwjprX+pK8AHXRVBL+LLBUKRff9T8hDZndK15UXxzVA78/oV59gxXoA6vyAlP1eiGxSY11Bo1qDGNZla2vMZwMVlDh8SxwDKcUrihy78jhV3Nl+Qrg53GgpwXYfy2DPZ3iQYAGbJ9jRXmQPF5d8nKmuB7JVVwwlLcDV1ZYIrj18lqrxb9WstAXjahZZ2QHbt6nlN4MY5yOGJ9hc+jqxY/6qYLg8PG2iLsInrHLAa4F1beAisCUVccpeWzAU=
