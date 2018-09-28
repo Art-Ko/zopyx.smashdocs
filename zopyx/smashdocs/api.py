@@ -752,5 +752,4 @@ class Smashdocs(object):
         xmlschema_doc = lxml.etree.fromstring(schema_text)
         xmlschema = lxml.etree.XMLSchema(xmlschema_doc)
         doc = lxml.etree.fromstring(xml)
-        import pdb; pdb.set_trace() 
         xmlschema.assertValid(doc)

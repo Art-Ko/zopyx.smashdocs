@@ -1,14 +1,17 @@
 Changes
 -------
+0.3.20 (2018-09-27)
++++++++++++++++++++
+- remove pdb call
+
 0.3.19 (2018-09-09)
 +++++++++++++++++++
 - added SDXML validation support
-=======
+
 
 0.3.18 (2018-08-19)
 +++++++++++++++++++
 - support for optional `userId` parameter in `document_info()`
-=======
 
 0.3.17 (2018-07-30)
 +++++++++++++++++++

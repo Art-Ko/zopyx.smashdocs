@@ -5,11 +5,11 @@
             version CDATA #IMPLIED
             id CDATA #IMPLIED >
 
-<!ELEMENT meta (language?, title, filename?, subtitle, description, footer, creator, tags?, word-export-presets?) >
+<!ELEMENT meta (language?, title, filename?, subtitle, description, footer, creator, tags?, word-export-presets?, grid?, grid-indentation-enabled?, spellcheck-lang?) >
 
 <!-- Dokumentmeta -->
 <!ELEMENT language EMPTY>
-<!ATTLIST	language value ( de_DE | en_EN ) #REQUIRED >
+<!ATTLIST	language value ( de_DE | en_EN | ru_RU) #REQUIRED >
 
 <!ELEMENT title (#PCDATA) >
 <!ELEMENT filename (#PCDATA) >
@@ -32,11 +32,17 @@
 			caption_image (0 | 1) #REQUIRED
 			caption_table (0 | 1) #REQUIRED >
 
+<!ELEMENT grid-indentation-enabled (#PCDATA) >
+<!ELEMENT grid (item)* >
+<!ELEMENT spellcheck-lang (#PCDATA) >
 
-<!--=== Parameter-Entities ===-->
-<!ENTITY % heading_content "(#PCDATA | b | i | u | a | sub | sup | s | kbd | sd-sc | footnote | xref | index | inline)*" >
-<!ENTITY % mixed_content "(#PCDATA | b | i | u | a | sub | sup | s | kbd | sd-sc | footnote | xref | index | inline)*" >
+
+		<!--=== Parameter-Entities ===-->
+<!ENTITY % heading_content "(#PCDATA | b | i | u | a | sub | sup | s | kbd | sd-sc | footnote | img | sidenote | inline | xref | index )*" >
+<!ENTITY % mixed_content "(#PCDATA | b | i | u | a | sub | sup | s | kbd | sd-sc | footnote | img | sidenote | xref | index | inline)*" >
 <!ENTITY % footnote_content "(#PCDATA | b | i | u | a | sub | sup | s | kbd | sd-sc | br)*" >
+<!ENTITY % img_content "(#PCDATA | b | i | u | a | sub | sup | s | kbd | sd-sc | br)*" >
+<!ENTITY % sidenote_content "(#PCDATA | b | i | u | a | sub | sup | s | kbd | xref | sd-sc | br)*" >
 <!ENTITY % values_indent "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15" >
 <!ENTITY % values_enumeration-level "0|1|2|3|4|5" >
 <!ENTITY % alignment "left | center | right | justify" >
@@ -44,7 +50,7 @@
  id CDATA #IMPLIED" >
 
 <!-- Dokumentstruktur -->
-<!ELEMENT document (heading | paragraph | image | table | ol-li | ul-li | pagebreak)* >
+<!ELEMENT document (heading | paragraph | image | table | ol-li | ul-li | pagebreak | directory)* >
 
 
 <!-- Headings -->
@@ -167,7 +173,7 @@
 			background-color CDATA "#000000"
             background-intensity CDATA #IMPLIED >
 
-<!ELEMENT p (#PCDATA | b | i | u | s | br | a | kbd | sd-sc | inline | footnote)* >
+<!ELEMENT p (#PCDATA | b | i | u | sub | sup | s | a | inline | kbd | sd-sc | footnote | img | xref)* >
 
 <!-- Pagebreak -->
 <!ELEMENT pagebreak EMPTY>
@@ -176,6 +182,11 @@
 <!ELEMENT br EMPTY>
 
 <!-- Inline-Elements -->
+<!-- Inline-image-->
+<!ELEMENT img %img_content;>
+<!ATTLIST	img
+			filename CDATA #REQUIRED
+			caption CDATA #REQUIRED >
 
 <!-- Weblink -->
 <!ELEMENT a (#PCDATA | br | b | i | u | sub | sup | s | kbd | sd-sc | inline )* >
@@ -191,6 +202,14 @@
 
 <!-- Footnote -->
 <!ELEMENT footnote %footnote_content; >
+
+<!-- Sidenote -->
+<!ELEMENT sidenote %sidenote_content; >
+
+<!-- Directory -->
+<!ELEMENT directory EMPTY>
+<!ATTLIST directory
+		  type (content|images|tables|footnotes|weblinks|indexes|sidenotes) #REQUIRED >
 
 <!-- Formatting -->
 <!-- b/i/u can be descendant of paragraph, ol/ul or table cell -->
