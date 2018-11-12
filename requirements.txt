@@ -1,10 +1,9 @@
 appdirs==1.4.3
-furl==1.0.1
+furl==2.0.0
 orderedmultidict==0.7.11
 packaging==18
-py==1.5.3
 PyJWT==1.6.4
-pyparsing==2.2.0
+pyparsing==2.3.0
 pytest==3.5.1
 requests==2.20.1
 six==1.11.0
