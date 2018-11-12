@@ -1,6 +1,6 @@
 appdirs==1.4.3
 furl==1.0.1
-orderedmultidict==0.7.11
+orderedmultidict==1.0
 packaging==17.1
 py==1.5.3
 PyJWT==1.6.1
