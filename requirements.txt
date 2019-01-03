@@ -8,5 +8,5 @@ pytest==3.10.1
 requests==2.20.1
 six==1.11.0
 fs>2.0.10
-lxml==4.2.5
+lxml==4.2.6
 -e git://github.com/zopyx/zopyx.smashdocs.git#egg=zopyx.smashdocs
