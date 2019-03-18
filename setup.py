@@ -2,7 +2,7 @@ import io
 import os
 from setuptools import setup, find_packages
 
-version = '0.3.20'
+version = '0.3.21'
 
 setup(name='zopyx.smashdocs',
       version=version,
@@ -14,9 +14,9 @@ setup(name='zopyx.smashdocs',
       classifiers=[
           "Programming Language :: Python",
           "Programming Language :: Python :: 2.7",
-          "Programming Language :: Python :: 3.7",
-          "Programming Language :: Python :: 3.6",
           "Programming Language :: Python :: 3.5",
+          "Programming Language :: Python :: 3.6",
+          "Programming Language :: Python :: 3.7",
           "Topic :: Software Development :: Libraries :: Python Modules",
       ],
       author='Andreas Jung',
